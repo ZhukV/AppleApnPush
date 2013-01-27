@@ -17,6 +17,20 @@ namespace Apple\ApnPush\Messages;
 interface MessageInterface extends PayloadDataInterface
 {
     /**
+     * Set identifier
+     *
+     * @param integer $identifier
+     */
+    public function setIdentifier($identifier);
+
+    /**
+     * Get identifier
+     *
+     * @return integet
+     */
+    public function getIdentifier();
+
+    /**
      * Set device token
      *
      * @param string $deviceToken

@@ -92,6 +92,14 @@ class Connection extends AbstractConnection
     /**
      * @{inerhitDoc}
      */
+    public function isReadyRead()
+    {
+        return $this->socketConnection->selectRead();
+    }
+
+    /**
+     * @{inerhitDoc}
+     */
     public function read($length)
     {
         return $this->socketConnection->read($length);

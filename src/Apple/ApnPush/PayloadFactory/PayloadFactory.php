@@ -25,14 +25,16 @@ class PayloadFactory implements PayloadFactoryInterface
     {
         $payload = pack('CNNnH*',
             1, // Command
-            0, // Identifier
+            $message->getIdentifier(),
             $message->getExpires()->format('U'),
             32, // Token length
             $message->getDeviceToken()
         );
 
-        $payload .= pack('n', mb_strlen($this->createJsonPayload($message)));
-        $payload .= $this->createJsonPayload($message);
+        $jsonData = $this->createJsonPayload($message);
+
+        $payload .= pack('n', mb_strlen($jsonData));
+        $payload .= $jsonData;
 
         return $payload;
     }

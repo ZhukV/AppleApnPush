@@ -93,6 +93,11 @@ interface ConnectionInterface
     public function write($data, $length = NULL);
 
     /**
+     * Is ready read
+     */
+    public function isReadyRead();
+
+    /**
      * Read data from connection
      *
      * @return string

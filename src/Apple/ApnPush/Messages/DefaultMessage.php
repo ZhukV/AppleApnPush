@@ -37,6 +37,11 @@ class DefaultMessage implements MessageInterface
     protected $expires;
 
     /**
+     * @var integer
+     */
+    protected $identifier;
+
+    /**
      * Construct
      */
     public function __construct()
@@ -44,6 +49,25 @@ class DefaultMessage implements MessageInterface
         $this->apsData = new ApsData;
         $this->customData = array();
         $this->expires = new \DateTime('+12 hours', new \DateTimeZone('UTC'));
+        $this->identifier = 0;
+    }
+
+    /**
+     * @{inerhitDoc}
+     */
+    public function setIdentifier($identifier)
+    {
+        $this->identifier = $identifier;
+
+        return $this;
+    }
+
+    /**
+     * @{inerhitDoc}
+     */
+    public function getIdentifier()
+    {
+        return $this->identifier;
     }
 
     /**

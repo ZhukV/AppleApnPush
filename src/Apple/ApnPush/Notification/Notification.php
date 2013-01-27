@@ -14,7 +14,8 @@ namespace Apple\ApnPush\Notification;
 use Apple\ApnPush\Connection\ConnectionInterface,
     Apple\ApnPush\Messages\MessageInterface,
     Apple\ApnPush\PayloadFactory\PayloadFactoryInterface,
-    Apple\ApnPush\Exceptions;
+    Apple\ApnPush\Exceptions,
+    Apple\ApnPush\Feedback\FeedbackException;
 
 /**
  * Notification core
@@ -91,5 +92,12 @@ class Notification implements NotificationInterface
         }
 
         $response = (mb_strlen($payload) === $this->connection->write($payload, mb_strlen($payload)));
+
+        if ($this->connection->isReadyRead()) {
+            $responseApple = $this->connection->read(6);
+            throw SendException::parseFromAppleResponse($responseApple, $message);
+        }
+
+        return $response;
     }
 }

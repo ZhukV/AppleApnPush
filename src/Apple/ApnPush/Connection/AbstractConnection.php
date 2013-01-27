@@ -65,6 +65,13 @@ abstract class AbstractConnection implements ConnectionInterface
             ));
         }
 
+        if (!is_readable($certificateFile)) {
+            throw new \InvalidArgumentException(sprintf(
+                'Can\'t read certificate file "%s".',
+                $certificateFile
+            ));
+        }
+
         $this->certificateFile = $certificateFile;
 
         return $this;
