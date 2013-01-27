@@ -1,0 +1,23 @@
+{
+    "name": "apple/apn-push",
+    "description": "Push notifications to Apple devices",
+    "keywords": ["apple", "push", "apn", "notifications"],
+    "homepage": "https://github.com/ZhukV/AppleApnPush",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Vitaliy Zhuk",
+            "email": "zhuk2205@gmail.com"
+        }
+    ],
+
+    "require": {
+        "php": ">=5.3.3",
+        "request-stream/request-stream": "dev-master"
+    },
+
+    "autoload": {
+        "psr-0": { "Apple\\ApnPush": "src/" }
+    }
+}
