@@ -17,6 +17,10 @@
         "request-stream/request-stream": "dev-master"
     },
 
+    "require-dev": {
+        "symfony/console": "dev-master"
+    },
+
     "autoload": {
         "psr-0": { "Apple\\ApnPush": "src/" }
     }

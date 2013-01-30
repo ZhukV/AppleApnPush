@@ -1,0 +1,86 @@
+<?php
+
+/**
+ * This file is part of the AppleApnPush package
+ *
+ * (c) Vitaliy Zhuk <zhuk2205@gmail.com>
+ *
+ * For the full copyring and license information, please view the LICENSE
+ * file that was distributed with this source code
+ */
+
+namespace Apple\ApnPush\Command;
+
+use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Input\InputArgument;
+use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
+use Symfony\Component\Console\Output\OutputInterface;
+use Apple\ApnPush\Messages\DefaultMessage;
+use Apple\ApnPush\Connection\Connection;
+use Apple\ApnPush\PayloadFactory\PayloadFactory;
+use Apple\ApnPush\Notification\Notification;
+
+
+/**
+ * Apn push notification command
+ */
+class PushCommand extends Command
+{
+    /**
+     * @{inerhitDoc}
+     */
+    protected function configure()
+    {
+        $this
+            ->setName('apple:apn-push:send')
+            ->setDescription('Push notification to iOS devices')
+            ->addArgument('certificate-file', InputArgument::REQUIRED, 'Certificate file')
+            ->addArgument('device-token', InputArgument::REQUIRED, 'Device token')
+            ->addArgument('message', InputArgument::REQUIRED, 'Push message')
+            ->addOption('sound', 's', InputOption::VALUE_OPTIONAL, 'Sound option')
+            ->addOption('badge', 'b', InputOption::VALUE_OPTIONAL, 'Badge option')
+            ->addOption('pass-phrase', 'p', InputOption::VALUE_OPTIONAL, 'Pass phrase for certificate file')
+            ->addOption('sandbox', NULL, InputOption::VALUE_NONE, 'Usage sandbox mode')
+        ;
+    }
+
+    /**
+     * @{inerhitDoc}
+     */
+    protected function execute(InputInterface $input, OutputInterface $output)
+    {
+        // Create connection
+        $connection = new Connection(
+            $input->getArgument('certificate-file'),
+            $input->getOption('pass-phrase'),
+            (bool) $input->getOption('sandbox')
+        );
+
+        // Create payload factory
+        $payloadFactory = new PayloadFactory();
+
+        // Create notification system
+        $notification = new Notification;
+        $notification->setPayloadFactory($payloadFactory);
+        $notification->setConnection($connection);
+
+        // Create message
+        $message = new DefaultMessage;
+        $message->setDeviceToken($input->getArgument('device-token'));
+        $apsData = $message->getApsData();
+        $apsData
+            ->setBody($input->getArgument('message'))
+            ->setSound($input->getOption('sound'))
+            ->setBadge($input->getOption('badge'));
+
+        // Send message
+        try {
+            $notification->sendMessage($message);
+            $output->writeln('<info>Success send push.</info>');
+        }
+        catch (\Exception $e) {
+            $output->writeln('<error>Error send push notification with message: ' . $e->getMessage() . '.</error>');
+        }
+    }
+}
