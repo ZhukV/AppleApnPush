@@ -11,9 +11,9 @@
 
 namespace Apple\ApnPush\Connection;
 
-use RequestStream\Stream\Socket\SocketClient,
-    RequestStream\Stream\Context,
-    Apple\ApnPush\Exceptions\CertificateFileNotFoundException;
+use RequestStream\Stream\Socket\SocketClient;
+use RequestStream\Stream\Context;
+use Apple\ApnPush\Exceptions\CertificateFileNotFoundException;
 
 /**
  * Default connection for Apple push notification

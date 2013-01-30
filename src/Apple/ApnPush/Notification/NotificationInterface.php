@@ -11,10 +11,10 @@
 
 namespace Apple\ApnPush\Notification;
 
-use Apple\ApnPush\Connection\ConnectionInterface,
-    Apple\ApnPush\Messages\MessageInterface,
-    Apple\ApnPush\PayloadFactory\PayloadFactoryInterface,
-    Psr\Log\LoggerInterface;
+use Apple\ApnPush\Connection\ConnectionInterface;
+use Apple\ApnPush\Messages\MessageInterface;
+use Apple\ApnPush\PayloadFactory\PayloadFactoryInterface;
+use Psr\Log\LoggerInterface;
 
 /**
  * Interface for control notification system
