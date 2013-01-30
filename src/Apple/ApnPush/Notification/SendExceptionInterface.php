@@ -31,6 +31,7 @@ interface SendExceptionInterface
     const ERROR_INVALID_PAYLOAD_SIZE    =   7;
     const ERROR_INVALID_TOKEN           =   8;
     const ERROR_UNKNOWN                 =   255;
+    const ERROR_UNPACK_RESPONSE         =   256;
 
     /**
      * Parse feedback from apple response

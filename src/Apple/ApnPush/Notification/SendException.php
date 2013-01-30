@@ -21,7 +21,7 @@ class SendException extends \UnexpectedValueException implements SendExceptionIn
     /**
      * @var array
      */
-    static $errorMessages = array(
+    static protected $errorMessages = array(
         SendExceptionInterface::NO_ERRORS                       =>  'Not errors',
         SendExceptionInterface::ERROR_PROCESSING                =>  'Processing error',
         SendExceptionInterface::ERROR_MISSING_DEVICE_TOKEN      =>  'Missing device token',
@@ -31,7 +31,8 @@ class SendException extends \UnexpectedValueException implements SendExceptionIn
         SendExceptionInterface::ERROR_INVALID_TOPIC_SIZE        =>  'Invalid topic size',
         SendExceptionInterface::ERROR_INVALID_PAYLOAD_SIZE      =>  'Invalid payload size',
         SendExceptionInterface::ERROR_INVALID_TOKEN             =>  'Invalid token',
-        SendExceptionInterface::ERROR_UNKNOWN                   =>  'Unknown error'
+        SendExceptionInterface::ERROR_UNKNOWN                   =>  'Unknown error',
+        SendExceptionInterface::ERROR_UNPACK_RESPONSE           =>  'Unpack response error'
     );
 
     /**
@@ -84,7 +85,10 @@ class SendException extends \UnexpectedValueException implements SendExceptionIn
      */
     static public function parseFromAppleResponse($binaryData, MessageInterface $message = NULL)
     {
-        $response = unpack("Ccommand/Cstatus/Nidentifier", $binaryData);
+        if(false === $response = @unpack("Ccommand/Cstatus/Nidentifier", $binaryData)) {
+            return new static(SendExceptionInterface::ERROR_UNPACK_RESPONSE, 0, 0, $message);
+        }
+
         return new static(
             $response['status'],
             $response['command'],
