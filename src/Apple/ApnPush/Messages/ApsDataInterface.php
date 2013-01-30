@@ -11,6 +11,8 @@
 
 namespace Apple\ApnPush\Messages;
 
+use Apple\ApnPush\PayloadFactory\PayloadDataInterface;
+
 /**
  * Interface for control Aps data in iOS message
  */

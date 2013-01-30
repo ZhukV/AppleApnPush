@@ -9,7 +9,7 @@
  * file that was distributed with this source code
  */
 
-namespace Apple\ApnPush\Messages;
+namespace Apple\ApnPush\PayloadFactory;
 
 /**
  * Interface for control payload data

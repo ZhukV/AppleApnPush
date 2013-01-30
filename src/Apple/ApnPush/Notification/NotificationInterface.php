@@ -13,7 +13,8 @@ namespace Apple\ApnPush\Notification;
 
 use Apple\ApnPush\Connection\ConnectionInterface,
     Apple\ApnPush\Messages\MessageInterface,
-    Apple\ApnPush\PayloadFactory\PayloadFactoryInterface;
+    Apple\ApnPush\PayloadFactory\PayloadFactoryInterface,
+    Psr\Log\LoggerInterface;
 
 /**
  * Interface for control notification system
@@ -54,4 +55,18 @@ interface NotificationInterface
      * @param MessageInterface $message
      */
     public function sendMessage(MessageInterface $message);
+
+    /**
+     * Set logger
+     *
+     * @param LoggerInterface $logger
+     */
+    public function setLogger(LoggerInterface $logger);
+
+    /**
+     * Get logger
+     *
+     * @return Logger
+     */
+    public function getLogger();
 }

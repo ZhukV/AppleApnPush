@@ -11,6 +11,8 @@
 
 namespace Apple\ApnPush\Messages;
 
+use Apple\ApnPush\PayloadFactory\PayloadDataInterface;
+
 /**
  * Interface for control iOS message
  */
@@ -85,6 +87,13 @@ interface MessageInterface extends PayloadDataInterface
      * @param string $customData
      */
     public function addCustomData($dataKey, $dataValue);
+
+    /**
+     * Get custom data
+     *
+     * @return array
+     */
+    public function getCustomData();
 
     /**
      * Set expires

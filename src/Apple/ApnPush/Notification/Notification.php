@@ -11,11 +11,12 @@
 
 namespace Apple\ApnPush\Notification;
 
-use Apple\ApnPush\Connection\ConnectionInterface,
-    Apple\ApnPush\Messages\MessageInterface,
-    Apple\ApnPush\PayloadFactory\PayloadFactoryInterface,
-    Apple\ApnPush\Exceptions,
-    Apple\ApnPush\Feedback\FeedbackException;
+use Apple\ApnPush\Connection\ConnectionInterface;
+use Apple\ApnPush\Messages\MessageInterface;
+use Apple\ApnPush\PayloadFactory\PayloadFactoryInterface;
+use Apple\ApnPush\Exceptions;
+use Apple\ApnPush\Feedback\FeedbackException;
+use Psr\Log\LoggerInterface;
 
 /**
  * Notification core
@@ -31,6 +32,11 @@ class Notification implements NotificationInterface
      * @var PayloadFactoryInterface
      */
     protected $payloadFactory;
+
+    /**
+     * @var LoggerInterface
+     */
+    protected $logger;
 
     /**
      * @{inerhitDoc}
@@ -87,7 +93,15 @@ class Notification implements NotificationInterface
 
         $payload = $this->payloadFactory->createPayload($message);
 
+        if ($this->logger) {
+            $this->logger->debug('Success create payload.');
+        }
+
         if (!$this->connection->isConnection()) {
+            if ($this->logger) {
+                $this->logger->debug('Create connection...');
+            }
+
             $this->connection->createConnection();
         }
 
@@ -95,9 +109,41 @@ class Notification implements NotificationInterface
 
         if ($this->connection->isReadyRead()) {
             $responseApple = $this->connection->read(6);
-            throw SendException::parseFromAppleResponse($responseApple, $message);
+            $error = SendException::parseFromAppleResponse($responseApple, $message);
+
+            if ($this->logger) {
+                $this->logger->error((string) $error);
+            }
+
+            throw $error;
+        }
+
+        if ($this->logger) {
+            $this->logger->info(sprintf(
+                'Success send notification to device "%s" by message identifier "%s".',
+                $message->getDeviceToken(),
+                $message->getIdentifier()
+            ));
         }
 
         return $response;
+    }
+
+    /**
+     * @{inerhitDoc}
+     */
+    public function setLogger(LoggerInterface $logger)
+    {
+        $this->logger = $logger;
+
+        return $this;
+    }
+
+    /**
+     * @{inerhitDoc}
+     */
+    public function getLogger()
+    {
+        return $this->logger;
     }
 }

@@ -187,6 +187,14 @@ class DefaultMessage implements MessageInterface
     /**
      * @{inerhitDoc}
      */
+    public function getCustomData()
+    {
+        return $this->customData;
+    }
+
+    /**
+     * @{inerhitDoc}
+     */
     public function setExpires(\DateTime $expires)
     {
         // TODO: Auto set UTC Timezone

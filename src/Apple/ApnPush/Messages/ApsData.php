@@ -93,7 +93,7 @@ class ApsData implements ApsDataInterface
         }
 
         if ($this->body) {
-            throw new \LogicException('Can\'t set localized budy, because body message already exists. Please clear body message (->setBody(NULL)).');
+            throw new \LogicException('Can\'t set localized body, because body message already exists. Please clear body message (->setBody(NULL)).');
         }
 
         if (is_object($localizeKey)) {
