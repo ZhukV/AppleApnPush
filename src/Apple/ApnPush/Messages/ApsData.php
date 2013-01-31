@@ -48,7 +48,7 @@ class ApsData implements ApsDataInterface
     }
 
     /**
-     * @{inerhitDoc}
+     * {@inheritDoc}
      *
      * ATTENTION:
      *  Clear custom body data
@@ -75,7 +75,7 @@ class ApsData implements ApsDataInterface
     }
 
     /**
-     * @{inerhitDoc}
+     * {@inheritDoc}
      */
     public function getBody()
     {
@@ -83,7 +83,7 @@ class ApsData implements ApsDataInterface
     }
 
     /**
-     * @{inerhitDoc}
+     * {@inheritDoc}
      */
     public function setBodyLocalize($localizeKey, array $localizeParams)
     {
@@ -116,7 +116,7 @@ class ApsData implements ApsDataInterface
     }
 
     /**
-     * @{inerhitDoc}
+     * {@inheritDoc}
      */
     public function setBodyCustom(array $bodyCustom)
     {
@@ -126,7 +126,7 @@ class ApsData implements ApsDataInterface
     }
 
     /**
-     * @{inerhitDoc}
+     * {@inheritDoc}
      */
     public function getBodyCustom()
     {
@@ -134,7 +134,7 @@ class ApsData implements ApsDataInterface
     }
 
     /**
-     * @{inerhitDoc}
+     * {@inheritDoc}
      */
     public function setSound($sound)
     {
@@ -154,7 +154,7 @@ class ApsData implements ApsDataInterface
     }
 
     /**
-     * @{inerhitDoc}
+     * {@inheritDoc}
      */
     public function getSound()
     {
@@ -162,7 +162,7 @@ class ApsData implements ApsDataInterface
     }
 
     /**
-     * @{inerhitDoc}
+     * {@inheritDoc}
      */
     public function setBadge($badge)
     {
@@ -184,7 +184,7 @@ class ApsData implements ApsDataInterface
     }
 
     /**
-     * @{inerhitDoc}
+     * {@inheritDoc}
      */
     public function getBadge()
     {
@@ -192,7 +192,7 @@ class ApsData implements ApsDataInterface
     }
 
     /**
-     * @{inerhitDoc}
+     * {@inheritDoc}
      */
     public function getPayloadData()
     {

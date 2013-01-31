@@ -21,12 +21,12 @@ use Apple\ApnPush\Exceptions\CertificateFileNotFoundException;
 class Connection extends AbstractConnection
 {
     /**
-     * @var SocketInterface
+     * @var SocketClient
      */
     protected $socketConnection;
 
     /**
-     * @{inerhitDoc}
+     * {@inheritDoc}
      */
     public function __construct($certificateFile = NULL, $certificatePassPhrase = NULL, $sandbox = FALSE)
     {
@@ -35,7 +35,7 @@ class Connection extends AbstractConnection
     }
 
     /**
-     * @{inerhitDoc}
+     * {@inheritDoc}
      */
     public function createConnection()
     {
@@ -66,7 +66,7 @@ class Connection extends AbstractConnection
     }
 
     /**
-     * @{inerhitDoc}
+     * {@inheritDoc}
      */
     public function isConnection()
     {
@@ -74,7 +74,7 @@ class Connection extends AbstractConnection
     }
 
     /**
-     * @{inerhitDoc}
+     * {@inheritDoc}
      */
     public function closeConnection()
     {
@@ -82,7 +82,7 @@ class Connection extends AbstractConnection
     }
 
     /**
-     * @{inerhitDoc}
+     * {@inheritDoc}
      */
     public function write($binaryData, $length = NULL)
     {
@@ -90,7 +90,7 @@ class Connection extends AbstractConnection
     }
 
     /**
-     * @{inerhitDoc}
+     * {@inheritDoc}
      */
     public function isReadyRead()
     {
@@ -98,7 +98,7 @@ class Connection extends AbstractConnection
     }
 
     /**
-     * @{inerhitDoc}
+     * {@inheritDoc}
      */
     public function read($length)
     {

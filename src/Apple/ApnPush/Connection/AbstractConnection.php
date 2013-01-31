@@ -54,7 +54,7 @@ abstract class AbstractConnection implements ConnectionInterface
     }
 
     /**
-     * @{inerhitDoc}
+     * {@inheritDoc}
      */
     public function setCertificateFile($certificateFile)
     {
@@ -78,7 +78,7 @@ abstract class AbstractConnection implements ConnectionInterface
     }
 
     /**
-     * @{inerhitDoc}
+     * {@inheritDoc}
      */
     public function getCertificateFile()
     {
@@ -86,7 +86,7 @@ abstract class AbstractConnection implements ConnectionInterface
     }
 
     /**
-     * @{inerhitDoc}
+     * {@inheritDoc}
      */
     public function setCertificatePassPhrase($certificatePassPhrase)
     {
@@ -104,7 +104,7 @@ abstract class AbstractConnection implements ConnectionInterface
     }
 
     /**
-     * @{inerhitDoc}
+     * {@inheritDoc}
      */
     public function setSandboxMode($sandboxMode)
     {
@@ -114,7 +114,7 @@ abstract class AbstractConnection implements ConnectionInterface
     }
 
     /**
-     * @{inerhitDoc}
+     * {@inheritDoc}
      */
     public function getSandboxMode()
     {
@@ -122,7 +122,7 @@ abstract class AbstractConnection implements ConnectionInterface
     }
 
     /**
-     * @{inerhitDoc}
+     * {@inheritDoc}
      */
     public function getConnectionUrl()
     {
@@ -132,7 +132,7 @@ abstract class AbstractConnection implements ConnectionInterface
     }
 
     /**
-     * @{inerhitDoc}
+     * {@inheritDoc}
      */
     public function getConnectionPort()
     {

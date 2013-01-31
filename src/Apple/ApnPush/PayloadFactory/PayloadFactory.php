@@ -19,7 +19,7 @@ use Apple\ApnPush\Messages\MessageInterface;
 class PayloadFactory implements PayloadFactoryInterface
 {
     /**
-     * @{inerhitDoc}
+     * {@inheritDoc}
      */
     public function createPayload(MessageInterface $message)
     {
@@ -40,7 +40,7 @@ class PayloadFactory implements PayloadFactoryInterface
     }
 
     /**
-     * @{inerhitDoc}
+     * {@inheritDoc}
      */
     public function createJsonPayload(MessageInterface $message)
     {

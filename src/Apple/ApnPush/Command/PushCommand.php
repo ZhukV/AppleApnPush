@@ -28,7 +28,7 @@ use Apple\ApnPush\Notification\Notification;
 class PushCommand extends Command
 {
     /**
-     * @{inerhitDoc}
+     * {@inheritDoc}
      */
     protected function configure()
     {
@@ -46,7 +46,7 @@ class PushCommand extends Command
     }
 
     /**
-     * @{inerhitDoc}
+     * {@inheritDoc}
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
@@ -78,8 +78,7 @@ class PushCommand extends Command
         try {
             $notification->sendMessage($message);
             $output->writeln('<info>Success send push.</info>');
-        }
-        catch (\Exception $e) {
+        } catch (\Exception $e) {
             $output->writeln('<error>Error send push notification with message: ' . $e->getMessage() . '.</error>');
         }
     }

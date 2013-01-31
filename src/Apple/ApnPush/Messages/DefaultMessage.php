@@ -53,7 +53,7 @@ class DefaultMessage implements MessageInterface
     }
 
     /**
-     * @{inerhitDoc}
+     * {@inheritDoc}
      */
     public function setIdentifier($identifier)
     {
@@ -63,7 +63,7 @@ class DefaultMessage implements MessageInterface
     }
 
     /**
-     * @{inerhitDoc}
+     * {@inheritDoc}
      */
     public function getIdentifier()
     {
@@ -71,7 +71,7 @@ class DefaultMessage implements MessageInterface
     }
 
     /**
-     * @{inerhitDoc}
+     * {@inheritDoc}
      */
     public function setDeviceToken($deviceToken)
     {
@@ -111,7 +111,7 @@ class DefaultMessage implements MessageInterface
     }
 
     /**
-     * @{inerhitDoc}
+     * {@inheritDoc}
      */
     public function getDeviceToken()
     {
@@ -119,7 +119,7 @@ class DefaultMessage implements MessageInterface
     }
 
     /**
-     * @{inerhitDoc}
+     * {@inheritDoc}
      */
     public function setApsData(ApsDataInterface $apsData)
     {
@@ -129,7 +129,7 @@ class DefaultMessage implements MessageInterface
     }
 
     /**
-     * @{inerhitDoc}
+     * {@inheritDoc}
      */
     public function getApsData()
     {
@@ -137,7 +137,7 @@ class DefaultMessage implements MessageInterface
     }
 
     /**
-     * @{inerhitDoc}
+     * {@inheritDoc}
      */
     public function setBody($body)
     {
@@ -147,7 +147,7 @@ class DefaultMessage implements MessageInterface
     }
 
     /**
-     * @{inerhitDoc}
+     * {@inheritDoc}
      */
     public function getBody()
     {
@@ -155,7 +155,7 @@ class DefaultMessage implements MessageInterface
     }
 
     /**
-     * @{inerhitDoc}
+     * {@inheritDoc}
      */
     public function setCustomData(array $customData)
     {
@@ -169,7 +169,7 @@ class DefaultMessage implements MessageInterface
     }
 
     /**
-     * @{inerhitDoc}
+     * {@inheritDoc}
      */
     public function addCustomData($key, $value = NULL)
     {
@@ -185,7 +185,7 @@ class DefaultMessage implements MessageInterface
     }
 
     /**
-     * @{inerhitDoc}
+     * {@inheritDoc}
      */
     public function getCustomData()
     {
@@ -193,7 +193,7 @@ class DefaultMessage implements MessageInterface
     }
 
     /**
-     * @{inerhitDoc}
+     * {@inheritDoc}
      */
     public function setExpires(\DateTime $expires)
     {
@@ -204,7 +204,7 @@ class DefaultMessage implements MessageInterface
     }
 
     /**
-     * @{inerhitDoc}
+     * {@inheritDoc}
      */
     public function getExpires()
     {
@@ -212,7 +212,7 @@ class DefaultMessage implements MessageInterface
     }
 
     /**
-     * @{inerhitDoc}
+     * {@inheritDoc}
      */
     public function getPayloadData()
     {
