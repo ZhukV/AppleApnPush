@@ -28,7 +28,7 @@ class Connection extends AbstractConnection
     /**
      * {@inheritDoc}
      */
-    public function __construct($certificateFile = NULL, $certificatePassPhrase = NULL, $sandbox = FALSE)
+    public function __construct($certificateFile = null, $certificatePassPhrase = null, $sandbox = false)
     {
         parent::__construct($certificateFile, $certificatePassPhrase, $sandbox);
         $this->socketConnection = new SocketClient;
@@ -39,7 +39,7 @@ class Connection extends AbstractConnection
      */
     public function createConnection()
     {
-        if ($this->socketConnection->is(FALSE)) {
+        if ($this->socketConnection->is(false)) {
             return $this;
         }
 
@@ -70,7 +70,7 @@ class Connection extends AbstractConnection
      */
     public function isConnection()
     {
-        return $this->socketConnection->is(FALSE);
+        return $this->socketConnection->is(false);
     }
 
     /**
@@ -84,7 +84,7 @@ class Connection extends AbstractConnection
     /**
      * {@inheritDoc}
      */
-    public function write($binaryData, $length = NULL)
+    public function write($binaryData, $length = null)
     {
         return $this->socketConnection->write($binaryData, $length);
     }

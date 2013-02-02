@@ -90,7 +90,7 @@ interface ConnectionInterface
      * @param string $data
      * @param integer $length
      */
-    public function write($data, $length = NULL);
+    public function write($data, $length = null);
 
     /**
      * Is ready read

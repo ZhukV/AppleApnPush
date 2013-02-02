@@ -38,17 +38,17 @@ abstract class AbstractConnection implements ConnectionInterface
      * @param string $certificatePassPhrase
      * @param boolean $sandboxMode
      */
-    public function __construct($certificateFile = NULL, $certificatePassPhrase = NULL, $sandboxMode = FALSE)
+    public function __construct($certificateFile = null, $certificatePassPhrase = null, $sandboxMode = false)
     {
-        if ($certificateFile !== NULL) {
+        if ($certificateFile !== null) {
             $this->setCertificateFile($certificateFile);
         }
 
-        if ($certificatePassPhrase !== NULL) {
+        if ($certificatePassPhrase !== null) {
             $this->setCertificatePassPhrase($certificatePassPhrase);
         }
 
-        if ($sandboxMode !== NULL) {
+        if ($sandboxMode !== null) {
             $this->setSandboxMode($sandboxMode);
         }
     }
