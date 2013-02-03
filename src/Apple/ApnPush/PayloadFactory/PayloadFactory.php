@@ -19,6 +19,37 @@ use Apple\ApnPush\Messages\MessageInterface;
 class PayloadFactory implements PayloadFactoryInterface
 {
     /**
+     * @var boolean
+     */
+    protected $jsonUnescapedUnicode = false;
+
+    /**
+     * {@inheritDoc}
+     */
+    public function setJsonUnescapedUnicode($status)
+    {
+        // Validate PHP version
+        if (!version_compare(PHP_VERSION, '5.4.0', '>=')) {
+            throw new \LogicException(sprintf(
+                'Can\'t use JSON_UNESCAPED_UNICODE option on PHP %s. Support PHP >= 5.4.0',
+                PHP_VERSION
+            ));
+        }
+
+        $this->jsonUnescapedUnicode = (bool) $status;
+
+        return $this;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getJsonUnescapedUnicode()
+    {
+        return $this->jsonUnescapedUnicode;
+    }
+
+    /**
      * {@inheritDoc}
      */
     public function createPayload(MessageInterface $message)
@@ -33,6 +64,8 @@ class PayloadFactory implements PayloadFactoryInterface
 
         $jsonData = $this->createJsonPayload($message);
 
+        print $jsonData; exit();
+
         $payload .= pack('n', mb_strlen($jsonData));
         $payload .= $jsonData;
 
@@ -44,6 +77,11 @@ class PayloadFactory implements PayloadFactoryInterface
      */
     public function createJsonPayload(MessageInterface $message)
     {
-        return json_encode($message->getPayloadData(), JSON_FORCE_OBJECT);
+        if ($this->jsonUnescapedUnicode && version_compare(PHP_VERSION, '5.4.0', '>=')) {
+            return json_encode($message->getPayloadData(), JSON_FORCE_OBJECT ^ JSON_UNESCAPED_UNICODE);
+        }
+        else {
+            return json_encode($message->getPayloadData(), JSON_FORCE_OBJECT);
+        }
     }
 }
