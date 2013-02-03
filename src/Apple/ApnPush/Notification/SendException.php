@@ -63,7 +63,7 @@ class SendException extends \UnexpectedValueException implements SendExceptionIn
      * @param string $identifier
      * @param MessageInterface $message
      */
-    public function __construct($statusCode, $command, $identifier, MessageInterface $message = NULL)
+    public function __construct($statusCode, $command, $identifier, MessageInterface $message = null)
     {
         if (isset(self::$errorMessages[$statusCode])) {
             $message = self::$errorMessages[$statusCode];
@@ -83,7 +83,7 @@ class SendException extends \UnexpectedValueException implements SendExceptionIn
     /**
      * @{inerhitDoc}
      */
-    static public function parseFromAppleResponse($binaryData, MessageInterface $message = NULL)
+    static public function parseFromAppleResponse($binaryData, MessageInterface $message = null)
     {
         if(false === $response = @unpack("Ccommand/Cstatus/Nidentifier", $binaryData)) {
             return new static(SendExceptionInterface::ERROR_UNPACK_RESPONSE, 0, 0, $message);
