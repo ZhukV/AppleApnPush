@@ -64,8 +64,6 @@ class PayloadFactory implements PayloadFactoryInterface
 
         $jsonData = $this->createJsonPayload($message);
 
-        print $jsonData; exit();
-
         $payload .= pack('n', mb_strlen($jsonData));
         $payload .= $jsonData;
 
