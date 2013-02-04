@@ -42,9 +42,10 @@ class Notification implements NotificationInterface
     /**
      * Construct
      */
-    public function __construct()
+    public function __construct(PayloadFactoryInterface $payloadFactory = null, ConnectionInterface $connection = null)
     {
-        $this->payloadFactory = new PayloadFactory();
+        $this->connection = $connection;
+        $this->payloadFactory = $payloadFactory === null ? new PayloadFactory() : $payloadFactory;
     }
 
     /**
