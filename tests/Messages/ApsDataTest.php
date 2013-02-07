@@ -26,21 +26,39 @@ class ApsDataTest extends \PHPUnit_Framework_TestCase
         $aps = new ApsData;
         $this->assertTrue($aps instanceof PayloadDataInterface);
         $this->assertTrue($aps instanceof ApsDataInterface);
+    }
 
-        $aps->setBody('Hello');
-        $this->assertEquals($aps->getBody(), 'Hello');
+    /**
+     * @dataProvider apsDataProvider
+     */
+    public function testApsData($body, $sound, $badge)
+    {
+        $aps = new ApsData;
 
-        $aps->setSound('1.mp3');
-        $this->assertEquals($aps->getSound(), '1.mp3');
+        $aps->setBody($body);
+        $aps->setSound($sound);
+        $aps->setBadge($badge);
 
-        $aps->setBadge(5);
-        $this->assertEquals($aps->getBadge(), 5);
+        $this->assertEquals($aps->getBody(), $body);
+        $this->assertEquals($aps->getSound(), $sound);
+        $this->assertEquals($aps->getBadge(), $badge);
+    }
 
-        $this->assertEquals($aps->getPayloadData(), array(
-            'alert' => 'Hello',
-            'sound' => '1.mp3',
-            'badge' => 5
-        ));
+    /**
+     * Provider for test ApsData
+     */
+    public function apsDataProvider()
+    {
+        return array(
+            array(null, null, null),
+            array('foo', null, null),
+            array(null, 'foo.mp3', null),
+            array(null, null, 4),
+            array('foo', 'bar.mp3', null),
+            array(null, 'bar.mp3', 5),
+            array('foo', null, 3),
+            array('foo', 'bar.mp3', 20)
+        );
     }
 
     /**

@@ -35,29 +35,30 @@ class DefaultMessageTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test set device token
+     * @dataProvider deviceTokenProvider
      */
-    public function testSetDeviceToken()
+    public function testSetDeviceToken($token, $exception)
     {
+        if ($exception) {
+            $this->setExpectedException('InvalidArgumentException');
+        }
+
         $defaultMessage = new DefaultMessage;
 
-        $defaultMessage->setDeviceToken(str_repeat('a1', 32));
-        $this->assertEquals($defaultMessage->getDeviceToken(), str_repeat('a1', 32));
+        $defaultMessage->setDeviceToken($token);
+        $this->assertEquals($defaultMessage->getDeviceToken(), $token);
+    }
 
-        try {
-            // Not 64 charset
-            $defaultMessage->setDeviceToken('aa');
-            $this->fail('Not control device token size.');
-        }
-        catch (\InvalidArgumentException $e) {
-        }
-
-        try {
-            $defaultMessage->setDeviceToken(str_repeat('z', 64));
-            $this->fail('Not control device token pattern.');
-        }
-        catch (\InvalidArgumentException $e) {
-        }
+    /**
+     * Provider for testing device token
+     */
+    public function deviceTokenProvider()
+    {
+        return array(
+            array('foo_bar', true),
+            array(str_repeat('aq', 32), true),
+            array(str_repeat('af', 32), false)
+        );
     }
 
     /**

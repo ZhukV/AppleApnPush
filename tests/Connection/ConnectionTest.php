@@ -33,10 +33,10 @@ class ConnectionTest extends \PHPUnit_Framework_TestCase
         $connection->setCertificatePassPhrase('qq');
         $this->assertEquals($connection->getCertificatePassPhrase(), 'qq');
 
-        $connection->setSandboxMode(TRUE);
+        $connection->setSandboxMode(true);
         $this->assertTrue($connection->getSandboxMode());
 
-        $connection = new Connection(__FILE__, '11', TRUE);
+        $connection = new Connection(__FILE__, '11', true);
         $this->assertEquals($connection->getCertificateFile(), __FILE__);
         $this->assertEquals($connection->getCertificatePassPhrase(), '11');
         $this->assertTrue($connection->getSandboxMode());
@@ -44,8 +44,7 @@ class ConnectionTest extends \PHPUnit_Framework_TestCase
         try {
             $connection->setCertificateFile(__FILE__ . '.aa');
             $this->fail('Not control certificate file not found.');
-        }
-        catch (\Exception $e) {
+        } catch (\Exception $e) {
         }
     }
 
@@ -101,7 +100,7 @@ class ConnectionTest extends \PHPUnit_Framework_TestCase
         $mock->expects($this->any())->method('selectRead')->will($this->returnValue(false));
 
         $refSocket = new \ReflectionProperty($connection, 'socketConnection');
-        $refSocket->setAccessible(TRUE);
+        $refSocket->setAccessible(true);
         $refSocket->setValue($connection, $mock);
 
         $this->assertFalse($connection->isConnection());
