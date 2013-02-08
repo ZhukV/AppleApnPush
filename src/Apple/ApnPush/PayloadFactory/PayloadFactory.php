@@ -28,7 +28,7 @@ class PayloadFactory implements PayloadFactoryInterface
      */
     public function setJsonUnescapedUnicode($status)
     {
-        // Validate PHP version
+        // Check PHP version
         if (!version_compare(PHP_VERSION, '5.4.0', '>=')) {
             throw new \LogicException(sprintf(
                 'Can\'t use JSON_UNESCAPED_UNICODE option on PHP %s. Support PHP >= 5.4.0',

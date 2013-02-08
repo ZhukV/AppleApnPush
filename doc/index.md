@@ -70,7 +70,7 @@ Device token must be patter of template: `/[0-9a-f]]/` and size must be 64 chars
 Logger
 ------
 
-Your can control send messages with logger (`Psr\Log\LoggerInterface`)
+Your can control send messages with logger (`Psr\Log\LoggerInterface` and `Monolog`)
 
 Example:
 
@@ -93,8 +93,7 @@ use Apple\apnPush\Notification\SendExceptionInterface;
 try {
     $notification->sendMessage($message);
     print 'Success send message';
-}
-catch (SendExceptionInterface $error) {
+} catch (SendExceptionInterface $error) {
     print (string) $error;
     // Your logic
 }

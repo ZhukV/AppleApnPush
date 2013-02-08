@@ -28,6 +28,9 @@ class SendExceptionTest extends \PHPUnit_Framework_TestCase
 
     /**
      * Create new mock connection for testing exceptions
+     *
+     * @param string $responseData
+     *   Binary response package
      */
     protected function createNotification($responseData)
     {
@@ -69,9 +72,8 @@ class SendExceptionTest extends \PHPUnit_Framework_TestCase
         try {
             $notification->sendMessage($message);
             $this->fail('Must be throws');
-        }
-        catch (SendExceptionInterface $exception) {
-            $this->assertEquals($exception->getStatusCode(), $statusCode);
+        } catch (SendExceptionInterface $exception) {
+            $this->assertEquals($statusCode, $exception->getStatusCode());
         }
     }
 

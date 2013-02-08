@@ -21,7 +21,6 @@ use Apple\ApnPush\Connection\Connection;
 use Apple\ApnPush\PayloadFactory\PayloadFactory;
 use Apple\ApnPush\Notification\Notification;
 
-
 /**
  * Apn push notification command
  */
@@ -41,7 +40,7 @@ class PushCommand extends Command
             ->addOption('sound', 's', InputOption::VALUE_OPTIONAL, 'Sound option')
             ->addOption('badge', 'b', InputOption::VALUE_OPTIONAL, 'Badge option')
             ->addOption('pass-phrase', 'p', InputOption::VALUE_OPTIONAL, 'Pass phrase for certificate file')
-            ->addOption('sandbox', NULL, InputOption::VALUE_NONE, 'Usage sandbox mode')
+            ->addOption('sandbox', null, InputOption::VALUE_NONE, 'Usage sandbox mode')
         ;
     }
 

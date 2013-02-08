@@ -171,7 +171,7 @@ class DefaultMessage implements MessageInterface
     /**
      * {@inheritDoc}
      */
-    public function addCustomData($key, $value = NULL)
+    public function addCustomData($key, $value = null)
     {
         if (!is_array($key)) {
             $key = array($key => $value);

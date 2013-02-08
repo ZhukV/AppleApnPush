@@ -39,9 +39,9 @@ class ApsDataTest extends \PHPUnit_Framework_TestCase
         $aps->setSound($sound);
         $aps->setBadge($badge);
 
-        $this->assertEquals($aps->getBody(), $body);
-        $this->assertEquals($aps->getSound(), $sound);
-        $this->assertEquals($aps->getBadge(), $badge);
+        $this->assertEquals($body, $aps->getBody());
+        $this->assertEquals($sound, $aps->getSound());
+        $this->assertEquals($badge, $aps->getBadge());
     }
 
     /**
@@ -70,23 +70,21 @@ class ApsDataTest extends \PHPUnit_Framework_TestCase
         $aps->setBody('Hello');
 
         $aps->setBodyCustom(array('foo' => 'bar'));
-        $this->assertEquals($aps->getBodyCustom(), array('foo' => 'bar'));
+        $this->assertEquals(array('foo' => 'bar'), $aps->getBodyCustom());
 
         $this->assertEquals($aps->getPayloadData(), array(
             'alert' => array('foo' => 'bar')
         ));
 
-
         try {
             $aps->setBodyLocalize('LOCALE_KEY', array('P1' => 'V1', 'P2' => 'V2'));
             $this->fail('Not control body localize. Body message already exists.');
-        }
-        catch (\LogicException $e) {
+        } catch (\LogicException $e) {
         }
 
         $aps = new ApsData;
         $aps->setBodyLocalize('LOCALE_KEY', array('P1' => 'V1', 'P2' => 'V2'));
-        $this->assertEquals($aps->getPayloadData(), array(
+        $this->assertEquals(array(
             'alert' => array(
                 'loc-key' => 'LOCALE_KEY',
                 'loc-args' => array(
@@ -94,6 +92,6 @@ class ApsDataTest extends \PHPUnit_Framework_TestCase
                     'V2'
                 )
             )
-        ));
+        ), $aps->getPayloadData());
     }
 }

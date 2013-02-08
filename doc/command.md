@@ -27,7 +27,7 @@ php console apple:apn-push:send path/to/your/certificate/file.pem DEVICE_TOKEN "
 
 Options:
 
-* --sandbox (NULL): Use sandbox mode
+* --sandbox (null): Use sandbox mode
 * --pass-phrase (-p): Pass phrase for your certificate file
 * --sound (-s): Use sound key in APS Data
 * --badge (-b): Use badge key in APS Data

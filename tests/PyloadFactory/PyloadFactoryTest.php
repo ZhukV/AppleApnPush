@@ -19,16 +19,43 @@ use Apple\ApnPush\Messages\DefaultMessage;
 class PayloadFactoryTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * Base test
+     * @dataProvider providerPayloadFactory
      */
-    public function testBase()
+    public function testPayloadFactory($identifier, $expires, $token, $body)
     {
-        $payloadFactory = new PayloadFactory;
         $message = new DefaultMessage;
-        $message->setBody('test');
-        $message->setIdentifier(1);
-        $message->setDeviceToken(str_repeat('a', 64));
+        $message
+            ->setIdentifier($identifier)
+            ->setExpires($expires)
+            ->setDeviceToken($token)
+            ->setBody($body);
 
-        $this->assertNotNull($payloadFactory->createPayload($message));
+        $payload = new PayloadFactory;
+
+        $this->assertNotNull($payload->createPayload($message));
+
+        $jsonData = json_encode($message->getPayloadData(), JSON_FORCE_OBJECT);
+
+        $payloadEqData = pack('CNNnH*',
+            1,
+            $identifier,
+            $expires->format('U'),
+            32,
+            $token
+        ) . pack('n', mb_strlen($jsonData)) . $jsonData;
+
+        $this->assertEquals($payloadEqData, $payload->createPayload($message));
+    }
+
+    /**
+     * Provider for test PayloadFactory
+     */
+    public function providerPayloadFactory()
+    {
+        return array(
+            array(0, new \DateTime(), str_repeat('af', 32), 'foo'),
+            array(256, new \DateTime('+12 hours'), str_repeat('ab', 32), 'bar'),
+            array(11111, new \DateTime('-12 hours'), str_repeat('ae', 32), 'foo_bar')
+        );
     }
 }

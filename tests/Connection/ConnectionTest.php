@@ -28,17 +28,17 @@ class ConnectionTest extends \PHPUnit_Framework_TestCase
         $this->assertFalse($connection->getSandboxMode());
 
         $connection->setCertificateFile(__FILE__);
-        $this->assertEquals($connection->getCertificateFile(), __FILE__);
+        $this->assertEquals(__FILE__, $connection->getCertificateFile());
 
         $connection->setCertificatePassPhrase('qq');
-        $this->assertEquals($connection->getCertificatePassPhrase(), 'qq');
+        $this->assertEquals('qq', $connection->getCertificatePassPhrase());
 
         $connection->setSandboxMode(true);
         $this->assertTrue($connection->getSandboxMode());
 
         $connection = new Connection(__FILE__, '11', true);
-        $this->assertEquals($connection->getCertificateFile(), __FILE__);
-        $this->assertEquals($connection->getCertificatePassPhrase(), '11');
+        $this->assertEquals(__FILE__, $connection->getCertificateFile());
+        $this->assertEquals('11', $connection->getCertificatePassPhrase());
         $this->assertTrue($connection->getSandboxMode());
 
         try {
@@ -55,13 +55,13 @@ class ConnectionTest extends \PHPUnit_Framework_TestCase
     {
         $connection = new Connection;
 
-        $this->assertEquals($connection->getConnectionPort(), 2195);
-        $this->assertEquals($connection->getConnectionUrl(), 'gateway.push.apple.com');
+        $this->assertEquals(2195, $connection->getConnectionPort());
+        $this->assertEquals('gateway.push.apple.com', $connection->getConnectionUrl());
 
         $connection->setSandboxMode(true);
 
-        $this->assertEquals($connection->getConnectionPort(), 2195);
-        $this->assertEquals($connection->getConnectionUrl(), 'gateway.sandbox.push.apple.com');
+        $this->assertEquals(2195, $connection->getConnectionPort());
+        $this->assertEquals('gateway.sandbox.push.apple.com', $connection->getConnectionUrl());
     }
 
     /**
@@ -107,9 +107,9 @@ class ConnectionTest extends \PHPUnit_Framework_TestCase
         $connection->createConnection();
         $this->assertTrue($connection->isConnection());
 
-        $this->assertEquals($connection->write('test'), 4);
-        $this->assertEquals($connection->read(1), 'a');
-        $this->assertEquals($connection->read(3), 'aaa');
+        $this->assertEquals(4, $connection->write('test'));
+        $this->assertEquals('a', $connection->read(1));
+        $this->assertEquals('aaa', $connection->read(3));
         $this->assertFalse($connection->isReadyRead());
     }
 }

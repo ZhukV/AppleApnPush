@@ -68,16 +68,16 @@ class DefaultMessageTest extends \PHPUnit_Framework_TestCase
     {
         $defaultMessage = new DefaultMessage;
 
-        $this->assertEquals($defaultMessage->getCustomData(), array());
+        $this->assertEquals(array(), $defaultMessage->getCustomData());
 
         $customData = array(
             'c1' => 'v1'
         );
         $defaultMessage->setCustomData($customData);
 
-        $this->assertEquals($defaultMessage->getCustomData(), $customData);
+        $this->assertEquals($customData, $defaultMessage->getCustomData());
         $defaultMessage->addCustomData('c2', 'v2');
-        $this->assertEquals($defaultMessage->getCustomData(), $customData + array('c2' => 'v2'));
+        $this->assertEquals($customData + array('c2' => 'v2'), $defaultMessage->getCustomData());
     }
 
     /**
@@ -88,6 +88,6 @@ class DefaultMessageTest extends \PHPUnit_Framework_TestCase
         $defaultMessage = new DefaultMessage;
         $apsData = new ApsData;
         $defaultMessage->setApsData($apsData);
-        $this->assertEquals($defaultMessage->getApsData(), $apsData);
+        $this->assertEquals($apsData, $defaultMessage->getApsData());
     }
 }

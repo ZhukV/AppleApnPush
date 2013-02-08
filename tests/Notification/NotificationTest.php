@@ -113,8 +113,7 @@ class NotificationTest extends \PHPUnit_Framework_TestCase
 
         if ($deviceToken !== null) {
             $message->setDeviceToken($deviceToken);
-        }
-        else {
+        } else {
             $message->setDeviceToken(str_repeat('af', 32));
         }
 

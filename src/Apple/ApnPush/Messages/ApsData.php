@@ -41,10 +41,10 @@ class ApsData implements ApsDataInterface
      */
     public function __clone()
     {
-        $this->body = NULL;
+        $this->body = null;
         $this->bodyCustom = array();
-        $this->sound = NULL;
-        $this->badge = NULL;
+        $this->sound = null;
+        $this->badge = null;
     }
 
     /**
@@ -62,7 +62,7 @@ class ApsData implements ApsDataInterface
             $body = (string) $body;
         }
 
-        if ($body !== NULL && !is_string($body) && !is_numeric($body)) {
+        if ($body !== null && !is_string($body) && !is_numeric($body)) {
             throw new \InvalidArgumentException(sprintf(
                 'Body message must be string, "%s" given.',
                 gettype($body)
@@ -87,13 +87,13 @@ class ApsData implements ApsDataInterface
      */
     public function setBodyLocalize($localizeKey, array $localizeParams)
     {
-        if ($localizeKey === NULL && !count($localizeParams)) {
+        if ($localizeKey === null && !count($localizeParams)) {
             $this->bodyCustom = array();
             return $this;
         }
 
         if ($this->body) {
-            throw new \LogicException('Can\'t set localized body, because body message already exists. Please clear body message (->setBody(NULL)).');
+            throw new \LogicException('Can\'t set localized body, because body message already exists. Please clear body message (->setBody(null)).');
         }
 
         if (is_object($localizeKey)) {
@@ -142,7 +142,7 @@ class ApsData implements ApsDataInterface
             $sound = (string) $sound;
         }
 
-        if ($sound !== NULL && !is_string($sound) && !is_numeric($sound)) {
+        if ($sound !== null && !is_string($sound) && !is_numeric($sound)) {
             throw new \InvalidArgumentException(sprintf(
                 'Sound must be a string, "%s" given.'
             ));
@@ -166,8 +166,8 @@ class ApsData implements ApsDataInterface
      */
     public function setBadge($badge)
     {
-        if ($badge === NULL) {
-            $this->badge = NULL;
+        if ($badge === null) {
+            $this->badge = null;
             return $this;
         }
 
