@@ -39,7 +39,7 @@ interface SendExceptionInterface
      * @param string $binaryData
      * @param MessageInterface $message
      */
-    static public function parseFromAppleResponse($binaryData, MessageInterface $message = null);
+    public static function parseFromAppleResponse($binaryData, MessageInterface $message = null);
 
     /**
      * Get status code

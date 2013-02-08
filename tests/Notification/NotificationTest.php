@@ -89,7 +89,7 @@ class NotificationTest extends \PHPUnit_Framework_TestCase
     /**
      * Notification test provider
      */
-    static public function notificationProvider()
+    public static function notificationProvider()
     {
         return array(
             array(self::createMessage('test1')),

@@ -83,7 +83,7 @@ class SendException extends \UnexpectedValueException implements SendExceptionIn
     /**
      * @{inerhitDoc}
      */
-    static public function parseFromAppleResponse($binaryData, MessageInterface $message = null)
+    public static function parseFromAppleResponse($binaryData, MessageInterface $message = null)
     {
         if(false === $response = @unpack("Ccommand/Cstatus/Nidentifier", $binaryData)) {
             return new static(SendExceptionInterface::ERROR_UNPACK_RESPONSE, 0, 0, $message);
