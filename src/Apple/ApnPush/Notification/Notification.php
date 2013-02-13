@@ -125,6 +125,8 @@ class Notification implements NotificationInterface
                 $this->logger->error((string) $error);
             }
 
+            $this->connection->closeConnection();
+
             throw $error;
         }
 

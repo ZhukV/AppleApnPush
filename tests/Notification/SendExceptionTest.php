@@ -36,7 +36,7 @@ class SendExceptionTest extends \PHPUnit_Framework_TestCase
     {
         $socketMock = $this->getMock(
             'RequestStream\\Stream\\Socket\\SocketClient',
-            array('create', 'write', 'read', 'selectRead', 'setBlocking', 'is')
+            array('create', 'write', 'read', 'selectRead', 'setBlocking', 'is', 'close')
         );
 
         $socketMock->expects($this->any())->method('selectRead')->will($this->returnValue(true));
