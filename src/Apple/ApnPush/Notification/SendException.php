@@ -53,7 +53,7 @@ class SendException extends \UnexpectedValueException implements SendExceptionIn
     /**
      * @var MessageInterface $message
      */
-    protected $message;
+    protected $messageObject;
 
     /**
      * Construct
@@ -66,22 +66,22 @@ class SendException extends \UnexpectedValueException implements SendExceptionIn
     public function __construct($statusCode, $command, $identifier, MessageInterface $message = null)
     {
         if (isset(self::$errorMessages[$statusCode])) {
-            $message = self::$errorMessages[$statusCode];
+            $messageStr = self::$errorMessages[$statusCode];
         }
         else {
-            $message = 'Undefined error with status: "' . $statusCode. '".';
+            $messageStr = 'Undefined error with status: "' . $statusCode. '".';
         }
 
-        parent::__construct($message, $statusCode);
+        parent::__construct($messageStr, $statusCode);
 
-        $this->message = $message;
+        $this->messageObject = $message;
         $this->statusCode = $statusCode;
         $this->command = $command;
         $this->identifier = $identifier;
     }
 
     /**
-     * @{inerhitDoc}
+     * {@inheritDoc}
      */
     public static function parseFromAppleResponse($binaryData, MessageInterface $message = null)
     {
@@ -98,7 +98,7 @@ class SendException extends \UnexpectedValueException implements SendExceptionIn
     }
 
     /**
-     * @{inerhitDoc}
+     * {@inheritDoc}
      */
     public function getStatusCode()
     {
@@ -106,7 +106,7 @@ class SendException extends \UnexpectedValueException implements SendExceptionIn
     }
 
     /**
-     * @{inerhitDoc}
+     * {@inheritDoc}
      */
     public function getCommand()
     {
@@ -114,7 +114,7 @@ class SendException extends \UnexpectedValueException implements SendExceptionIn
     }
 
     /**
-     * @{inerhitDoc}
+     * {@inheritDoc}
      */
     public function getIdentifier()
     {
@@ -122,10 +122,24 @@ class SendException extends \UnexpectedValueException implements SendExceptionIn
     }
 
     /**
+     * {@inheritDoc}
+     */
+    public function getMessageObject()
+    {
+        return $this->messageObject;
+    }
+
+    /**
      * __toString
      */
     public function __toString()
     {
-        return sprintf('Error sending push: "%s", with code status: %d. Message identifier: %d.', $this->message, $this->statusCode, $this->identifier);
+        return sprintf(
+            'Error sending push: "%s", with code status: %d. Message identifier: %d.%s',
+            $this->getMessage(),
+            $this->statusCode,
+            $this->identifier,
+            ($this->messageObject ? ' Device token: ' . $this->messageObject->getDeviceToken() : '')
+        );
     }
 }

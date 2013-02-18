@@ -56,11 +56,11 @@ interface SendExceptionInterface
     public function getCommand();
 
     /**
-     * Get message
+     * Get message object
      *
-     * @return Message
+     * @return Message|null
      */
-    public function getMessage();
+    public function getMessageObject();
 
     /**
      * Get identifier
