@@ -77,8 +77,7 @@ class PayloadFactory implements PayloadFactoryInterface
     {
         if ($this->jsonUnescapedUnicode && version_compare(PHP_VERSION, '5.4.0', '>=')) {
             return json_encode($message->getPayloadData(), JSON_FORCE_OBJECT ^ JSON_UNESCAPED_UNICODE);
-        }
-        else {
+        } else {
             return json_encode($message->getPayloadData(), JSON_FORCE_OBJECT);
         }
     }

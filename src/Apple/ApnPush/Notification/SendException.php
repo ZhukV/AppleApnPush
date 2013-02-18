@@ -12,11 +12,12 @@
 namespace Apple\ApnPush\Notification;
 
 use Apple\ApnPush\Messages\MessageInterface;
+use Apple\ApnPush\Exceptions\ApnPushException;
 
 /**
- * Control apple error feddback
+ * Control error with send message
  */
-class SendException extends \UnexpectedValueException implements SendExceptionInterface
+class SendException extends ApnPushException implements SendExceptionInterface
 {
     /**
      * @var array
