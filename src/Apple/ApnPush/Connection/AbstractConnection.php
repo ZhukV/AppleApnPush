@@ -32,6 +32,11 @@ abstract class AbstractConnection implements ConnectionInterface
     protected $sandboxMode;
 
     /**
+     * @var array
+     */
+    protected $readTime = array(1, 0);
+
+    /**
      * Construct
      *
      * @param string $certificateFile
@@ -51,6 +56,38 @@ abstract class AbstractConnection implements ConnectionInterface
         if ($sandboxMode !== null) {
             $this->setSandboxMode($sandboxMode);
         }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function setReadTime($second, $milisecond = 0)
+    {
+        if (!is_integer($second)) {
+            throw new \InvalidArgumentException(sprintf(
+                'Second must be a integer value, "%s" given.',
+                gettype($second)
+            ));
+        }
+
+        if (!is_integer($milisecond)) {
+            throw new \InvalidArgumentException(sprintf(
+                'Milisecond must be a integer value, "%s" given.',
+                gettype($milisecond)
+            ));
+        }
+
+        $this->readTime = array($second, $milisecond);
+
+        return $this;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getReadTime()
+    {
+        return $this->readTime;
     }
 
     /**

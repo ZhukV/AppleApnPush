@@ -39,10 +39,14 @@ class SendExceptionTest extends \PHPUnit_Framework_TestCase
             array('create', 'write', 'read', 'selectRead', 'setBlocking', 'is', 'close')
         );
 
-        $socketMock->expects($this->any())->method('selectRead')->will($this->returnValue(true));
-        $socketMock->expects($this->any())->method('read')->will($this->returnCallback(function($size) use ($responseData){
-            return $responseData;
-        }));
+        $socketMock->expects($this->once())
+            ->method('selectRead')
+            ->will($this->returnValue(true));
+
+        $socketMock->expects($this->once())
+            ->method('read')
+            ->with(6)
+            ->will($this->returnValue($responseData));
 
         $notification = new Notification;
         $payload = new PayloadFactory;
@@ -60,6 +64,7 @@ class SendExceptionTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @dataProvider notificationProvider
+     * @expectedException \Apple\ApnPush\Notification\SendException
      */
     public function testNotificationException($response, $statusCode)
     {
@@ -71,9 +76,9 @@ class SendExceptionTest extends \PHPUnit_Framework_TestCase
 
         try {
             $notification->sendMessage($message);
-            $this->fail('Must be throws');
         } catch (SendExceptionInterface $exception) {
             $this->assertEquals($statusCode, $exception->getStatusCode());
+            throw $exception;
         }
     }
 

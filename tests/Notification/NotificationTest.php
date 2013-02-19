@@ -20,62 +20,30 @@ use Apple\ApnPush\Notification\SendException;
 /**
  * Notification test
  */
-class NotificationTest extends \PHPUnit_Framework_TestCase
+class NotificationTest extends \Apple\ApnPush\TestCase
 {
     /**
-     * @var Notification
+     * @var \RequestStream\Stream\Socket\SocketClient
      */
-    protected $notification;
+    protected $socketConnection;
 
     /**
-     * Create notification
+     * {@inheritDoc}
      */
-    public function createNotification()
+    public function setUp()
     {
-        if ($this->notification) {
-            return $this->notification;
-        }
-
-        $notification = new Notification;
-        $connection = new Connection(__FILE__, 'pass', false);
-        $payload = new PayloadFactory;
-        $notification->setPayloadFactory($payload);
-        $notification->setConnection($connection);
-
-        $socketMock = $this->getMock(
-            'RequestStream\\Stream\\Socket\\SocketClient',
-            array('create', 'write', 'read', 'selectRead', 'setBlocking', 'is')
+        $this->socketConnection = $this->getMock(
+            'RequestStream\Stream\Socket\SocketClient',
+            array('create', 'write', 'read', 'selectRead', 'setBlocking', 'is', 'close')
         );
+    }
 
-        // Replace create
-        $socketMock->expects($this->once())->method('create')->will($this->returnCallback(function() use ($socketMock) {
-            $socketMock->__Create__ = true;
-        }));
-
-        // Replace is method
-        $socketMock->expects($this->any())->method('is')->will($this->returnCallback(function($autload = false) use ($socketMock) {
-            return !empty($socketMock->__Create__);
-        }));
-
-        // Replace write
-        $socketMock->expects($this->any())->method('write')->will($this->returnCallback(function($text, $size = null) {
-            return mb_strlen($text);
-        }));
-
-        // Read
-        $socketMock->expects($this->any())->method('read')->will($this->returnCallback(function($length) {
-            return str_repeat('a', $length);
-        }));
-
-        // Select blocking
-        $socketMock->expects($this->any())->method('selectRead')->will($this->returnValue(false));
-
-        $refSocket = new \ReflectionProperty($connection, 'socketConnection');
-        $refSocket->setAccessible(true);
-        $refSocket->setValue($connection, $socketMock);
-
-        $this->notification = $notification;
-        return $this->notification;
+    /**
+     * {@inheritDoc}
+     */
+    public function tearDown()
+    {
+        unset ($this->socketConnection);
     }
 
     /**
@@ -83,7 +51,45 @@ class NotificationTest extends \PHPUnit_Framework_TestCase
      */
     public function testNotification(MessageInterface $message)
     {
-        $notification = $this->createNotification();
+        // Create notification
+        $notification = new Notification;
+        $connection = new Connection(__FILE__, 'pass', false);
+        $payload = new PayloadFactory;
+        $notification->setPayloadFactory($payload);
+        $notification->setConnection($connection);
+
+        // Get socket connection mock
+        $socketMock = $this->socketConnection;
+
+        $socketMock->expects($this->any())
+            ->method('is')
+            ->will($this->returnValue(false));
+
+        $socketMock->expects($this->once())
+            ->method('create');
+
+        $socketMock->expects($this->once())
+            ->method('setBlocking')
+            ->with($this->equalTo(0));
+
+        $socketMock->expects($this->once())
+            ->method('write')
+            ->will($this->returnCallback(function($text, $size = null) {
+                return mb_strlen($text);
+            }));
+
+        $socketMock->expects($this->once())
+            ->method('selectRead')
+            ->with($this->equalTo(1), $this->equalTo(0))
+            ->will($this->returnValue(false));
+
+        $socketMock->expects($this->never())
+            ->method('read');
+
+        // Set socket mock to connection
+        $this->setValueToProtected($connection, 'socketConnection', $socketMock);
+
+        // Testing send message
         $this->assertTrue($notification->sendMessage($message));
     }
 
@@ -105,10 +111,7 @@ class NotificationTest extends \PHPUnit_Framework_TestCase
     public function testReopenConnection()
     {
         // Create mock socket connection
-        $socketMock = $this->getMock(
-            'RequestStream\\Stream\\Socket\\SocketClient',
-            array('create', 'write', 'read', 'selectRead', 'setBlocking', 'is', 'close')
-        );
+        $socketMock = $this->socketConnection;
 
         $socketMock->expects($this->any())->method('create')->will($this->returnCallback(function() use ($socketMock) {
             $socketMock->__Create__ = true;
@@ -126,13 +129,15 @@ class NotificationTest extends \PHPUnit_Framework_TestCase
             return mb_strlen($content);
         }));
 
-        $socketMock->expects($this->any())->method('selectRead')->will($this->returnCallback(function() use ($socketMock) {
-            if (isset($socketMock->__NotError__)) {
-                return false;
-            }
+        $socketMock->expects($this->any())->method('selectRead')
+            ->with($this->equalTo(1), $this->equalTo(0))
+            ->will($this->returnCallback(function() use ($socketMock) {
+                if (isset($socketMock->__NotError__)) {
+                    return false;
+                }
 
-            return true;
-        }));
+                return true;
+            }));
 
         $socketMock->expects($this->any())->method('read')->will($this->returnCallback(function($size) use ($socketMock) {
             if (isset($socketMock->__NotError__)) {

@@ -94,8 +94,28 @@ interface ConnectionInterface
 
     /**
      * Is ready read
+     *
+     * @return boolean
      */
     public function isReadyRead();
+
+    /**
+     * Set time ready
+     * @see: http://www.php.net/manual/function.stream-select.php
+     *
+     * @param integer $second
+     * @param integer $milisecond
+     */
+    public function setReadTime($second, $milisecond = 0);
+
+    /**
+     * Get time ready
+     *
+     * @return array
+     *  - second
+     *  - milisecond
+     */
+    public function getReadTime();
 
     /**
      * Read data from connection

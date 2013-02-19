@@ -24,8 +24,7 @@ class ApsDataTest extends \PHPUnit_Framework_TestCase
     public function testBase()
     {
         $aps = new ApsData;
-        $this->assertTrue($aps instanceof PayloadDataInterface);
-        $this->assertTrue($aps instanceof ApsDataInterface);
+        $this->assertInstanceOf('Apple\ApnPush\PayloadFactory\PayloadDataInterface', $aps);
     }
 
     /**
@@ -72,9 +71,9 @@ class ApsDataTest extends \PHPUnit_Framework_TestCase
         $aps->setBodyCustom(array('foo' => 'bar'));
         $this->assertEquals(array('foo' => 'bar'), $aps->getBodyCustom());
 
-        $this->assertEquals($aps->getPayloadData(), array(
+        $this->assertEquals(array(
             'alert' => array('foo' => 'bar')
-        ));
+        ),$aps->getPayloadData());
 
         try {
             $aps->setBodyLocalize('LOCALE_KEY', array('P1' => 'V1', 'P2' => 'V2'));

@@ -24,14 +24,13 @@ class DefaultMessageTest extends \PHPUnit_Framework_TestCase
     public function testBase()
     {
         $defaultMessage = new DefaultMessage;
-        $this->assertTrue($defaultMessage instanceof MessageInterface);
-        $this->assertTrue($defaultMessage instanceof PayloadDataInterface);
-        $this->assertTrue($defaultMessage->getApsData() instanceof ApsDataInterface);
-        $this->assertTrue($defaultMessage->getExpires() instanceof \DateTime);
-        $this->assertEquals($defaultMessage->getIdentifier(), 0);
+        $this->assertInstanceOf('Apple\ApnPush\PayloadFactory\PayloadDataInterface', $defaultMessage);
+        $this->assertInstanceOf('Apple\ApnPush\Messages\ApsDataInterface', $defaultMessage->getApsData());
+        $this->assertInstanceOf('DateTime', $defaultMessage->getExpires());
+        $this->assertEquals(0, $defaultMessage->getIdentifier());
 
         $defaultMessage->setIdentifier(123);
-        $this->assertEquals($defaultMessage->getIdentifier(), 123);
+        $this->assertEquals(123, $defaultMessage->getIdentifier());
     }
 
     /**
@@ -70,9 +69,7 @@ class DefaultMessageTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals(array(), $defaultMessage->getCustomData());
 
-        $customData = array(
-            'c1' => 'v1'
-        );
+        $customData = array('c1' => 'v1');
         $defaultMessage->setCustomData($customData);
 
         $this->assertEquals($customData, $defaultMessage->getCustomData());
