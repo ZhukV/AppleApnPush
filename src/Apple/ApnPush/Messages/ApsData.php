@@ -171,9 +171,9 @@ class ApsData implements ApsDataInterface
             return $this;
         }
 
-        if (0 >= (int) $badge) {
+        if (0 > (int) $badge) {
             throw new \InvalidArgumentException(sprintf(
-                'Badge key must be large than zero (%s)!',
+                'Badge key cannot be less than zero (%s)!',
                 $badge
             ));
         }
@@ -204,7 +204,7 @@ class ApsData implements ApsDataInterface
             $apsData['sound'] = $this->sound;
         }
 
-        if ($this->badge) {
+        if ($this->badge !== null) {
             $apsData['badge'] = $this->badge;
         }
 
