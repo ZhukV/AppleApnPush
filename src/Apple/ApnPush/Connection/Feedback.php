@@ -11,13 +11,12 @@
 
 namespace Apple\ApnPush\Connection;
 
-use RequestStream\Stream\Socket\SocketClient;
 use Apple\ApnPush\Exceptions\FeedbackException;
 
 /**
  * Connection for the Apple Push Notification Feedback Service
  */
-class Feedback extends Connection
+class Feedback extends AbstractSocketConnection
 {
     /**
      * {@inheritDoc}
