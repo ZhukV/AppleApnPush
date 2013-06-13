@@ -12,8 +12,6 @@
 namespace Apple\ApnPush\Connection;
 
 use RequestStream\Stream\Socket\SocketClient;
-use RequestStream\Stream\Context;
-use Apple\ApnPush\Exceptions\CertificateFileNotFoundException;
 
 /**
  * Default connection for Apple push notification
@@ -39,26 +37,7 @@ class Connection extends AbstractConnection
      */
     public function createConnection()
     {
-        if ($this->socketConnection->is(false)) {
-            return $this;
-        }
-
-        if (!$this->certificateFile) {
-            throw new CertificateFileNotFoundException('Not found certificate file. Please set certificate file to connection.');
-        }
-
-        $context = new Context;
-        $context->setOptions('ssl', 'local_cert', $this->certificateFile);
-
-        if ($this->certificatePassPhrase) {
-            $context->setOptions('ssl', 'passphrase', $this->certificatePassPhrase);
-        }
-
-        $this->socketConnection
-            ->setTransport('ssl')
-            ->setTarget($this->getConnectionUrl())
-            ->setPort($this->getConnectionPort())
-            ->setContext($context);
+        $this->initConnection();
 
         $this->socketConnection->create();
 
