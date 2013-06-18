@@ -61,12 +61,12 @@ interface NotificationInterface
      *
      * @param LoggerInterface $logger
      */
-    public function setLogger(LoggerInterface $logger);
+    public function setLogger(LoggerInterface $logger = null);
 
     /**
      * Get logger
      *
-     * @return Logger
+     * @return LoggerInterface
      */
     public function getLogger();
 }

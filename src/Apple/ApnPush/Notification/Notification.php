@@ -48,7 +48,7 @@ class Notification implements NotificationInterface
     }
 
     /**
-     * @{inerhitDoc}
+     * {@inheritDoc}
      */
     public function setConnection(ConnectionInterface $connection)
     {
@@ -58,7 +58,7 @@ class Notification implements NotificationInterface
     }
 
     /**
-     * @{inerhitDoc}
+     * {@inheritDoc}
      */
     public function getConnection()
     {
@@ -66,7 +66,7 @@ class Notification implements NotificationInterface
     }
 
     /**
-     * @{inerhitDoc}
+     * {@inheritDoc}
      */
     public function setPayloadFactory(PayloadFactoryInterface $payloadFactory)
     {
@@ -76,7 +76,7 @@ class Notification implements NotificationInterface
     }
 
     /**
-     * @{inerhitDoc}
+     * {@inheritDoc}
      */
     public function getPayloadFactory()
     {
@@ -84,7 +84,7 @@ class Notification implements NotificationInterface
     }
 
     /**
-     * @{inerhitDoc}
+     * {@inheritDoc}
      */
     public function sendMessage(MessageInterface $message)
     {
@@ -141,9 +141,9 @@ class Notification implements NotificationInterface
     }
 
     /**
-     * @{inerhitDoc}
+     * {@inheritDoc}
      */
-    public function setLogger(LoggerInterface $logger)
+    public function setLogger(LoggerInterface $logger = null)
     {
         $this->logger = $logger;
 
@@ -151,7 +151,7 @@ class Notification implements NotificationInterface
     }
 
     /**
-     * @{inerhitDoc}
+     * {@inheritDoc}
      */
     public function getLogger()
     {
