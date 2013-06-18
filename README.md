@@ -166,7 +166,25 @@ foreach ($messages as $message) {
 }
 ```
 
-Usage command with Push Notificaiton
+Usage feedback service
+======================
+
+Example get invalid devices:
+
+```php
+use Apple\ApnPush\Feedback\Service;
+use Apple\ApnPush\Connection\Feedback;
+
+// Create new feedback connection (Disable write and control ready read)
+$connection = new Feedback('/apn_push.pem');
+
+// Create feedback service
+$feedBack = new Service($connection);
+
+$invalidDevices = $feedBack->getInvalidDevices();
+```
+
+Usage command with Push Notification
 ====================================
 
 Your can send messages from console.

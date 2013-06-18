@@ -48,7 +48,8 @@ class Device
      * Unpacks the APNS data into the required fields
      *
      * @param string $data
-     * @return \Apple\ApnPush\Feedback\Device
+     * @throws FeedbackException
+     * @return Device
      */
     public function unpack($data)
     {

@@ -39,7 +39,7 @@ class Service implements ServiceInterface
     }
 
     /**
-     * @{inerhitDoc}
+     * {@inheritDoc}
      */
     public function setConnection(ConnectionInterface $connection)
     {
@@ -49,7 +49,7 @@ class Service implements ServiceInterface
     }
 
     /**
-     * @{inerhitDoc}
+     * {@inheritDoc}
      */
     public function getConnection()
     {
@@ -57,7 +57,7 @@ class Service implements ServiceInterface
     }
 
     /**
-     * @{inerhitDoc}
+     * {@inheritDoc}
      */
     public function getInvalidDevices()
     {
@@ -95,9 +95,9 @@ class Service implements ServiceInterface
     }
 
     /**
-     * @{inerhitDoc}
+     * {@inheritDoc}
      */
-    public function setLogger(LoggerInterface $logger)
+    public function setLogger(LoggerInterface $logger = null)
     {
         $this->logger = $logger;
 
@@ -105,7 +105,7 @@ class Service implements ServiceInterface
     }
 
     /**
-     * @{inerhitDoc}
+     * {@inheritDoc}
      */
     public function getLogger()
     {
