@@ -16,7 +16,6 @@ use Apple\ApnPush\Messages\MessageInterface;
 use Apple\ApnPush\PayloadFactory\PayloadFactoryInterface;
 use Apple\ApnPush\PayloadFactory\PayloadFactory;
 use Apple\ApnPush\Exceptions;
-use Apple\ApnPush\Feedback\FeedbackException;
 use Psr\Log\LoggerInterface;
 
 /**

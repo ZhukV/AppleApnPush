@@ -25,6 +25,12 @@ interface ConnectionInterface
     const GATEWAY_SANDBOX_PUSH_URL      =   'gateway.sandbox.push.apple.com';
     const GATEWAY_SANDBOX_PUSH_PORT     =   2195;
 
+    const FEEDBACK_PUSH_URL             =   'feedback.push.apple.com';
+    const FEEDBACK_PUSH_PORT            =   2196;
+
+    const FEEDBACK_SANDBOX_PUSH_URL     =   'feedback.sandbox.push.apple.com';
+    const FEEDBACK_SANDBOX_PUSH_PORT    =   2196;
+
     /**
      * Set certificate
      *
