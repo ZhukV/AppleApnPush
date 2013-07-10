@@ -39,6 +39,11 @@ class Notification implements NotificationInterface
     protected $logger;
 
     /**
+     * @var bool
+     */
+    protected $checkForErrors = true;
+
+    /**
      * Construct
      */
     public function __construct(PayloadFactoryInterface $payloadFactory = null, ConnectionInterface $connection = null)
@@ -116,7 +121,7 @@ class Notification implements NotificationInterface
 
         $response = (mb_strlen($payload) === $this->connection->write($payload, mb_strlen($payload)));
 
-        if ($this->connection->isReadyRead()) {
+        if ($this->checkForErrors && $this->connection->isReadyRead()) {
             $responseApple = $this->connection->read(6);
             $error = SendException::parseFromAppleResponse($responseApple, $message);
 
@@ -156,5 +161,13 @@ class Notification implements NotificationInterface
     public function getLogger()
     {
         return $this->logger;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function setCheckForErrors($check)
+    {
+        return $this->checkForErrors = $check;
     }
 }
