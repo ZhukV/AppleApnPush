@@ -3,7 +3,7 @@ Apple Push Notifications
 
 This package has components:
 
-* [Notification] (notification.nd)
+* [Notification] (notification.md)
 * [Feedback] (feedback.md)
 
 Contributors:
