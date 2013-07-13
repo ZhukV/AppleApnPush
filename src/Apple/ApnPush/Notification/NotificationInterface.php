@@ -68,4 +68,11 @@ interface NotificationInterface
      * @return LoggerInterface
      */
     public function getLogger();
+
+    /**
+     * Set whether or not to check for errors
+     *
+     * @param bool $check
+     */
+    public function setCheckForErrors($check);
 }
