@@ -9,12 +9,14 @@
  * file that was distributed with this source code
  */
 
-namespace Apple\ApnPush\Connection;
+namespace Apple\ApnPush\Notification;
+
+use Apple\ApnPush\TestCase;
 
 /**
  * Connection test
  */
-class ConnectionTest extends \Apple\ApnPush\TestCase
+class ConnectionTest extends TestCase
 {
     /**
      * Default test
@@ -52,19 +54,19 @@ class ConnectionTest extends \Apple\ApnPush\TestCase
     }
 
     /**
-     * Test sanbox mode
+     * Test sandbox mode
      */
     public function testSandboxMode()
     {
         $connection = new Connection;
 
-        $this->assertEquals(2195, $connection->getConnectionPort());
-        $this->assertEquals('gateway.push.apple.com', $connection->getConnectionUrl());
+        $this->assertEquals(2195, $connection->getPort());
+        $this->assertEquals('gateway.push.apple.com', $connection->getUrl());
 
         $connection->setSandboxMode(true);
 
-        $this->assertEquals(2195, $connection->getConnectionPort());
-        $this->assertEquals('gateway.sandbox.push.apple.com', $connection->getConnectionUrl());
+        $this->assertEquals(2195, $connection->getPort());
+        $this->assertEquals('gateway.sandbox.push.apple.com', $connection->getUrl());
     }
 
     /**
@@ -105,9 +107,9 @@ class ConnectionTest extends \Apple\ApnPush\TestCase
 
         $this->setValueToProtected($connection, 'socketConnection', $mock);
 
-        $this->assertFalse($connection->isConnection());
-        $connection->createConnection();
-        $this->assertTrue($connection->isConnection());
+        $this->assertFalse($connection->is());
+        $connection->create();
+        $this->assertTrue($connection->is());
 
         $this->assertEquals(4, $connection->write('test'));
         $this->assertEquals('a', $connection->read(1));

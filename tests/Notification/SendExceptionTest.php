@@ -11,18 +11,13 @@
 
 namespace Apple\ApnPush\Notification;
 
-use Apple\ApnPush\Connection\Connection;
-use Apple\ApnPush\PayloadFactory\PayloadFactory;
-use Apple\ApnPush\Messages\DefaultMessage;
-use Apple\ApnPush\Messages\MessageInterface;
-
 /**
  * Control errors
  */
 class SendExceptionTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @var Notificaiton
+     * @var Notification
      */
     protected $notification;
 
@@ -70,12 +65,12 @@ class SendExceptionTest extends \PHPUnit_Framework_TestCase
     {
         $notification = $this->createNotification($response);
 
-        $message = new DefaultMessage;
+        $message = new Message;
         $message->setDeviceToken(str_repeat('af', 32));
         $message->setBody('foo');
 
         try {
-            $notification->sendMessage($message);
+            $notification->send($message);
         } catch (SendExceptionInterface $exception) {
             $this->assertEquals($statusCode, $exception->getStatusCode());
             throw $exception;
@@ -88,16 +83,16 @@ class SendExceptionTest extends \PHPUnit_Framework_TestCase
     public function notificationProvider()
     {
         return array(
-            array(pack('CCN', 1, 1, 0), SendExceptionInterface::ERROR_PROCESSING),
-            array(pack('CCN', 1, 2, 0), SendExceptionInterface::ERROR_MISSING_DEVICE_TOKEN),
-            array(pack('CCN', 1, 3, 0), SendExceptionInterface::ERROR_MISSING_TOPIC),
-            array(pack('CCN', 1, 4, 0), SendExceptionInterface::ERROR_MISSING_PAYLOAD),
-            array(pack('CCN', 1, 5, 0), SendExceptionInterface::ERROR_INVALID_TOKEN_SIZE),
-            array(pack('CCN', 1, 6, 0), SendExceptionInterface::ERROR_INVALID_TOPIC_SIZE),
-            array(pack('CCN', 1, 7, 0), SendExceptionInterface::ERROR_INVALID_PAYLOAD_SIZE),
-            array(pack('CCN', 1, 8, 0), SendExceptionInterface::ERROR_INVALID_TOKEN),
-            array(pack('CCN', 1, 255, 0), SendExceptionInterface::ERROR_UNKNOWN),
-            array('', SendExceptionInterface::ERROR_UNPACK_RESPONSE)
+            array(pack('CCN', 1, 1, 0), SendException::ERROR_PROCESSING),
+            array(pack('CCN', 1, 2, 0), SendException::ERROR_MISSING_DEVICE_TOKEN),
+            array(pack('CCN', 1, 3, 0), SendException::ERROR_MISSING_TOPIC),
+            array(pack('CCN', 1, 4, 0), SendException::ERROR_MISSING_PAYLOAD),
+            array(pack('CCN', 1, 5, 0), SendException::ERROR_INVALID_TOKEN_SIZE),
+            array(pack('CCN', 1, 6, 0), SendException::ERROR_INVALID_TOPIC_SIZE),
+            array(pack('CCN', 1, 7, 0), SendException::ERROR_INVALID_PAYLOAD_SIZE),
+            array(pack('CCN', 1, 8, 0), SendException::ERROR_INVALID_TOKEN),
+            array(pack('CCN', 1, 255, 0), SendException::ERROR_UNKNOWN),
+            array('', SendException::ERROR_UNPACK_RESPONSE)
         );
     }
 }

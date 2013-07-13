@@ -16,8 +16,10 @@ use Psr\Log\LoggerInterface;
 
 /**
  * Interface for feedback service system
+ *
+ * @author Ryan Martinsen <ryan@ryanware.com>
  */
-interface ServiceInterface
+interface FeedbackInterface
 {
     /**
      * Set connection

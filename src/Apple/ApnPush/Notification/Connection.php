@@ -9,7 +9,9 @@
  * file that was distributed with this source code
  */
 
-namespace Apple\ApnPush\Connection;
+namespace Apple\ApnPush\Notification;
+
+use Apple\ApnPush\Connection\AbstractSocketConnection;
 
 /**
  * Default connection for Apple push notification
@@ -19,12 +21,10 @@ class Connection extends AbstractSocketConnection
     /**
      * {@inheritDoc}
      */
-    public function createConnection()
+    public function create()
     {
-        $this->initConnection();
-
+        $this->init();
         $this->socketConnection->create();
-
         $this->socketConnection->setBlocking(0);
     }
 }

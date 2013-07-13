@@ -9,9 +9,7 @@
  * file that was distributed with this source code
  */
 
-namespace Apple\ApnPush\PayloadFactory;
-
-use Apple\ApnPush\Messages\DefaultMessage;
+namespace Apple\ApnPush\Notification;
 
 /**
  * Payload factory test
@@ -23,7 +21,7 @@ class PayloadFactoryTest extends \PHPUnit_Framework_TestCase
      */
     public function testPayloadFactory($identifier, $expires, $token, $body)
     {
-        $message = new DefaultMessage;
+        $message = new Message();
         $message
             ->setIdentifier($identifier)
             ->setExpires($expires)

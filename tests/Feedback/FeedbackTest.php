@@ -11,12 +11,14 @@
 
 namespace Apple\ApnPush\Feedback;
 
-use Apple\ApnPush\Connection\Feedback;
+use Apple\ApnPush\TestCase;
 
 /**
- * Feedback service test
+ * Feedback test
+ *
+ * @author Ryan Martinsen <ryan@ryanware.com>
  */
-class ServiceTest extends \Apple\ApnPush\TestCase
+class FeedbackTest extends TestCase
 {
     /**
      * @var \RequestStream\Stream\Socket\SocketClient
@@ -42,11 +44,14 @@ class ServiceTest extends \Apple\ApnPush\TestCase
         unset ($this->socketConnection);
     }
 
+    /**
+     * Base feedback test
+     */
     public function testService()
     {
         // Create service
-        $service = new Service;
-        $connection = new Feedback(__FILE__, 'pass', false);
+        $service = new Feedback();
+        $connection = new Connection(__FILE__, 'pass', false);
         $service->setConnection($connection);
 
         // Get socket connection mock

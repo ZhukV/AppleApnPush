@@ -13,10 +13,12 @@ namespace Apple\ApnPush\Connection;
 
 use RequestStream\Stream\Context;
 use RequestStream\Stream\Socket\SocketClient;
-use Apple\ApnPush\Exceptions\CertificateFileNotFoundException;
+use Apple\ApnPush\Exception\CertificateFileNotFoundException;
 
 /**
  * Abstract socket connection for Apple push notification
+ *
+ * @author Ryan Martinsen <ryan@ryanware.com>
  */
 abstract class AbstractSocketConnection extends AbstractConnection
 {
@@ -37,7 +39,7 @@ abstract class AbstractSocketConnection extends AbstractConnection
     /**
      * Initialize connection
      */
-    protected function initConnection()
+    protected function init()
     {
         if ($this->socketConnection->is(false)) {
             return $this;
@@ -56,15 +58,15 @@ abstract class AbstractSocketConnection extends AbstractConnection
 
         $this->socketConnection
             ->setTransport('ssl')
-            ->setTarget($this->getConnectionUrl())
-            ->setPort($this->getConnectionPort())
+            ->setTarget($this->getUrl())
+            ->setPort($this->getPort())
             ->setContext($context);
     }
 
     /**
      * {@inheritDoc}
      */
-    public function isConnection()
+    public function is()
     {
         return $this->socketConnection->is(false);
     }
@@ -72,7 +74,7 @@ abstract class AbstractSocketConnection extends AbstractConnection
     /**
      * {@inheritDoc}
      */
-    public function closeConnection()
+    public function close()
     {
         $this->socketConnection->close();
     }

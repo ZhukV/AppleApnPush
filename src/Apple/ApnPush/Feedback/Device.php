@@ -11,10 +11,12 @@
 
 namespace Apple\ApnPush\Feedback;
 
-use Apple\ApnPush\Exceptions\FeedbackException;
+use Apple\ApnPush\Exception\FeedbackException;
 
 /**
  * Feedback message
+ *
+ * @author Ryan Martinsen <ryan@ryanware.com>
  */
 class Device
 {
@@ -38,7 +40,8 @@ class Device
      * 
      * @param string $data
      */
-    public function __construct($data = null) {
+    public function __construct($data = null)
+    {
         if ($data) {
             $this->unpack($data);
         }
@@ -57,7 +60,7 @@ class Device
             throw new FeedbackException('Unpack feedback error');
         }
         
-        $this->timestamp   = $token['timestamp'];
+        $this->timestamp = $token['timestamp'];
         $this->tokenLength = $token['length'];
         $this->deviceToken = $token['token'];
 

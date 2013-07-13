@@ -9,24 +9,26 @@
  * file that was distributed with this source code
  */
 
-namespace Apple\ApnPush\Connection;
+namespace Apple\ApnPush\Feedback;
 
-use Apple\ApnPush\Exceptions\FeedbackException;
+use Apple\ApnPush\Exception\FeedbackException;
+use Apple\ApnPush\Connection\AbstractSocketConnection;
+use Apple\ApnPush\Connection\ConnectionInterface;
 
 /**
  * Connection for the Apple Push Notification Feedback Service
+ *
+ * @author Ryan Martinsen <ryan@ryanware.com>
  */
-class Feedback extends AbstractSocketConnection
+class Connection extends AbstractSocketConnection
 {
     /**
      * {@inheritDoc}
      */
-    public function createConnection()
+    public function create()
     {
-        $this->initConnection();
-
+        $this->init();
         $this->socketConnection->setFlag(STREAM_CLIENT_CONNECT|STREAM_CLIENT_PERSISTENT);
-
         $this->socketConnection->create();
     }
 
@@ -35,7 +37,7 @@ class Feedback extends AbstractSocketConnection
      */
     public function write($binaryData, $length = null)
     {
-        throw new FeedbackException('Cannot write to a feedback connection.');
+        throw new \BadMethodCallException('Cannot write to a feedback connection.');
     }
 
     /**
@@ -43,13 +45,13 @@ class Feedback extends AbstractSocketConnection
      */
     public function isReadyRead()
     {
-        throw new FeedbackException('isReadyRead() is not used for feedback connections.');
+        throw new \BadMethodCallException('isReadyRead() is not used for feedback connections.');
     }
 
     /**
      * {@inheritDoc}
      */
-    public function getConnectionUrl()
+    public function getUrl()
     {
         return $this->sandboxMode
             ? ConnectionInterface::FEEDBACK_SANDBOX_PUSH_URL
@@ -59,7 +61,7 @@ class Feedback extends AbstractSocketConnection
     /**
      * {@inheritDoc}
      */
-    public function getConnectionPort()
+    public function getPort()
     {
         return $this->sandboxMode
             ? ConnectionInterface::FEEDBACK_SANDBOX_PUSH_PORT

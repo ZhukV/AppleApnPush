@@ -9,9 +9,7 @@
  * file that was distributed with this source code
  */
 
-namespace Apple\ApnPush\Messages;
-
-use Apple\ApnPush\PayloadFactory\PayloadDataInterface;
+namespace Apple\ApnPush\Notification;
 
 /**
  * Interface for control Aps data in iOS message
@@ -38,14 +36,14 @@ interface ApsDataInterface extends PayloadDataInterface
      * @param string $localizeKey
      * @param array $localizeParams
      */
-    public function setBodyLocalize($localizeKey, array $localizeParams);
+    public function setBodyLocalize($localizeKey, array $localizeParams = array());
 
     /**
      * Set custom
      *
      * @param array $customBody
      */
-    public function setBodyCustom(array $customBody);
+    public function setBodyCustom(array $customBody = array());
 
     /**
      * Set sound

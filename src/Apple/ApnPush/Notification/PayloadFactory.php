@@ -9,9 +9,7 @@
  * file that was distributed with this source code
  */
 
-namespace Apple\ApnPush\PayloadFactory;
-
-use Apple\ApnPush\Messages\MessageInterface;
+namespace Apple\ApnPush\Notification;
 
 /**
  * Default payload factory

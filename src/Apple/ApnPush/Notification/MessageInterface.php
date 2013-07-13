@@ -9,9 +9,7 @@
  * file that was distributed with this source code
  */
 
-namespace Apple\ApnPush\Messages;
-
-use Apple\ApnPush\PayloadFactory\PayloadDataInterface;
+namespace Apple\ApnPush\Notification;
 
 /**
  * Interface for control iOS message
@@ -54,6 +52,14 @@ interface MessageInterface extends PayloadDataInterface
     public function setBody($bodyMessage);
 
     /**
+     * Set body localize
+     *
+     * @param string $localizeKey
+     * @param array $params
+     */
+    public function setBodyLocalize($localizeKey, array $params = array());
+
+    /**
      * Get body
      *
      * @return string
@@ -94,6 +100,34 @@ interface MessageInterface extends PayloadDataInterface
      * @return array
      */
     public function getCustomData();
+
+    /**
+     * Set badge
+     *
+     * @param int $badge
+     */
+    public function setBadge($badge);
+
+    /**
+     * Get badge
+     *
+     * @return int
+     */
+    public function getBadge();
+
+    /**
+     * Set sound
+     *
+     * @param string $sound
+     */
+    public function setSound($sound);
+
+    /**
+     * Get sound
+     *
+     * @return string
+     */
+    public function getSound();
 
     /**
      * Set expires

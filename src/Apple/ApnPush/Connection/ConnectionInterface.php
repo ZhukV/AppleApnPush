@@ -62,19 +62,19 @@ interface ConnectionInterface
     /**
      * Create connection
      */
-    public function createConnection();
+    public function create();
 
     /**
      * Close connection
      */
-    public function closeConnection();
+    public function close();
 
     /**
      * Is connection
      *
      * @return boolean
      */
-    public function isConnection();
+    public function is();
 
     /**
      * Set sandbox mode
@@ -135,12 +135,12 @@ interface ConnectionInterface
      *
      * @return string
      */
-    public function getConnectionUrl();
+    public function getUrl();
 
     /**
      * Get connection port
      *
      * @return integer
      */
-    public function getConnectionPort();
+    public function getPort();
 }

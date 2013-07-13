@@ -11,29 +11,40 @@
 
 namespace Apple\ApnPush\Notification;
 
-use Apple\ApnPush\Messages\MessageInterface;
-use Apple\ApnPush\Exceptions\ApnPushException;
+use Apple\ApnPush\Exception\ApnPushException;
 
 /**
  * Control error with send message
  */
-class SendException extends ApnPushException implements SendExceptionInterface
+class SendException extends ApnPushException
 {
+    const NO_ERRORS                     =   0;
+    const ERROR_PROCESSING              =   1;
+    const ERROR_MISSING_DEVICE_TOKEN    =   2;
+    const ERROR_MISSING_TOPIC           =   3;
+    const ERROR_MISSING_PAYLOAD         =   4;
+    const ERROR_INVALID_TOKEN_SIZE      =   5;
+    const ERROR_INVALID_TOPIC_SIZE      =   6;
+    const ERROR_INVALID_PAYLOAD_SIZE    =   7;
+    const ERROR_INVALID_TOKEN           =   8;
+    const ERROR_UNKNOWN                 =   255;
+    const ERROR_UNPACK_RESPONSE         =   256;
+
     /**
      * @var array
      */
     static protected $errorMessages = array(
-        SendExceptionInterface::NO_ERRORS                       =>  'Not errors',
-        SendExceptionInterface::ERROR_PROCESSING                =>  'Processing error',
-        SendExceptionInterface::ERROR_MISSING_DEVICE_TOKEN      =>  'Missing device token',
-        SendExceptionInterface::ERROR_MISSING_TOPIC             =>  'Missing topic',
-        SendExceptionInterface::ERROR_MISSING_PAYLOAD           =>  'Missing payload',
-        SendExceptionInterface::ERROR_INVALID_TOKEN_SIZE        =>  'Invalid token size',
-        SendExceptionInterface::ERROR_INVALID_TOPIC_SIZE        =>  'Invalid topic size',
-        SendExceptionInterface::ERROR_INVALID_PAYLOAD_SIZE      =>  'Invalid payload size',
-        SendExceptionInterface::ERROR_INVALID_TOKEN             =>  'Invalid token',
-        SendExceptionInterface::ERROR_UNKNOWN                   =>  'Unknown error',
-        SendExceptionInterface::ERROR_UNPACK_RESPONSE           =>  'Unpack response error'
+        self::NO_ERRORS                       =>  'Not errors',
+        self::ERROR_PROCESSING                =>  'Processing error',
+        self::ERROR_MISSING_DEVICE_TOKEN      =>  'Missing device token',
+        self::ERROR_MISSING_TOPIC             =>  'Missing topic',
+        self::ERROR_MISSING_PAYLOAD           =>  'Missing payload',
+        self::ERROR_INVALID_TOKEN_SIZE        =>  'Invalid token size',
+        self::ERROR_INVALID_TOPIC_SIZE        =>  'Invalid topic size',
+        self::ERROR_INVALID_PAYLOAD_SIZE      =>  'Invalid payload size',
+        self::ERROR_INVALID_TOKEN             =>  'Invalid token',
+        self::ERROR_UNKNOWN                   =>  'Unknown error',
+        self::ERROR_UNPACK_RESPONSE           =>  'Unpack response error'
     );
 
     /**
@@ -87,7 +98,7 @@ class SendException extends ApnPushException implements SendExceptionInterface
     public static function parseFromAppleResponse($binaryData, MessageInterface $message = null)
     {
         if(false === $response = @unpack("Ccommand/Cstatus/Nidentifier", $binaryData)) {
-            return new static(SendExceptionInterface::ERROR_UNPACK_RESPONSE, 0, 0, $message);
+            return new static(self::ERROR_UNPACK_RESPONSE, 0, 0, $message);
         }
 
         return new static(

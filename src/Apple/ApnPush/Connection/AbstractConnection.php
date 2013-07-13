@@ -133,7 +133,7 @@ abstract class AbstractConnection implements ConnectionInterface
     }
 
     /**
-     * @{inerhitDoc}
+     * {@inheritDoc}
      */
     public function getCertificatePassPhrase()
     {
@@ -161,7 +161,7 @@ abstract class AbstractConnection implements ConnectionInterface
     /**
      * {@inheritDoc}
      */
-    public function getConnectionUrl()
+    public function getUrl()
     {
         return $this->sandboxMode
             ? ConnectionInterface::GATEWAY_SANDBOX_PUSH_URL
@@ -171,7 +171,7 @@ abstract class AbstractConnection implements ConnectionInterface
     /**
      * {@inheritDoc}
      */
-    public function getConnectionPort()
+    public function getPort()
     {
         return $this->sandboxMode
             ? ConnectionInterface::GATEWAY_SANDBOX_PUSH_PORT

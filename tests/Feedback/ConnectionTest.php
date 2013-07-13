@@ -9,12 +9,14 @@
  * file that was distributed with this source code
  */
 
-namespace Apple\ApnPush\Connection;
+namespace Apple\ApnPush\Feedback;
 
 /**
  * Feedback test
+ *
+ * @author Ryan Martinsen <ryan@ryanware.com>
  */
-class FeedbackTest extends \PHPUnit_Framework_TestCase
+class ConnectionTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * Default test
@@ -22,7 +24,7 @@ class FeedbackTest extends \PHPUnit_Framework_TestCase
     public function testBase()
     {
         // Test with setter&getter
-        $connection = new Feedback;
+        $connection = new Connection();
         $this->assertNull($connection->getCertificateFile());
         $this->assertNull($connection->getCertificatePassPhrase());
         $this->assertFalse($connection->getSandboxMode());
@@ -37,7 +39,7 @@ class FeedbackTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue($connection->getSandboxMode());
 
         // Test with constructor
-        $connection = new Feedback(__FILE__, '11', true);
+        $connection = new Connection(__FILE__, '11', true);
         $this->assertEquals(__FILE__, $connection->getCertificateFile());
         $this->assertEquals('11', $connection->getCertificatePassPhrase());
         $this->assertTrue($connection->getSandboxMode());
@@ -51,18 +53,18 @@ class FeedbackTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test sanbox mode
+     * Test sandbox mode
      */
     public function testSandboxMode()
     {
-        $connection = new Feedback;
+        $connection = new Connection();
 
-        $this->assertEquals(2196, $connection->getConnectionPort());
-        $this->assertEquals('feedback.push.apple.com', $connection->getConnectionUrl());
+        $this->assertEquals(2196, $connection->getPort());
+        $this->assertEquals('feedback.push.apple.com', $connection->getUrl());
 
         $connection->setSandboxMode(true);
 
-        $this->assertEquals(2196, $connection->getConnectionPort());
-        $this->assertEquals('feedback.sandbox.push.apple.com', $connection->getConnectionUrl());
+        $this->assertEquals(2196, $connection->getPort());
+        $this->assertEquals('feedback.sandbox.push.apple.com', $connection->getUrl());
     }
 }

@@ -9,7 +9,7 @@
  * file that was distributed with this source code
  */
 
-namespace Apple\ApnPush\Exceptions;
+namespace Apple\ApnPush\Exception;
 
 /**
  * Connection not found exception

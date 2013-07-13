@@ -13,6 +13,10 @@ namespace Apple\ApnPush\Feedback;
 
 /**
  * Feedback Device test
+ *
+ * @author Ryan Martinsen <ryan@ryanware.com>
+ *
+ * @todo: add test for control exceptions
  */
 class DeviceTest extends \PHPUnit_Framework_TestCase
 {

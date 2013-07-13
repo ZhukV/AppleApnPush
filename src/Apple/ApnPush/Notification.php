@@ -9,11 +9,14 @@
  * file that was distributed with this source code
  */
 
-namespace Apple\ApnPush\Exceptions;
+namespace Apple\ApnPush;
+
+use Apple\ApnPush\Notification\Notification as BaseNotification;
 
 /**
- * Default exception for control all ApnPush exceptions
+ * This is a shortcut class
+ * @see \Apple\ApnPush\Notification\Notification
  */
-abstract class ApnPushException extends \Exception
+class Notification extends BaseNotification
 {
 }

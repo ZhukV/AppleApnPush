@@ -16,9 +16,9 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
-use Apple\ApnPush\Messages\DefaultMessage;
-use Apple\ApnPush\Connection\Connection;
-use Apple\ApnPush\PayloadFactory\PayloadFactory;
+use Apple\ApnPush\Notification\Message;
+use Apple\ApnPush\Notification\Connection;
+use Apple\ApnPush\Notification\PayloadFactory;
 use Apple\ApnPush\Notification\Notification;
 
 /**
@@ -65,7 +65,7 @@ class PushCommand extends Command
         $notification->setConnection($connection);
 
         // Create message
-        $message = new DefaultMessage;
+        $message = new Message();
         $message->setDeviceToken($input->getArgument('device-token'));
         $apsData = $message->getApsData();
         $apsData
@@ -75,7 +75,7 @@ class PushCommand extends Command
 
         // Send message
         try {
-            $notification->sendMessage($message);
+            $notification->send($message);
             $output->writeln('<info>Success send push.</info>');
         } catch (\Exception $e) {
             $output->writeln('<error>Error send push notification with message: ' . $e->getMessage() . '.</error>');

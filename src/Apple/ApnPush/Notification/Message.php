@@ -9,12 +9,12 @@
  * file that was distributed with this source code
  */
 
-namespace Apple\ApnPush\Messages;
+namespace Apple\ApnPush\Notification;
 
 /**
  * Default iOS message
  */
-class DefaultMessage implements MessageInterface
+class Message implements MessageInterface
 {
     /**
      * @var string
@@ -157,6 +157,16 @@ class DefaultMessage implements MessageInterface
     /**
      * {@inheritDoc}
      */
+    public function setBodyLocalize($localizeKey, array $params = array())
+    {
+        $this->apsData->setBodyLocalize($localizeKey, $params);
+
+        return $this;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
     public function setCustomData(array $customData)
     {
         $this->customData = array();
@@ -221,6 +231,42 @@ class DefaultMessage implements MessageInterface
         return array(
             'aps' => $this->apsData->getPayloadData()
         ) + $this->customData;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function setBadge($badge)
+    {
+        $this->apsData->setBadge($badge);
+
+        return $this;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getBadge()
+    {
+        return $this->apsData->getBadge();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function setSound($sound)
+    {
+        $this->apsData->setSound($sound);
+
+        return $this;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getSound()
+    {
+        return $this->apsData->getSound();
     }
 
     /**

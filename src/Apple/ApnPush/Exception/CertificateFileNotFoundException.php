@@ -9,17 +9,11 @@
  * file that was distributed with this source code
  */
 
-namespace Apple\ApnPush\PayloadFactory;
+namespace Apple\ApnPush\Exception;
 
 /**
- * Interface for control payload data
+ * Control certificate file
  */
-interface PayloadDataInterface
+class CertificateFileNotFoundException extends ApnPushException
 {
-    /**
-     * Get payload data
-     *
-     * @return mixed
-     */
-    public function getPayloadData();
 }

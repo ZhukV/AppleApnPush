@@ -12,8 +12,7 @@
 namespace Apple\ApnPush\Notification;
 
 use Apple\ApnPush\Connection\ConnectionInterface;
-use Apple\ApnPush\Messages\MessageInterface;
-use Apple\ApnPush\PayloadFactory\PayloadFactoryInterface;
+use Apple\ApnPush\Notification\MessageInterface;
 use Psr\Log\LoggerInterface;
 
 /**
@@ -54,7 +53,7 @@ interface NotificationInterface
      *
      * @param MessageInterface $message
      */
-    public function sendMessage(MessageInterface $message);
+    public function send(MessageInterface $message);
 
     /**
      * Set logger

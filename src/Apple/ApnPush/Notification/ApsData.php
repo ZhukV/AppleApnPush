@@ -9,7 +9,7 @@
  * file that was distributed with this source code
  */
 
-namespace Apple\ApnPush\Messages;
+namespace Apple\ApnPush\Notification;
 
 /**
  * Default APS data
@@ -85,7 +85,7 @@ class ApsData implements ApsDataInterface
     /**
      * {@inheritDoc}
      */
-    public function setBodyLocalize($localizeKey, array $localizeParams)
+    public function setBodyLocalize($localizeKey, array $localizeParams = array())
     {
         if ($localizeKey === null && !count($localizeParams)) {
             $this->bodyCustom = array();
@@ -118,7 +118,7 @@ class ApsData implements ApsDataInterface
     /**
      * {@inheritDoc}
      */
-    public function setBodyCustom(array $bodyCustom)
+    public function setBodyCustom(array $bodyCustom = array())
     {
         $this->bodyCustom = $bodyCustom;
 
@@ -166,12 +166,12 @@ class ApsData implements ApsDataInterface
      */
     public function setBadge($badge)
     {
-        if ($badge === null) {
+        if (null === $badge) {
             $this->badge = null;
             return $this;
         }
 
-        if (0 > (int) $badge) {
+        if ((int) $badge < 0) {
             throw new \InvalidArgumentException(sprintf(
                 'Badge key cannot be less than zero (%s)!',
                 $badge

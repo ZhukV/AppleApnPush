@@ -12,13 +12,15 @@
 namespace Apple\ApnPush\Feedback;
 
 use Apple\ApnPush\Connection\ConnectionInterface;
-use Apple\ApnPush\Exceptions;
+use Apple\ApnPush\Exception;
 use Psr\Log\LoggerInterface;
 
 /**
  * Feedback Service core
+ *
+ * @author Ryan Martinsen <ryan@ryanware.com>
  */
-class Service implements ServiceInterface
+class Feedback implements FeedbackInterface
 {
     /**
      * @var ConnectionInterface
@@ -32,10 +34,19 @@ class Service implements ServiceInterface
 
     /**
      * Construct
+     *
+     * @param Connection
      */
-    public function __construct(ConnectionInterface $connection = null)
+    public function __construct($connection = null)
     {
-        $this->connection = $connection;
+        if (null !== $connection) {
+            if ($connection instanceof ConnectionInterface) {
+                $this->connection = $connection;
+            } else if (is_string($connection)) {
+                // Connection is a certificate path file
+                $this->connection = new Connection($connection);
+            }
+        }
     }
 
     /**
@@ -62,20 +73,20 @@ class Service implements ServiceInterface
     public function getInvalidDevices()
     {
         if (!$this->connection) {
-            throw new Exceptions\ConnectionUndefinedException();
+            throw new Exception\ConnectionUndefinedException();
         }
 
-        if (!$this->connection->isConnection()) {
+        if (!$this->connection->is()) {
             if ($this->logger) {
                 $this->logger->debug('Create feedback connection...');
             }
 
-            $this->connection->createConnection();
+            $this->connection->create();
         }
 
         $data = $this->connection->read(-1);
         
-        $this->connection->closeConnection();
+        $this->connection->close();
         
         $feedback = array();
         if (!empty($data)) {

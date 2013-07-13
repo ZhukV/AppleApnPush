@@ -9,11 +9,14 @@
  * file that was distributed with this source code
  */
 
-namespace Apple\ApnPush\Exceptions;
+namespace Apple\ApnPush;
+
+use Apple\ApnPush\Feedback\Feedback as BaseFeedback;
 
 /**
- * Control cetfiricate file
+ * This is a shortcut class
+ * @see \Apple\ApnPush\Feedback\Feedback
  */
-class CertificateFileNotFoundException extends ApnPushException
+class Feedback extends BaseFeedback
 {
 }

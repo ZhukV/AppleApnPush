@@ -11,16 +11,12 @@
 
 namespace Apple\ApnPush\Notification;
 
-use Apple\ApnPush\Connection\Connection;
-use Apple\ApnPush\PayloadFactory\PayloadFactory;
-use Apple\ApnPush\Messages\DefaultMessage;
-use Apple\ApnPush\Messages\MessageInterface;
-use Apple\ApnPush\Notification\SendException;
+use Apple\ApnPush\TestCase;
 
 /**
  * Notification test
  */
-class NotificationTest extends \Apple\ApnPush\TestCase
+class NotificationTest extends TestCase
 {
     /**
      * @var \RequestStream\Stream\Socket\SocketClient
@@ -90,7 +86,7 @@ class NotificationTest extends \Apple\ApnPush\TestCase
         $this->setValueToProtected($connection, 'socketConnection', $socketMock);
 
         // Testing send message
-        $this->assertTrue($notification->sendMessage($message));
+        $this->assertTrue($notification->send($message));
     }
 
     /**
@@ -161,21 +157,21 @@ class NotificationTest extends \Apple\ApnPush\TestCase
 
         try {
             // Force error
-            $notification->sendMessage(self::createMessage('test1'));
+            $notification->send(self::createMessage('test1'));
         } catch (SendException $e) {
             // Nothing
         }
 
         // Test auto close connection
         $originConnection = $notification->getConnection();
-        $this->assertFalse($originConnection->isConnection());
+        $this->assertFalse($originConnection->is());
 
         // Disallow error
         $socketMock->__NotError__ = true;
 
         // Test reopen connection
-        $notification->sendMessage(self::createMessage('test2'));
-        $this->assertTrue($originConnection->isConnection());
+        $notification->send(self::createMessage('test2'));
+        $this->assertTrue($originConnection->is());
     }
 
     /**
@@ -183,7 +179,7 @@ class NotificationTest extends \Apple\ApnPush\TestCase
      */
     public static function createMessage($body, $identifier = null, $deviceToken = null)
     {
-        $message = new DefaultMessage;
+        $message = new Message;
 
         $message->setBody($body);
 

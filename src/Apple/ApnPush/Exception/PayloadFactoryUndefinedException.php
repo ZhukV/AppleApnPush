@@ -9,12 +9,12 @@
  * file that was distributed with this source code
  */
 
-namespace Apple\ApnPush\Exceptions;
+namespace Apple\ApnPush\Exception;
 
 /**
- * Device token not found
+ * Payload factory not found exception
  */
-class DeviceTokenNotFoundException extends ApnPushException
+class PayloadFactoryUndefinedException extends ApnPushException
 {
     /**
      * Construct
@@ -23,7 +23,7 @@ class DeviceTokenNotFoundException extends ApnPushException
      * @param integer $code
      * @param \Exception $prev
      */
-    public function __construct($message = 'Device token not found.', $code = 0, \Exception $prev = null)
+    public function __construct($message = 'Not found payload factory.', $code = 0, \Exception $prev = null)
     {
         parent::__construct($message, $code, $prev);
     }

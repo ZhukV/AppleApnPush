@@ -9,22 +9,11 @@
  * file that was distributed with this source code
  */
 
-namespace Apple\ApnPush\Exceptions;
+namespace Apple\ApnPush\Exception;
 
 /**
  * Connection not found exception
  */
 class FeedbackException extends ApnPushException
 {
-    /**
-     * Construct
-     *
-     * @param string $message
-     * @param integer $code
-     * @param \Exception $prev
-     */
-    public function __construct($message = '', $code = 0, \Exception $prev = null)
-    {
-        parent::__construct($message, $code, $prev);
-    }
 }

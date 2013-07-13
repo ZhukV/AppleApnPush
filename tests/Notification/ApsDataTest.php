@@ -9,9 +9,7 @@
  * file that was distributed with this source code
  */
 
-namespace Apple\ApnPush\Messages;
-
-use Apple\ApnPush\PayloadFactory\PayloadDataInterface;
+namespace Apple\ApnPush\Notification;
 
 /**
  * Test aps data
@@ -24,7 +22,7 @@ class ApsDataTest extends \PHPUnit_Framework_TestCase
     public function testBase()
     {
         $aps = new ApsData;
-        $this->assertInstanceOf('Apple\ApnPush\PayloadFactory\PayloadDataInterface', $aps);
+        $this->assertInstanceOf('Apple\ApnPush\Notification\PayloadDataInterface', $aps);
     }
 
     /**

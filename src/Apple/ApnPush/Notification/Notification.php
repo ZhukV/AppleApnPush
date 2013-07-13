@@ -12,10 +12,7 @@
 namespace Apple\ApnPush\Notification;
 
 use Apple\ApnPush\Connection\ConnectionInterface;
-use Apple\ApnPush\Messages\MessageInterface;
-use Apple\ApnPush\PayloadFactory\PayloadFactoryInterface;
-use Apple\ApnPush\PayloadFactory\PayloadFactory;
-use Apple\ApnPush\Exceptions;
+use Apple\ApnPush\Exception;
 use Psr\Log\LoggerInterface;
 
 /**
@@ -40,10 +37,21 @@ class Notification implements NotificationInterface
 
     /**
      * Construct
+     *
+     * @param string|ConnectionInterface $connection
+     * @param PayloadFactoryInterface $payloadFactory
      */
-    public function __construct(PayloadFactoryInterface $payloadFactory = null, ConnectionInterface $connection = null)
+    public function __construct($connection = null, PayloadFactoryInterface $payloadFactory = null)
     {
-        $this->connection = $connection;
+        if (null !== $connection) {
+            if ($connection instanceof ConnectionInterface) {
+                $this->connection = $connection;
+            } else if (is_string($connection)) {
+                // Connection is a certificate path file
+                $this->connection = new Connection($connection);
+            }
+        }
+
         $this->payloadFactory = $payloadFactory === null ? new PayloadFactory() : $payloadFactory;
     }
 
@@ -86,18 +94,18 @@ class Notification implements NotificationInterface
     /**
      * {@inheritDoc}
      */
-    public function sendMessage(MessageInterface $message)
+    public function send(MessageInterface $message)
     {
         if (!$this->payloadFactory) {
-            throw new Exceptions\PayloadFactoryUndefinedException();
+            throw new Exception\PayloadFactoryUndefinedException();
         }
 
         if (!$this->connection) {
-            throw new Exceptions\ConnectionUndefinedException();
+            throw new Exception\ConnectionUndefinedException();
         }
 
         if (!$message->getDeviceToken()) {
-            throw new Exceptions\DeviceTokenNotFoundException();
+            throw new Exception\DeviceTokenNotFoundException();
         }
 
         $payload = $this->payloadFactory->createPayload($message);
@@ -106,12 +114,12 @@ class Notification implements NotificationInterface
             $this->logger->debug('Success create payload.');
         }
 
-        if (!$this->connection->isConnection()) {
+        if (!$this->connection->is()) {
             if ($this->logger) {
                 $this->logger->debug('Create connection...');
             }
 
-            $this->connection->createConnection();
+            $this->connection->create();
         }
 
         $response = (mb_strlen($payload) === $this->connection->write($payload, mb_strlen($payload)));
@@ -124,7 +132,7 @@ class Notification implements NotificationInterface
                 $this->logger->error((string) $error);
             }
 
-            $this->connection->closeConnection();
+            $this->connection->close();
 
             throw $error;
         }
@@ -138,6 +146,29 @@ class Notification implements NotificationInterface
         }
 
         return $response;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function sendMessage($deviceToken, $body, $messIdentifier = null, $badge = null, $sound = null)
+    {
+        $message = $this->createMessage();
+        $message->setDeviceToken($deviceToken);
+        $message->setBody($body);
+        $message->setIdentifier($messIdentifier);
+        $message->setBadge($badge);
+        $message->setSound($sound);
+
+        return $this->send($message);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function createMessage()
+    {
+        return new Message();
     }
 
     /**
