@@ -19,8 +19,8 @@ class ConnectionUndefinedException extends ApnPushException
     /**
      * Construct
      *
-     * @param string $message
-     * @param integer $code
+     * @param string     $message
+     * @param integer    $code
      * @param \Exception $prev
      */
     public function __construct($message = 'Connection not found.', $code = 0, \Exception $prev = null)

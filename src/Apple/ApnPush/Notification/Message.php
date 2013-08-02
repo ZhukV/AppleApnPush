@@ -48,6 +48,7 @@ class Message implements MessageInterface
     {
         $this->apsData = new ApsData;
         $this->customData = array();
+        // Default expires for ApnPush
         $this->expires = new \DateTime('+12 hours', new \DateTimeZone('UTC'));
         $this->identifier = 0;
     }
@@ -77,7 +78,7 @@ class Message implements MessageInterface
     {
         if (is_object($deviceToken)) {
             if (!method_exists($deviceToken, '__toString')) {
-                throw new \InvalidArgumentException(sprintf('Can\'t set device token from object "%s".', get_class($deviceToken)));
+                throw new \InvalidArgumentException(sprintf('Can\'t set device token from object "%s". Object must have __toString method.', get_class($deviceToken)));
             }
 
             $deviceToken = (string) $deviceToken;

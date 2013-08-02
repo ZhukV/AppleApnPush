@@ -89,6 +89,7 @@ class ApsData implements ApsDataInterface
     {
         if ($localizeKey === null && !count($localizeParams)) {
             $this->bodyCustom = array();
+
             return $this;
         }
 
@@ -168,6 +169,7 @@ class ApsData implements ApsDataInterface
     {
         if (null === $badge) {
             $this->badge = null;
+
             return $this;
         }
 
@@ -200,11 +202,11 @@ class ApsData implements ApsDataInterface
             'alert' => count($this->bodyCustom) ? $this->bodyCustom : $this->body
         );
 
-        if ($this->sound) {
+        if (null !== $this->sound) {
             $apsData['sound'] = $this->sound;
         }
 
-        if ($this->badge !== null) {
+        if (null !== $this->badge) {
             $apsData['badge'] = $this->badge;
         }
 

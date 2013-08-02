@@ -93,6 +93,7 @@ abstract class AbstractSocketConnection extends AbstractConnection
     public function isReadyRead()
     {
         list ($second, $milisecond) = $this->readTime;
+
         return $this->socketConnection->selectRead($second, $milisecond);
     }
 

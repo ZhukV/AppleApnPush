@@ -55,7 +55,7 @@ interface MessageInterface extends PayloadDataInterface
      * Set body localize
      *
      * @param string $localizeKey
-     * @param array $params
+     * @param array  $params
      */
     public function setBodyLocalize($localizeKey, array $params = array());
 

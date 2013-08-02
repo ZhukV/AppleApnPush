@@ -13,6 +13,9 @@ namespace Apple\ApnPush\Connection;
 
 /**
  * Interface for connection to Apple push servers
+ *
+ * @author Vitaliy Zhuk <zhuk2205@gmail.com>
+ * @author Ryan Martinsen <ryan@ryanware.com>
  */
 interface ConnectionInterface
 {
@@ -93,7 +96,7 @@ interface ConnectionInterface
     /**
      * Write data to connection
      *
-     * @param string $data
+     * @param string  $data
      * @param integer $length
      */
     public function write($data, $length = null);

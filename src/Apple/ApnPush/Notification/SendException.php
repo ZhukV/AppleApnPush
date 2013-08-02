@@ -33,7 +33,7 @@ class SendException extends ApnPushException
     /**
      * @var array
      */
-    static protected $errorMessages = array(
+    protected static $errorMessages = array(
         self::NO_ERRORS                       =>  'Not errors',
         self::ERROR_PROCESSING                =>  'Processing error',
         self::ERROR_MISSING_DEVICE_TOKEN      =>  'Missing device token',
@@ -70,17 +70,16 @@ class SendException extends ApnPushException
     /**
      * Construct
      *
-     * @param integer $statusCode
-     * @param integer $command
-     * @param string $identifier
+     * @param integer          $statusCode
+     * @param integer          $command
+     * @param string           $identifier
      * @param MessageInterface $message
      */
     public function __construct($statusCode, $command, $identifier, MessageInterface $message = null)
     {
         if (isset(self::$errorMessages[$statusCode])) {
             $messageStr = self::$errorMessages[$statusCode];
-        }
-        else {
+        } else {
             $messageStr = 'Undefined error with status: "' . $statusCode. '".';
         }
 
@@ -97,7 +96,7 @@ class SendException extends ApnPushException
      */
     public static function parseFromAppleResponse($binaryData, MessageInterface $message = null)
     {
-        if(false === $response = @unpack("Ccommand/Cstatus/Nidentifier", $binaryData)) {
+        if (false === $response = @unpack("Ccommand/Cstatus/Nidentifier", $binaryData)) {
             return new static(self::ERROR_UNPACK_RESPONSE, 0, 0, $message);
         }
 

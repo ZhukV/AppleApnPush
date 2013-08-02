@@ -34,7 +34,7 @@ interface ApsDataInterface extends PayloadDataInterface
      * Set body localize
      *
      * @param string $localizeKey
-     * @param array $localizeParams
+     * @param array  $localizeParams
      */
     public function setBodyLocalize($localizeKey, array $localizeParams = array());
 

@@ -42,7 +42,7 @@ class Feedback implements FeedbackInterface
         if (null !== $connection) {
             if ($connection instanceof ConnectionInterface) {
                 $this->connection = $connection;
-            } else if (is_string($connection)) {
+            } elseif (is_string($connection)) {
                 // Connection is a certificate path file
                 $this->connection = new Connection($connection);
             }
@@ -85,23 +85,23 @@ class Feedback implements FeedbackInterface
         }
 
         $data = $this->connection->read(-1);
-        
+
         $this->connection->close();
-        
+
         $feedback = array();
         if (!empty($data)) {
             foreach (str_split($data, 38) as $device_data) {
                 $feedback[] = new Device($device_data);
             }
         }
-        
+
         if ($this->logger) {
             $this->logger->info(sprintf(
                 '%d device tokens received from feedback service.',
                 count($feedback)
             ));
         }
-        
+
         return $feedback;
     }
 

@@ -13,6 +13,8 @@ namespace Apple\ApnPush\Exception;
 
 /**
  * Connection not found exception
+ *
+ * @author Ryan Martinsen <ryan@ryanware.com>
  */
 class FeedbackException extends ApnPushException
 {

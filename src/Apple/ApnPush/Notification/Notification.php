@@ -44,20 +44,20 @@ class Notification implements NotificationInterface
      * Construct
      *
      * @param string|ConnectionInterface $connection
-     * @param PayloadFactoryInterface $payloadFactory
+     * @param PayloadFactoryInterface    $payloadFactory
      */
     public function __construct($connection = null, PayloadFactoryInterface $payloadFactory = null)
     {
         if (null !== $connection) {
             if ($connection instanceof ConnectionInterface) {
                 $this->connection = $connection;
-            } else if (is_string($connection)) {
+            } elseif (is_string($connection)) {
                 // Connection is a certificate path file
                 $this->connection = new Connection($connection);
             }
         }
 
-        $this->payloadFactory = $payloadFactory === null ? new PayloadFactory() : $payloadFactory;
+        $this->payloadFactory = $payloadFactory ?: new PayloadFactory();
     }
 
     /**

@@ -11,7 +11,6 @@
 
 namespace Apple\ApnPush\Feedback;
 
-use Apple\ApnPush\Exception\FeedbackException;
 use Apple\ApnPush\Connection\AbstractSocketConnection;
 use Apple\ApnPush\Connection\ConnectionInterface;
 
@@ -19,6 +18,7 @@ use Apple\ApnPush\Connection\ConnectionInterface;
  * Connection for the Apple Push Notification Feedback Service
  *
  * @author Ryan Martinsen <ryan@ryanware.com>
+ * @author Vitaliy Zhuk <zhuk2205@gmail.com>
  */
 class Connection extends AbstractSocketConnection
 {

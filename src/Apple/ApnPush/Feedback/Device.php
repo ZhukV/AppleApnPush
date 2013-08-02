@@ -37,7 +37,7 @@ class Device
 
     /**
      * Construct
-     * 
+     *
      * @param string $data
      */
     public function __construct($data = null)
@@ -50,7 +50,7 @@ class Device
     /**
      * Unpacks the APNS data into the required fields
      *
-     * @param string $data
+     * @param  string            $data
      * @throws FeedbackException
      * @return Device
      */
@@ -59,7 +59,7 @@ class Device
         if (false === ($token = unpack('N1timestamp/n1length/H*token', $data))) {
             throw new FeedbackException('Unpack feedback error');
         }
-        
+
         $this->timestamp = $token['timestamp'];
         $this->tokenLength = $token['length'];
         $this->deviceToken = $token['token'];
@@ -69,7 +69,7 @@ class Device
 
     /**
      * Get timestamp
-     * 
+     *
      * @return integer
      */
     public function getTimestamp()
@@ -79,7 +79,7 @@ class Device
 
     /**
      * Get token length
-     * 
+     *
      * @return integer
      */
     public function getTokenLength()
@@ -89,7 +89,7 @@ class Device
 
     /**
      * Get device token
-     * 
+     *
      * @return string
      */
     public function getDeviceToken()
