@@ -17,8 +17,8 @@
         "request-stream/request-stream": "dev-master"
     },
 
-    "require-dev": {
-        "symfony/console": "dev-master"
+    "suggest": {
+        "symfony/console": "For send push notifications from console"
     },
 
     "autoload": {
