@@ -1,14 +1,14 @@
 Apple Apn Push
 ==============
 
-[![Build Status](https://travis-ci.org/ZhukV/AppleApnPush.png?branch=master)](https://travis-ci.org/ZhukV/AppleApnPush)
+[![Build Status](https://travis-ci.org/ZhukV/AppleApnPush.png)](https://travis-ci.org/ZhukV/AppleApnPush)
 
 Documentation
 -------------
 
 The bulk of the documentation is stored in the `doc/index.md` file in this library:
 
-[Read the Documentation](https://github.com/ZhukV/AppleApnPush/blob/master/doc/index.md)
+[Read the Documentation](doc/index.md)
 
 License
 -------
