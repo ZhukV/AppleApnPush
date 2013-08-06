@@ -1,7 +1,7 @@
 Apple Apn Push
 ==============
 
-[![Build Status](https://travis-ci.org/ZhukV/AppleApnPush.png)](https://travis-ci.org/ZhukV/AppleApnPush)
+Send push notifications to apple devices (iPhone, iPad, iPpod).
 
 Documentation
 -------------
