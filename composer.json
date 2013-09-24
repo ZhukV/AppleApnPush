@@ -14,7 +14,8 @@
 
     "require": {
         "php": ">=5.3.3",
-        "request-stream/request-stream": "dev-master"
+        "request-stream/request-stream": "dev-master",
+        "psr/log": "*"
     },
 
     "suggest": {
