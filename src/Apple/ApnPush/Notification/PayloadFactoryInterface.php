@@ -17,7 +17,7 @@ namespace Apple\ApnPush\Notification;
 interface PayloadFactoryInterface
 {
     /**
-     * Create payload
+     * Create payload for message
      *
      * @param MessageInterface $message
      */

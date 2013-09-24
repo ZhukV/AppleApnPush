@@ -61,7 +61,10 @@ class Notification implements NotificationInterface
     }
 
     /**
-     * {@inheritDoc}
+     * Set connection to manager
+     *
+     * @param ConnectionInterface $connection
+     * @return Notification
      */
     public function setConnection(ConnectionInterface $connection)
     {
@@ -71,7 +74,9 @@ class Notification implements NotificationInterface
     }
 
     /**
-     * {@inheritDoc}
+     * Get connection
+     *
+     * @return ConnectionInterface
      */
     public function getConnection()
     {
@@ -79,7 +84,10 @@ class Notification implements NotificationInterface
     }
 
     /**
-     * {@inheritDoc}
+     * Set payload factory for generate apn data
+     *
+     * @param PayloadFactoryInterface $payloadFactory
+     * @return Notification
      */
     public function setPayloadFactory(PayloadFactoryInterface $payloadFactory)
     {
@@ -89,7 +97,9 @@ class Notification implements NotificationInterface
     }
 
     /**
-     * {@inheritDoc}
+     * Get payload factory
+     *
+     * @return PayloadFactoryInterface
      */
     public function getPayloadFactory()
     {
@@ -97,7 +107,14 @@ class Notification implements NotificationInterface
     }
 
     /**
-     * {@inheritDoc}
+     * Set message to iOS devices
+     *
+     * @param MessageInterface $message
+     * @throws SendException
+     * @throws Exception\PayloadFactoryUndefinedException
+     * @throws Exception\ConnectionUndefinedException
+     * @throws Exception\DeviceTokenNotFoundException
+     * @return bool
      */
     public function send(MessageInterface $message)
     {
@@ -154,7 +171,14 @@ class Notification implements NotificationInterface
     }
 
     /**
-     * {@inheritDoc}
+     * Send message with parameters
+     *
+     * @param string $deviceToken       Device token (/^[a-z0-9]{64}$/i)
+     * @param string $body              Message content
+     * @param integer $messIdentifier   Message identifier
+     * @param integer $badge
+     * @param string $sound             Path to sound file in application or sound key
+     * @return bool
      */
     public function sendMessage($deviceToken, $body, $messIdentifier = null, $badge = null, $sound = null)
     {
@@ -169,7 +193,9 @@ class Notification implements NotificationInterface
     }
 
     /**
-     * {@inheritDoc}
+     * Create new message
+     *
+     * @return Message
      */
     public function createMessage()
     {
@@ -177,7 +203,10 @@ class Notification implements NotificationInterface
     }
 
     /**
-     * {@inheritDoc}
+     * Set logger for logging all actions
+     *
+     * @param LoggerInterface $logger
+     * @return Notification
      */
     public function setLogger(LoggerInterface $logger = null)
     {
@@ -187,7 +216,9 @@ class Notification implements NotificationInterface
     }
 
     /**
-     * {@inheritDoc}
+     * Get logger
+     *
+     * @return LoggerInterface
      */
     public function getLogger()
     {
@@ -195,10 +226,15 @@ class Notification implements NotificationInterface
     }
 
     /**
-     * {@inheritDoc}
+     * Set status for require check errors
+     *
+     * @param bool $check
+     * @return Notification
      */
     public function setCheckForErrors($check)
     {
-        return $this->checkForErrors = $check;
+        $this->checkForErrors = $check;
+
+        return $this;
     }
 }

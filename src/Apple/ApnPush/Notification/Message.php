@@ -54,7 +54,10 @@ class Message implements MessageInterface
     }
 
     /**
-     * {@inheritDoc}
+     * Set identifier
+     *
+     * @param integer $identifier
+     * @return Message
      */
     public function setIdentifier($identifier)
     {
@@ -64,7 +67,9 @@ class Message implements MessageInterface
     }
 
     /**
-     * {@inheritDoc}
+     * Get identifier
+     *
+     * @return integer
      */
     public function getIdentifier()
     {
@@ -72,7 +77,11 @@ class Message implements MessageInterface
     }
 
     /**
-     * {@inheritDoc}
+     * Set device token
+     *
+     * @param string $deviceToken
+     * @throws \InvalidArgumentException
+     * @return Message
      */
     public function setDeviceToken($deviceToken)
     {
@@ -112,7 +121,9 @@ class Message implements MessageInterface
     }
 
     /**
-     * {@inheritDoc}
+     * Get device token
+     *
+     * @return string
      */
     public function getDeviceToken()
     {
@@ -120,7 +131,10 @@ class Message implements MessageInterface
     }
 
     /**
-     * {@inheritDoc}
+     * Set aps data
+     *
+     * @param ApsDataInterface $apsData
+     * @return Message
      */
     public function setApsData(ApsDataInterface $apsData)
     {
@@ -130,7 +144,9 @@ class Message implements MessageInterface
     }
 
     /**
-     * {@inheritDoc}
+     * Get aps data
+     *
+     * @return ApsDataInterface
      */
     public function getApsData()
     {
@@ -138,7 +154,10 @@ class Message implements MessageInterface
     }
 
     /**
-     * {@inheritDoc}
+     * Set body
+     *
+     * @param string $body
+     * @return Message
      */
     public function setBody($body)
     {
@@ -148,7 +167,9 @@ class Message implements MessageInterface
     }
 
     /**
-     * {@inheritDoc}
+     * Get body
+     *
+     * @return string
      */
     public function getBody()
     {
@@ -156,7 +177,11 @@ class Message implements MessageInterface
     }
 
     /**
-     * {@inheritDoc}
+     * Set body localize
+     *
+     * @param string $localizeKey
+     * @param array $params
+     * @return Message
      */
     public function setBodyLocalize($localizeKey, array $params = array())
     {
@@ -166,7 +191,10 @@ class Message implements MessageInterface
     }
 
     /**
-     * {@inheritDoc}
+     * Set custom data
+     *
+     * @param array $customData
+     * @return Message
      */
     public function setCustomData(array $customData)
     {
@@ -180,7 +208,11 @@ class Message implements MessageInterface
     }
 
     /**
-     * {@inheritDoc}
+     * Add custom data
+     *
+     * @param string $key
+     * @param mixed $value
+     * @return Message
      */
     public function addCustomData($key, $value = null)
     {
@@ -196,7 +228,9 @@ class Message implements MessageInterface
     }
 
     /**
-     * {@inheritDoc}
+     * Get custom data
+     *
+     * @return array
      */
     public function getCustomData()
     {
@@ -204,7 +238,10 @@ class Message implements MessageInterface
     }
 
     /**
-     * {@inheritDoc}
+     * Set expires of this message
+     *
+     * @param \DateTime $expires
+     * @return Message
      */
     public function setExpires(\DateTime $expires)
     {
@@ -215,7 +252,9 @@ class Message implements MessageInterface
     }
 
     /**
-     * {@inheritDoc}
+     * Get expires
+     *
+     * @return \DateTime
      */
     public function getExpires()
     {
@@ -223,7 +262,9 @@ class Message implements MessageInterface
     }
 
     /**
-     * {@inheritDoc}
+     * Get payload data
+     *
+     * @return array
      */
     public function getPayloadData()
     {
@@ -235,7 +276,10 @@ class Message implements MessageInterface
     }
 
     /**
-     * {@inheritDoc}
+     * Set badge
+     *
+     * @param int $badge
+     * @return Message
      */
     public function setBadge($badge)
     {
@@ -245,7 +289,9 @@ class Message implements MessageInterface
     }
 
     /**
-     * {@inheritDoc}
+     * Get madge
+     *
+     * @return int
      */
     public function getBadge()
     {
@@ -253,7 +299,10 @@ class Message implements MessageInterface
     }
 
     /**
-     * {@inheritDoc}
+     * Set sound
+     *
+     * @param string $sound
+     * @return Message
      */
     public function setSound($sound)
     {
@@ -263,7 +312,9 @@ class Message implements MessageInterface
     }
 
     /**
-     * {@inheritDoc}
+     * Get sound
+     *
+     * @return string
      */
     public function getSound()
     {

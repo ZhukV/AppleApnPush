@@ -19,7 +19,7 @@ use Apple\ApnPush\Connection\AbstractSocketConnection;
 class Connection extends AbstractSocketConnection
 {
     /**
-     * {@inheritDoc}
+     * Initialize connection
      */
     public function create()
     {

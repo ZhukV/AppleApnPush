@@ -48,10 +48,11 @@ class ApsData implements ApsDataInterface
     }
 
     /**
-     * {@inheritDoc}
+     * Set body
+     * Attention: clear custom body data
      *
-     * ATTENTION:
-     *  Clear custom body data
+     * @param string $body
+     * @return ApsData
      */
     public function setBody($body)
     {
@@ -75,7 +76,9 @@ class ApsData implements ApsDataInterface
     }
 
     /**
-     * {@inheritDoc}
+     * Get body
+     *
+     * @return string
      */
     public function getBody()
     {
@@ -83,7 +86,12 @@ class ApsData implements ApsDataInterface
     }
 
     /**
-     * {@inheritDoc}
+     * Set body localize
+     *
+     * @param string $localizeKey
+     * @param array $localizeParams
+     * @throws \LogicException          If body message already exists.
+     * @return ApsData
      */
     public function setBodyLocalize($localizeKey, array $localizeParams = array())
     {
@@ -117,7 +125,10 @@ class ApsData implements ApsDataInterface
     }
 
     /**
-     * {@inheritDoc}
+     * Set custom body
+     *
+     * @param array $bodyCustom
+     * @return ApsData
      */
     public function setBodyCustom(array $bodyCustom = array())
     {
@@ -127,7 +138,9 @@ class ApsData implements ApsDataInterface
     }
 
     /**
-     * {@inheritDoc}
+     * Get custom body
+     *
+     * @return array
      */
     public function getBodyCustom()
     {
@@ -135,7 +148,11 @@ class ApsData implements ApsDataInterface
     }
 
     /**
-     * {@inheritDoc}
+     * Set sound
+     *
+     * @param string $sound
+     * @throws \InvalidArgumentException
+     * @return ApsData
      */
     public function setSound($sound)
     {
@@ -155,7 +172,9 @@ class ApsData implements ApsDataInterface
     }
 
     /**
-     * {@inheritDoc}
+     * Get sound
+     *
+     * @return string
      */
     public function getSound()
     {
@@ -163,7 +182,11 @@ class ApsData implements ApsDataInterface
     }
 
     /**
-     * {@inheritDoc}
+     * Set badge
+     *
+     * @param int $badge
+     * @throw \InvalidArgumentException
+     * @return ApsData
      */
     public function setBadge($badge)
     {
@@ -174,7 +197,7 @@ class ApsData implements ApsDataInterface
         }
 
         if ((int) $badge < 0) {
-            throw new \InvalidArgumentException(sprintf(
+            throw new \OutOfRangeException(sprintf(
                 'Badge key cannot be less than zero (%s)!',
                 $badge
             ));
@@ -186,7 +209,9 @@ class ApsData implements ApsDataInterface
     }
 
     /**
-     * {@inheritDoc}
+     * Get badge
+     *
+     * @return int
      */
     public function getBadge()
     {
@@ -194,7 +219,9 @@ class ApsData implements ApsDataInterface
     }
 
     /**
-     * {@inheritDoc}
+     * Get payload data
+     *
+     * @return array
      */
     public function getPayloadData()
     {

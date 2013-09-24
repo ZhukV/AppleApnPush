@@ -26,7 +26,7 @@ interface MessageInterface extends PayloadDataInterface
     /**
      * Get identifier
      *
-     * @return integet
+     * @return integer
      */
     public function getIdentifier();
 

@@ -92,7 +92,11 @@ class SendException extends ApnPushException
     }
 
     /**
-     * {@inheritDoc}
+     * Parse exception from apple response
+     *
+     * @param string $binaryData
+     * @param MessageInterface $message
+     * @return SendException
      */
     public static function parseFromAppleResponse($binaryData, MessageInterface $message = null)
     {
@@ -109,7 +113,9 @@ class SendException extends ApnPushException
     }
 
     /**
-     * {@inheritDoc}
+     * Get status code
+     *
+     * @return string
      */
     public function getStatusCode()
     {
@@ -117,7 +123,9 @@ class SendException extends ApnPushException
     }
 
     /**
-     * {@inheritDoc}
+     * Get command
+     *
+     * @return string
      */
     public function getCommand()
     {
@@ -125,7 +133,9 @@ class SendException extends ApnPushException
     }
 
     /**
-     * {@inheritDoc}
+     * Get identifier
+     *
+     * @return string
      */
     public function getIdentifier()
     {
@@ -133,7 +143,9 @@ class SendException extends ApnPushException
     }
 
     /**
-     * {@inheritDoc}
+     * Get message object
+     *
+     * @return MessageInterface
      */
     public function getMessageObject()
     {

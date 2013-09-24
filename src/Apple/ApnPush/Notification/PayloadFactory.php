@@ -22,7 +22,10 @@ class PayloadFactory implements PayloadFactoryInterface
     protected $jsonUnescapedUnicode = false;
 
     /**
-     * {@inheritDoc}
+     * Set status enabled flag JSON_UNESCAPED_UNICODE
+     *
+     * @param boolean $status
+     * @return PayloadFactory
      */
     public function setJsonUnescapedUnicode($status)
     {
@@ -40,7 +43,9 @@ class PayloadFactory implements PayloadFactoryInterface
     }
 
     /**
-     * {@inheritDoc}
+     * Get status enabled JSON_UNESCAPED_UNICODE
+     *
+     * @return bool
      */
     public function getJsonUnescapedUnicode()
     {
@@ -48,7 +53,10 @@ class PayloadFactory implements PayloadFactoryInterface
     }
 
     /**
-     * {@inheritDoc}
+     * Create payload hash for message
+     *
+     * @param MessageInterface $message
+     * @return string
      */
     public function createPayload(MessageInterface $message)
     {
