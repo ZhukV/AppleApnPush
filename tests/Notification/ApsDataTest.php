@@ -91,4 +91,26 @@ class ApsDataTest extends \PHPUnit_Framework_TestCase
             )
         ), $aps->getPayloadData());
     }
+
+    /**
+     * Test serialize
+     */
+    public function testSerialize()
+    {
+        $aps = new ApsData();
+        $aps
+            ->setBody('foo')
+            ->setBodyCustom(array('bar' => 'foo'))
+            ->setSound('test.acc')
+            ->setBadge(5);
+
+        $serializeData = serialize($aps);
+        /** @var ApsData $newAps */
+        $newAps = unserialize($serializeData);
+
+        $this->assertEquals('foo', $newAps->getBody());
+        $this->assertEquals(array('bar' => 'foo'), $newAps->getBodyCustom());
+        $this->assertEquals('test.acc', $newAps->getSound());
+        $this->assertEquals(5, $newAps->getBadge());
+    }
 }

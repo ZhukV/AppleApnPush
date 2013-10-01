@@ -14,7 +14,7 @@ namespace Apple\ApnPush\Notification;
 /**
  * Default APS data
  */
-class ApsData implements ApsDataInterface
+class ApsData implements ApsDataInterface, \Serializable
 {
     /**
      * @var string
@@ -238,5 +238,38 @@ class ApsData implements ApsDataInterface
         }
 
         return $apsData;
+    }
+
+    /**
+     * Serialize APS Data
+     *
+     * @return string
+     */
+    public function serialize()
+    {
+        $data = array(
+            'body' => $this->body,
+            'body_custom' => $this->bodyCustom,
+            'sound' => $this->sound,
+            'badge' => $this->badge
+        );
+
+        return serialize($data);
+    }
+
+    /**
+     * Unserialize APS Data
+     *
+     * @param string $data
+     */
+    public function unserialize($data)
+    {
+        $data = unserialize($data);
+
+        $this
+            ->setBody($data['body'])
+            ->setBodyCustom($data['body_custom'])
+            ->setSound($data['sound'])
+            ->setBadge($data['badge']);
     }
 }

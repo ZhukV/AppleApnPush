@@ -59,7 +59,10 @@ abstract class AbstractConnection implements ConnectionInterface
     }
 
     /**
-     * {@inheritDoc}
+     * Set the read time limit
+     *
+     * @param int $second
+     * @param int $milisecond
      */
     public function setReadTime($second, $milisecond = 0)
     {
@@ -83,7 +86,9 @@ abstract class AbstractConnection implements ConnectionInterface
     }
 
     /**
-     * {@inheritDoc}
+     * Get read time limit
+     *
+     * @return array
      */
     public function getReadTime()
     {
@@ -91,7 +96,9 @@ abstract class AbstractConnection implements ConnectionInterface
     }
 
     /**
-     * {@inheritDoc}
+     * Set certificate file path for create connection
+     *
+     * @param string $certificateFile
      */
     public function setCertificateFile($certificateFile)
     {
@@ -115,7 +122,9 @@ abstract class AbstractConnection implements ConnectionInterface
     }
 
     /**
-     * {@inheritDoc}
+     * Get certificate file path
+     *
+     * @return string
      */
     public function getCertificateFile()
     {
@@ -123,7 +132,9 @@ abstract class AbstractConnection implements ConnectionInterface
     }
 
     /**
-     * {@inheritDoc}
+     * Set certificate pass phrase
+     *
+     * @param string $certificatePassPhrase
      */
     public function setCertificatePassPhrase($certificatePassPhrase)
     {
@@ -133,7 +144,9 @@ abstract class AbstractConnection implements ConnectionInterface
     }
 
     /**
-     * {@inheritDoc}
+     * Get certificate pass phrase
+     *
+     * @return string|null
      */
     public function getCertificatePassPhrase()
     {
@@ -141,7 +154,9 @@ abstract class AbstractConnection implements ConnectionInterface
     }
 
     /**
-     * {@inheritDoc}
+     * Set use sandbox mode
+     *
+     * @param bool $sandboxMode
      */
     public function setSandboxMode($sandboxMode)
     {
@@ -151,7 +166,9 @@ abstract class AbstractConnection implements ConnectionInterface
     }
 
     /**
-     * {@inheritDoc}
+     * Get status use sandbox mode
+     *
+     * @return bool
      */
     public function getSandboxMode()
     {
@@ -159,7 +176,9 @@ abstract class AbstractConnection implements ConnectionInterface
     }
 
     /**
-     * {@inheritDoc}
+     * Get url for connection
+     *
+     * @return string
      */
     public function getUrl()
     {
@@ -169,7 +188,9 @@ abstract class AbstractConnection implements ConnectionInterface
     }
 
     /**
-     * {@inheritDoc}
+     * Get port for connection
+     *
+     * @return integer
      */
     public function getPort()
     {

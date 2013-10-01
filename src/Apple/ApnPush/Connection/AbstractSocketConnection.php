@@ -28,7 +28,11 @@ abstract class AbstractSocketConnection extends AbstractConnection
     protected $socketConnection;
 
     /**
-     * {@inheritDoc}
+     * Construct
+     *
+     * @param string $certificateFile
+     * @param string $certificatePassPhrase
+     * @param bool $sandbox
      */
     public function __construct($certificateFile = null, $certificatePassPhrase = null, $sandbox = false)
     {
@@ -61,10 +65,14 @@ abstract class AbstractSocketConnection extends AbstractConnection
             ->setTarget($this->getUrl())
             ->setPort($this->getPort())
             ->setContext($context);
+
+        return $this;
     }
 
     /**
-     * {@inheritDoc}
+     * Is created connection
+     *
+     * @return bool
      */
     public function is()
     {
@@ -72,7 +80,7 @@ abstract class AbstractSocketConnection extends AbstractConnection
     }
 
     /**
-     * {@inheritDoc}
+     * Close socket connection
      */
     public function close()
     {
@@ -80,7 +88,11 @@ abstract class AbstractSocketConnection extends AbstractConnection
     }
 
     /**
-     * {@inheritDoc}
+     * Write data to socket
+     *
+     * @param mixed $binaryData
+     * @param int|null $length
+     * @return int
      */
     public function write($binaryData, $length = null)
     {
@@ -88,7 +100,9 @@ abstract class AbstractSocketConnection extends AbstractConnection
     }
 
     /**
-     * {@inheritDoc}
+     * Check is ready ready
+     *
+     * @return bool
      */
     public function isReadyRead()
     {
@@ -98,7 +112,10 @@ abstract class AbstractSocketConnection extends AbstractConnection
     }
 
     /**
-     * {@inheritDoc}
+     * Read from socket
+     *
+     * @param int $length
+     * @return mixed
      */
     public function read($length)
     {

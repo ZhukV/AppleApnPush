@@ -14,7 +14,7 @@ namespace Apple\ApnPush\Notification;
 /**
  * Default iOS message
  */
-class Message implements MessageInterface
+class Message implements MessageInterface, \Serializable
 {
     /**
      * @var string
@@ -326,5 +326,53 @@ class Message implements MessageInterface
      */
     protected function preparePayload()
     {
+    }
+
+    /**
+     * Serialize message
+     *
+     * @return string
+     */
+    public function serialize()
+    {
+        $data = array(
+            'aps_data' => $this->apsData,
+            'device_token' => $this->deviceToken,
+            'custom_data' => $this->customData,
+            'expires' => $this->expires->format(\DateTime::ISO8601),
+            'identifier' => $this->identifier
+        );
+
+        return serialize($data);
+    }
+
+    /**
+     * Unserialize message
+     *
+     * @param string $data
+     */
+    public function unserialize($data)
+    {
+        $data = unserialize($data);
+
+        if ($data['aps_data']) {
+            $this->setApsData($data['aps_data']);
+        }
+
+        if ($data['device_token']) {
+            $this->setDeviceToken($data['device_token']);
+        }
+
+        if ($data['custom_data']) {
+            $this->setCustomData($data['custom_data']);
+        }
+
+        if ($data['expires']) {
+            $this->setExpires(\DateTime::createFromFormat(\DateTime::ISO8601, $data['expires']));
+        }
+
+        if ($data['identifier']) {
+            $this->setIdentifier($data['identifier']);
+        }
     }
 }

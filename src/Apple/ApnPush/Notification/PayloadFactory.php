@@ -25,6 +25,7 @@ class PayloadFactory implements PayloadFactoryInterface
      * Set status enabled flag JSON_UNESCAPED_UNICODE
      *
      * @param boolean $status
+     * @throws \LogicException      if PHP version < 5.4
      * @return PayloadFactory
      */
     public function setJsonUnescapedUnicode($status)
@@ -77,7 +78,10 @@ class PayloadFactory implements PayloadFactoryInterface
     }
 
     /**
-     * {@inheritDoc}
+     * Create JSON payload
+     *
+     * @param MessageInterface $message
+     * @return string
      */
     public function createJsonPayload(MessageInterface $message)
     {
