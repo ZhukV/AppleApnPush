@@ -29,7 +29,7 @@ class Message implements MessageInterface, \Serializable
     /**
      * @var array
      */
-    protected $customData;
+    protected $customData = array();
 
     /**
      * @var \DateTime $expire
