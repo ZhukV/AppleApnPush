@@ -19,7 +19,8 @@
     },
 
     "suggest": {
-        "symfony/console": "For send push notifications from console"
+        "symfony/console": "Send push notifications from console",
+        "apple/apn-push-queue": "Use queue for send push notification (AMQP, Redis, etc.)"
     },
 
     "autoload": {
