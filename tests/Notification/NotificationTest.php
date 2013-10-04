@@ -11,12 +11,10 @@
 
 namespace Apple\ApnPush\Notification;
 
-use Apple\ApnPush\TestCase;
-
 /**
  * Notification test
  */
-class NotificationTest extends TestCase
+class NotificationTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * @var \RequestStream\Stream\Socket\SocketClient
@@ -83,7 +81,9 @@ class NotificationTest extends TestCase
             ->method('read');
 
         // Set socket mock to connection
-        $this->setValueToProtected($connection, 'socketConnection', $socketMock);
+        $ref = new \ReflectionProperty($connection, 'socketConnection');
+        $ref->setAccessible(true);
+        $ref->setValue($connection, $socketMock);
 
         // Testing send message
         $this->assertTrue($notification->send($message));

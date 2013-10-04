@@ -11,12 +11,10 @@
 
 namespace Apple\ApnPush\Notification;
 
-use Apple\ApnPush\TestCase;
-
 /**
  * Connection test
  */
-class ConnectionTest extends TestCase
+class ConnectionTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * Default test
@@ -105,7 +103,9 @@ class ConnectionTest extends TestCase
         $mock->expects($this->any())->method('selectRead')
             ->will($this->returnValue(false));
 
-        $this->setValueToProtected($connection, 'socketConnection', $mock);
+        $ref = new \ReflectionProperty($connection, 'socketConnection');
+        $ref->setAccessible(true);
+        $ref->setValue($connection, $mock);
 
         $this->assertFalse($connection->is());
         $connection->create();
@@ -136,7 +136,9 @@ class ConnectionTest extends TestCase
             ->method('selectRead')
             ->with($this->equalTo($second), $this->equalTo($milisecond));
 
-        $this->setValueToProtected($connection, 'socketConnection', $mock);
+        $ref = new \ReflectionProperty($connection, 'socketConnection');
+        $ref->setAccessible(true);
+        $ref->setValue($connection, $mock);
 
         $connection->isReadyRead();
     }

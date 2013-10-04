@@ -1,0 +1,60 @@
+<?php
+
+/**
+ * This file is part of the AppleApnPush package
+ *
+ * (c) Vitaliy Zhuk <zhuk2205@gmail.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code
+ */
+
+namespace Apple\ApnPush\Queue;
+
+use Apple\ApnPush\Notification\MessageInterface;
+use Apple\ApnPush\Notification\NotificationInterface;
+use Apple\ApnPush\Queue\Adapter\AdapterInterface;
+
+interface QueueInterface
+{
+    /**
+     * Set queue adapter
+     *
+     * @param AdapterInterface $adapter
+     */
+    public function setAdapter(AdapterInterface $adapter = null);
+
+    /**
+     * Get queue adapter
+     *
+     * @return AdapterInterface
+     */
+    public function getAdapter();
+
+    /**
+     * Set notification
+     *
+     * @param NotificationInterface $notification
+     */
+    public function setNotification(NotificationInterface $notification = null);
+
+    /**
+     * Get notification
+     *
+     * @return NotificationInterface
+     */
+    public function getNotification();
+
+    /**
+     * Send message to queue
+     *
+     * @param MessageInterface $message
+     * @return bool         Status of send message
+     */
+    public function sendMessage(MessageInterface $message);
+
+    /**
+     * Run receiver instance
+     */
+    public function runReceiver();
+}
