@@ -335,6 +335,8 @@ class Message implements MessageInterface, \Serializable
      */
     public function serialize()
     {
+        $this->preparePayload();
+
         $data = array(
             'aps_data' => $this->apsData,
             'device_token' => $this->deviceToken,
