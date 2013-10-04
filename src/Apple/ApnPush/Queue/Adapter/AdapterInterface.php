@@ -26,17 +26,17 @@ interface AdapterInterface
     public function isNextReceive();
 
     /**
-     * Get message
+     * Get message from queue
      *
      * @return \Apple\ApnPush\Notification\MessageInterface|null
      */
     public function getMessage();
 
     /**
-     * Send message
+     * Add message to queue
      *
      * @param MessageInterface $message
      * @return bool
      */
-    public function sendMessage(MessageInterface $message);
+    public function addMessage(MessageInterface $message);
 }

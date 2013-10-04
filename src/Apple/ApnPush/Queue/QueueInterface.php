@@ -46,12 +46,12 @@ interface QueueInterface
     public function getNotification();
 
     /**
-     * Send message to queue
+     * Add message to queue
      *
      * @param MessageInterface $message
      * @return bool         Status of send message
      */
-    public function sendMessage(MessageInterface $message);
+    public function addMessage(MessageInterface $message);
 
     /**
      * Run receiver instance

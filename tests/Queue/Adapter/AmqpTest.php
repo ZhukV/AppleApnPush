@@ -55,9 +55,9 @@ class AmqpAdapterTest extends \PHPUnit_Framework_TestCase
     /**
      * Testing send message without errors
      *
-     * @dataProvider providerSendMessageParameters
+     * @dataProvider providerAddMessageParameters
      */
-    public function testSendMessage($routingKey, $publishFlag, $publishParameters)
+    public function testAddMessage($routingKey, $publishFlag, $publishParameters)
     {
         $message = new Message();
         $message
@@ -77,10 +77,10 @@ class AmqpAdapterTest extends \PHPUnit_Framework_TestCase
             ->setPublishOptions($publishParameters)
             ->setPublishFlag($publishFlag);
 
-        $adapter->sendMessage($message);
+        $adapter->addMessage($message);
     }
 
-    public function providerSendMessageParameters()
+    public function providerAddMessageParameters()
     {
         return array(
             array('foo', AMQP_NOPARAM, array()),
@@ -93,11 +93,11 @@ class AmqpAdapterTest extends \PHPUnit_Framework_TestCase
      *
      * @expectedException \RuntimeException
      */
-    public function testSendMessageExchangeNotFound()
+    public function testAddMessageExchangeNotFound()
     {
         $adapter = new AmqpAdapter();
         $adapter->setQueue($this->queue);
-        $adapter->sendMessage(new Message());
+        $adapter->addMessage(new Message());
     }
 
     /**
@@ -105,11 +105,11 @@ class AmqpAdapterTest extends \PHPUnit_Framework_TestCase
      *
      * @expectedException \RuntimeException
      */
-    public function testSendMessageRoutingKeyNotFound()
+    public function testAddMessageRoutingKeyNotFound()
     {
         $adapter = new AmqpAdapter();
         $adapter->setExchange($this->exchange);
-        $adapter->sendMessage(new Message());
+        $adapter->addMessage(new Message());
     }
 
     /**

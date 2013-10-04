@@ -169,7 +169,7 @@ class AmqpAdapter implements AdapterInterface
     }
 
     /**
-     * Get message
+     * Get message from queue
      *
      * @throws \RuntimeException
      * @return \Apple\ApnPush\Notification\MessageInterface|null
@@ -192,13 +192,13 @@ class AmqpAdapter implements AdapterInterface
     }
 
     /**
-     * Send message
+     * Add message to queue
      *
      * @param MessageInterface $message
      * @throws \RuntimeException
      * @return bool
      */
-    public function sendMessage(MessageInterface $message)
+    public function addMessage(MessageInterface $message)
     {
         if (null === $this->routingKey) {
             throw new \RuntimeException('Can\'t send message. Publish routing key is undefined.');

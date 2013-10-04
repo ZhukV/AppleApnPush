@@ -91,19 +91,19 @@ class Queue implements QueueInterface
     }
 
     /**
-     * Send message to queue
+     * Add message to queue
      *
      * @param MessageInterface $message
      * @throws \RuntimeException
      * @return bool
      */
-    public function sendMessage(MessageInterface $message)
+    public function addMessage(MessageInterface $message)
     {
         if (!$this->adapter) {
             throw new \RuntimeException('Can\'t send message to queue. Adapter not found.');
         }
 
-        return $this->adapter->sendMessage($message);
+        return $this->adapter->addMessage($message);
     }
 
     /**

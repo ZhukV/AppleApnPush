@@ -44,15 +44,15 @@ class QueueTest extends \PHPUnit_Framework_TestCase
     /**
      * Test send message without errors
      */
-    public function testSendMessage()
+    public function testAddMessage()
     {
         $message = new Message();
 
-        $this->adapter->expects($this->once())->method('sendMessage')
+        $this->adapter->expects($this->once())->method('addMessage')
             ->with($message)->will($this->returnValue(true));
 
         $queue = new Queue($this->adapter, $this->notification);
-        $this->assertTrue($queue->sendMessage($message));
+        $this->assertTrue($queue->addMessage($message));
     }
 
     /**
@@ -60,10 +60,10 @@ class QueueTest extends \PHPUnit_Framework_TestCase
      *
      * @expectedException \RuntimeException
      */
-    public function testSendMessageAdapterNotFound()
+    public function testAddMessageAdapterNotFound()
     {
         $queue = new Queue();
-        $queue->sendMessage(new Message());
+        $queue->addMessage(new Message());
     }
 
     /**

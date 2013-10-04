@@ -24,9 +24,9 @@ class ArrayAdapterTest extends \PHPUnit_Framework_TestCase
 
         $this->assertCount(0, $adapter);
         $this->assertNull($adapter->getMessage());
-        $adapter->sendMessage(new Message());
+        $adapter->addMessage(new Message());
         $this->assertCount(1, $adapter);
-        $adapter->sendMessage(new Message());
+        $adapter->addMessage(new Message());
         $this->assertCount(2, $adapter);
 
         $message = $adapter->getMessage();

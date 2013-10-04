@@ -35,7 +35,7 @@ class ArrayAdapter implements AdapterInterface, \Countable
     }
 
     /**
-     * Get message
+     * Get message from queue
      *
      * @return \Apple\ApnPush\Notification\MessageInterface|null
      */
@@ -45,12 +45,12 @@ class ArrayAdapter implements AdapterInterface, \Countable
     }
 
     /**
-     * Send message
+     * Add message to queue
      *
      * @param MessageInterface $message
      * @return bool
      */
-    public function sendMessage(MessageInterface $message)
+    public function addMessage(MessageInterface $message)
     {
         return array_push($this->_messages, $message);
     }

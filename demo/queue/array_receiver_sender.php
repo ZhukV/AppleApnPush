@@ -19,9 +19,9 @@ $notification = new Notification(CERTIFICATE_FILE);
 $queue = new Queue($adapter, $notification);
 
 // Add messages
-$queue->sendMessage(new Message(DEVICE_TOKEN, 'Hello world 1'));
-$queue->sendMessage(new Message(DEVICE_TOKEN, 'Hello world 2'));
-$queue->sendMessage(new Message(DEVICE_TOKEN, 'Hello world 3'));
+$queue->addMessage(new Message(DEVICE_TOKEN, 'Hello world 1'));
+$queue->addMessage(new Message(DEVICE_TOKEN, 'Hello world 2'));
+$queue->addMessage(new Message(DEVICE_TOKEN, 'Hello world 3'));
 
 // Run receiver for send all messages
 $queue->runReceiver();
