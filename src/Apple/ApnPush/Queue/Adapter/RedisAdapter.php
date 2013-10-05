@@ -129,7 +129,7 @@ class RedisAdapter implements AdapterInterface
             throw new \RuntimeException('Can\'t get message. Not found redis instance.');
         }
 
-        if ($useSleep) {
+        if ($useSleep && $this->sleepTimeout) {
             usleep($this->sleepTimeout);
         }
 
