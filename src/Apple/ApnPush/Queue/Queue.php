@@ -33,6 +33,11 @@ class Queue implements QueueInterface
     protected $notification;
 
     /**
+     * @var callable
+     */
+    protected $notificationControlError;
+
+    /**
      * Construct
      *
      * @param AdapterInterface $adapter
@@ -91,6 +96,34 @@ class Queue implements QueueInterface
     }
 
     /**
+     * Set notificationControlError
+     *
+     * @param callable $notificationControlError
+     * @throws \InvalidArgumentException
+     * @return Queue
+     */
+    public function setNotificationControlError($notificationControlError)
+    {
+        if (!is_callable($notificationControlError)) {
+            throw new \InvalidArgumentException('Notification control error must be a callable.');
+        }
+
+        $this->notificationControlError = $notificationControlError;
+
+        return $this;
+    }
+
+    /**
+     * Get notificationControlError
+     *
+     * @return callable
+     */
+    public function getNotificationControlError()
+    {
+        return $this->notificationControlError;
+    }
+
+    /**
      * Add message to queue
      *
      * @param MessageInterface $message
@@ -134,9 +167,11 @@ class Queue implements QueueInterface
                 try {
                     $this->notification->send($message);
                 } catch (SendException $e) {
+                    if ($this->notificationControlError) {
+                        call_user_func($this->notificationControlError, $e);
+                    }
                 }
             }
         }
     }
-
 }

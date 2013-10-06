@@ -12,6 +12,7 @@
 namespace Apple\ApnPush\Queue;
 
 use Apple\ApnPush\Notification\Message;
+use Apple\ApnPush\Notification\SendException;
 use Apple\ApnPush\Queue\Queue;
 
 class QueueTest extends \PHPUnit_Framework_TestCase
@@ -128,5 +129,43 @@ class QueueTest extends \PHPUnit_Framework_TestCase
     {
         $queue = new Queue($this->adapter, null);
         $queue->runReceiver();
+    }
+
+    /**
+     * Test run receiver and control control notification error
+     */
+    public function testRunReceiverControlNotificationError()
+    {
+        $iterations = 0;
+        $existsControlError = false;
+
+        $this->adapter->expects($this->any())->method('isNextReceive')
+            ->with()->will($this->returnCallback(function() use (&$iterations){
+                if ($iterations > 0) {
+                    return false;
+                }
+                $iterations++;
+                return true;
+            }));
+
+        $message = new Message();
+
+        $this->adapter->expects($this->any())->method('getMessage')
+            ->with()->will($this->returnValue($message));
+
+        $this->notification->expects($this->any())->method('send')
+            ->with($message)->will($this->returnCallback(function(){
+                throw new SendException(SendException::ERROR_UNPACK_RESPONSE, null, null);
+            }));
+
+        $controlError = function(SendException $error) use (&$existsControlError) {
+            $existsControlError = true;
+        };
+
+        $queue = new Queue($this->adapter, $this->notification);
+        $queue->setNotificationControlError($controlError);
+        $queue->runReceiver();
+
+        $this->assertTrue($existsControlError, 'Not call to callback for control notification error.');
     }
 }
