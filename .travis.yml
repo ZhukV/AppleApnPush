@@ -6,8 +6,6 @@ php:
   - 5.5
 
 before_script:
-  # Install required php extensions
-  - travis/install-extensions.sh
   - echo "extension = amqp.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
 
   - wget http://getcomposer.org/composer.phar
