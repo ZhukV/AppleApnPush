@@ -163,7 +163,7 @@ class QueueTest extends \PHPUnit_Framework_TestCase
         };
 
         $queue = new Queue($this->adapter, $this->notification);
-        $queue->setNotificationControlError($controlError);
+        $queue->setNotificationErrorHandler($controlError);
         $queue->runReceiver();
 
         $this->assertTrue($existsControlError, 'Not call to callback for control notification error.');

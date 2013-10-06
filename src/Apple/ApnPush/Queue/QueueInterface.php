@@ -46,18 +46,18 @@ interface QueueInterface
     public function getNotification();
 
     /**
-     * Set notification control error
+     * Set notification error handler
      *
-     * @param callable $notificationControlError
+     * @param callable $notificationErrorHandler
      */
-    public function setNotificationControlError($notificationControlError);
+    public function setNotificationErrorHandler($notificationErrorHandler);
 
     /**
-     * Get notification control error
+     * Get notification error handler
      *
      * @return callable
      */
-    public function getNotificationControlError();
+    public function getNotificationErrorHandler();
 
     /**
      * Add message to queue
