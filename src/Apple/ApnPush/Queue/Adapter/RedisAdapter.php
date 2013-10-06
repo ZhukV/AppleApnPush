@@ -20,7 +20,7 @@ class RedisAdapter implements AdapterInterface
      *
      * @var integer
      */
-    private $sleepTimeout;
+    private $sleepTimeout = 250000;
 
     /**
      * @var string
