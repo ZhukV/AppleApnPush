@@ -13,7 +13,10 @@ namespace Apple\ApnPush\Notification;
 
 use Apple\ApnPush\Connection\ConnectionInterface;
 use Apple\ApnPush\Exception;
+use Apple\ApnPush\Notification\Events\SendMessageCompleteEvent;
+use Apple\ApnPush\Notification\Events\SendMessageErrorEvent;
 use Psr\Log\LoggerInterface;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 /**
  * Notification core
@@ -36,6 +39,11 @@ class Notification implements NotificationInterface
     protected $logger;
 
     /**
+     * @var EventDispatcherInterface
+     */
+    protected $eventDispatcher;
+
+    /**
      * @var bool
      */
     protected $checkForErrors = true;
@@ -51,7 +59,7 @@ class Notification implements NotificationInterface
         if (null !== $connection) {
             if ($connection instanceof ConnectionInterface) {
                 $this->connection = $connection;
-            } elseif (is_string($connection)) {
+            } else if (is_string($connection)) {
                 // Connection is a certificate path file
                 $this->connection = new Connection($connection);
             }
@@ -107,6 +115,52 @@ class Notification implements NotificationInterface
     }
 
     /**
+     * Set logger for logging all actions
+     *
+     * @param LoggerInterface $logger
+     * @return Notification
+     */
+    public function setLogger(LoggerInterface $logger = null)
+    {
+        $this->logger = $logger;
+
+        return $this;
+    }
+
+    /**
+     * Get logger
+     *
+     * @return LoggerInterface
+     */
+    public function getLogger()
+    {
+        return $this->logger;
+    }
+
+    /**
+     * Set event dispatcher
+     *
+     * @param EventDispatcherInterface $eventDispatcher
+     * @return Notification
+     */
+    public function setEventDispatcher(EventDispatcherInterface $eventDispatcher = null)
+    {
+        $this->eventDispatcher = $eventDispatcher;
+
+        return $this;
+    }
+
+    /**
+     * Get event dispatcher
+     *
+     * @return EventDispatcherInterface|null
+     */
+    public function getEventDispatcher()
+    {
+        return $this->eventDispatcher;
+    }
+
+    /**
      * Set message to iOS devices
      *
      * @param MessageInterface $message
@@ -132,10 +186,6 @@ class Notification implements NotificationInterface
 
         $payload = $this->payloadFactory->createPayload($message);
 
-        if ($this->logger) {
-            $this->logger->debug('Success create payload.');
-        }
-
         if (!$this->connection->is()) {
             if ($this->logger) {
                 $this->logger->debug('Create connection...');
@@ -150,13 +200,27 @@ class Notification implements NotificationInterface
             $responseApple = $this->connection->read(6);
             $error = SendException::parseFromAppleResponse($responseApple, $message);
 
+            if ($this->eventDispatcher) {
+                // Call to event: Error send message
+                $event = new SendMessageErrorEvent($message, $error);
+                $this->eventDispatcher->dispatch(NotificationEvents::SEND_MESSAGE_ERROR, $event);
+            }
+
             if ($this->logger) {
+                // Write error to log
                 $this->logger->error((string) $error);
+                $this->logger->debug('Close connection...');
             }
 
             $this->connection->close();
 
             throw $error;
+        }
+
+        if ($this->eventDispatcher) {
+            // Call to event: Complete send message
+            $event = new SendMessageCompleteEvent($message);
+            $this->eventDispatcher->dispatch(NotificationEvents::SEND_MESSAGE_COMPLETE, $event);
         }
 
         if ($this->logger) {
@@ -200,29 +264,6 @@ class Notification implements NotificationInterface
     public function createMessage()
     {
         return new Message();
-    }
-
-    /**
-     * Set logger for logging all actions
-     *
-     * @param LoggerInterface $logger
-     * @return Notification
-     */
-    public function setLogger(LoggerInterface $logger = null)
-    {
-        $this->logger = $logger;
-
-        return $this;
-    }
-
-    /**
-     * Get logger
-     *
-     * @return LoggerInterface
-     */
-    public function getLogger()
-    {
-        return $this->logger;
     }
 
     /**

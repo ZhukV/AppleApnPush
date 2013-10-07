@@ -10,6 +10,7 @@
  */
 
 namespace Apple\ApnPush\Notification;
+use Symfony\Component\EventDispatcher\EventDispatcher;
 
 /**
  * Notification test
@@ -17,9 +18,14 @@ namespace Apple\ApnPush\Notification;
 class NotificationTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @var \RequestStream\Stream\Socket\SocketClient
+     * @var \RequestStream\Stream\Socket\SocketClient|\PHPUnit_Framework_MockObject_MockObject
      */
     protected $socketConnection;
+
+    /**
+     * @var \Apple\ApnPush\Notification\Connection|\PHPUnit_Framework_MockObject_MockObject
+     */
+    protected $connection;
 
     /**
      * {@inheritDoc}
@@ -30,6 +36,11 @@ class NotificationTest extends \PHPUnit_Framework_TestCase
             'RequestStream\Stream\Socket\SocketClient',
             array('create', 'write', 'read', 'selectRead', 'setBlocking', 'is', 'close')
         );
+
+        $this->connection = $this->getMock(
+            'Apple\ApnPush\Notification\Connection',
+            array('is', 'write', 'isReadyRead', 'create', 'close', 'read')
+        );
     }
 
     /**
@@ -37,7 +48,7 @@ class NotificationTest extends \PHPUnit_Framework_TestCase
      */
     public function tearDown()
     {
-        unset ($this->socketConnection);
+        unset ($this->socketConnection, $this->connection);
     }
 
     /**
@@ -53,27 +64,23 @@ class NotificationTest extends \PHPUnit_Framework_TestCase
         $notification->setConnection($connection);
 
         // Get socket connection mock
+        /** @var \PHPUnit_Framework_MockObject_MockObject $socketMock */
         $socketMock = $this->socketConnection;
 
-        $socketMock->expects($this->any())
-            ->method('is')
+        $socketMock->expects($this->any())->method('is')
             ->will($this->returnValue(false));
 
-        $socketMock->expects($this->once())
-            ->method('create');
+        $socketMock->expects($this->once())->method('create');
 
-        $socketMock->expects($this->once())
-            ->method('setBlocking')
+        $socketMock->expects($this->once())->method('setBlocking')
             ->with($this->equalTo(0));
 
-        $socketMock->expects($this->once())
-            ->method('write')
+        $socketMock->expects($this->once())->method('write')
             ->will($this->returnCallback(function($text, $size = null) {
                 return mb_strlen($text);
             }));
 
-        $socketMock->expects($this->once())
-            ->method('selectRead')
+        $socketMock->expects($this->once())->method('selectRead')
             ->with($this->equalTo(1), $this->equalTo(0))
             ->will($this->returnValue(false));
 
@@ -106,7 +113,7 @@ class NotificationTest extends \PHPUnit_Framework_TestCase
      */
     public function testReopenConnection()
     {
-        // Create mock socket connection
+        /** @var \PHPUnit_Framework_MockObject_MockObject $socketMock */
         $socketMock = $this->socketConnection;
 
         $socketMock->expects($this->any())->method('create')->will($this->returnCallback(function() use ($socketMock) {
@@ -172,6 +179,86 @@ class NotificationTest extends \PHPUnit_Framework_TestCase
         // Test reopen connection
         $notification->send(self::createMessage('test2'));
         $this->assertTrue($originConnection->is());
+    }
+
+    /**
+     * Test call error event
+     *
+     * @expectedException \Apple\ApnPush\Notification\SendException
+     */
+    public function testSendMessageEventError()
+    {
+        if (!class_exists('Symfony\Component\EventDispatcher\EventDispatcher')) {
+            $this->markTestSkipped('Not found package "symfony/event-dispatcher".');
+        }
+
+        $message = self::createMessage('Foo');
+
+        $this->connection->expects($this->any())->method('is')
+            ->will($this->returnValue(true));
+
+        $this->connection->expects($this->once())->method('isReadyRead')
+            ->will($this->returnValue(true));
+
+        $this->connection->expects($this->once())->method('write')
+            ->will($this->returnCallback(function ($a) { return mb_strlen($a); }));
+
+        $eventDispatcher = $this->getMock(
+            'Symfony\Component\EventDispatcher\EventDispatcher',
+            array('dispatch')
+        );
+
+        $eventDispatcher->expects($this->once())->method('dispatch')
+            ->with(
+                NotificationEvents::SEND_MESSAGE_ERROR,
+                $this->isInstanceOf('Apple\ApnPush\Notification\Events\SendMessageErrorEvent'
+            ));
+
+        $notification = new Notification();
+        $notification->setPayloadFactory(new PayloadFactory());
+        $notification->setConnection($this->connection);
+        $notification->setEventDispatcher($eventDispatcher);
+
+        $notification->send($message);
+    }
+
+    /**
+     * Test call complete event
+     */
+    public function testSendMessageEventComplete()
+    {
+        if (!class_exists('Symfony\Component\EventDispatcher\EventDispatcher')) {
+            $this->markTestSkipped('Not found package "symfony/event-dispatcher".');
+        }
+
+        $message = self::createMessage('Foo');
+
+        $this->connection->expects($this->any())->method('is')
+            ->will($this->returnValue(true));
+
+        $this->connection->expects($this->once())->method('isReadyRead')
+            ->will($this->returnValue(false));
+
+        $this->connection->expects($this->once())->method('write')
+            ->will($this->returnCallback(function ($a) { return mb_strlen($a); }));
+
+        $eventDispatcher = $this->getMock(
+            'Symfony\Component\EventDispatcher\EventDispatcher',
+            array('dispatch')
+        );
+
+        $eventDispatcher->expects($this->once())->method('dispatch')
+            ->with(
+                NotificationEvents::SEND_MESSAGE_COMPLETE,
+                $this->isInstanceOf('Apple\ApnPush\Notification\Events\SendMessageCompleteEvent'
+            ));
+
+        $notification = new Notification();
+        $notification->setPayloadFactory(new PayloadFactory());
+        $notification->setConnection($this->connection);
+        $notification->setEventDispatcher($eventDispatcher);
+
+        $notification->send($message);
     }
 
     /**

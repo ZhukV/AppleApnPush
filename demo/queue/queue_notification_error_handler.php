@@ -1,20 +1,22 @@
 <?php
 
-include_once __DIR__ . '/include_config.php';
+include_once __DIR__ . '/../include_config.php';
 
-include_once __DIR__ . '/../../vendor/autoload.php';
-
-use Apple\ApnPush\Notification;
+use Apple\ApnPush\Notification\Notification;
 use Apple\ApnPush\Notification\Message;
 use Apple\ApnPush\Notification\SendException;
+use Apple\ApnPush\Notification\Connection;
 use Apple\ApnPush\Queue;
 use Apple\ApnPush\Queue\Adapter\ArrayAdapter;
 
 // Create array adapter
 $adapter = new ArrayAdapter();
 
+// Create connection
+$connection = new Connection(CERTIFICATE_FILE, PASS_PHRASE, SANDBOX_MODE);
+
 // Create notification
-$notification = new Notification(CERTIFICATE_FILE);
+$notification = new Notification($connection);
 
 // Create queue
 $queue = new Queue($adapter, $notification);

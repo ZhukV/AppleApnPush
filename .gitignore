@@ -2,4 +2,4 @@
 /vendor/
 composer.phar
 composer.lock
-/demo/queue/config.php
+/demo/config.php
