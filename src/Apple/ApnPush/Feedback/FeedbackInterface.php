@@ -38,7 +38,7 @@ interface FeedbackInterface
     /**
      * Get invalided device tokens from Apple feedback service
      *
-     * @return array
+     * @return array|Device[]
      */
     public function getInvalidDevices();
 
