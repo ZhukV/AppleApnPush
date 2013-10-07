@@ -20,7 +20,7 @@
     "suggest": {
         "symfony/console": "Send push notifications from console",
         "symfony/event-dispatcher": "Use events in apple apn push",
-        "monolog/logger": "Use logger system"
+        "monolog/monolog": "Use logger system"
     },
 
     "autoload": {
