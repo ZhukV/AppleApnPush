@@ -5,6 +5,7 @@ This package has components:
 
 * [Notification] (notification.md)
 * [Feedback] (feedback.md)
+* [Queue] (queue.md)
 
 Contributors:
 -------------

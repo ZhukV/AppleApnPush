@@ -9,5 +9,3 @@ if (file_exists($file = $vendorDir . '/autoload.php')) {
 } else {
     throw new \RuntimeException("Not found composer autoload");
 }
-
-require __DIR__ . '/TestCase.php';

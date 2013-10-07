@@ -150,3 +150,31 @@ $logger->pushHandler(new Monolog\Handler\ChromePHPHandler());
 
 $notification->setLogger($logger);
 ```
+
+EventDispatcher
+---------------
+
+You can use event system for control complete/error send message.
+
+Example:
+
+```php
+use Apple\ApnPush\Notification\NotificationEvents;
+use Symfony\Component\EventDispatcher\EventDispatcher;
+
+// Create event dispatcher
+$eventDispatcher = new EventDispatcher;
+
+// Add complete listener
+$eventDispatcher->addListener(NotificationEvents::SEND_MESSAGE_ERROR, function (){
+    print "[*] Error with send message.\n";
+});
+
+// Add error listener
+$eventDispatcher->addListener(NotificationEvents::SEND_MESSAGE_COMPLETE, function (){
+    print "[-] Complete send message.\n";
+});
+
+$notification->setEventDispatcher($eventDispatcher);
+
+All event names defined in `Apple\ApnPush\Notification\NotificationEvents`

@@ -14,6 +14,7 @@ namespace Apple\ApnPush\Notification;
 use Apple\ApnPush\Connection\ConnectionInterface;
 use Apple\ApnPush\Notification\MessageInterface;
 use Psr\Log\LoggerInterface;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 /**
  * Interface for control notification system
@@ -68,6 +69,20 @@ interface NotificationInterface
      * @return LoggerInterface
      */
     public function getLogger();
+
+    /**
+     * Set event dispatcher
+     *
+     * @param EventDispatcherInterface $eventDispatcher
+     */
+    public function setEventDispatcher(EventDispatcherInterface $eventDispatcher = null);
+
+    /**
+     * Get event dispatcher
+     *
+     * @return EventDispatcherInterface|null
+     */
+    public function getEventDispatcher();
 
     /**
      * Set whether or not to check for errors

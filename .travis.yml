@@ -1,9 +1,19 @@
 language: php
 
 php:
-  - 5.3
-  - 5.4
+    - 5.3
+    - 5.4
+    - 5.5
 
 before_script:
-  - wget http://getcomposer.org/composer.phar
-  - php composer.phar install
+    # Add/Install required extensions for testing
+    - echo "extension = amqp.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
+    - pecl install redis
+
+    # Install composer
+    - wget http://getcomposer.org/composer.phar
+    - php composer.phar install
+
+    # Installation suggestion package
+    - php composer.phar require psr/log dev-master
+    - php composer.phar require symfony/event-dispatcher dev-master

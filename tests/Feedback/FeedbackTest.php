@@ -11,14 +11,12 @@
 
 namespace Apple\ApnPush\Feedback;
 
-use Apple\ApnPush\TestCase;
-
 /**
  * Feedback test
  *
  * @author Ryan Martinsen <ryan@ryanware.com>
  */
-class FeedbackTest extends TestCase
+class FeedbackTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * @var \RequestStream\Stream\Socket\SocketClient
@@ -73,7 +71,9 @@ class FeedbackTest extends TestCase
             ->will($this->returnValue($this->packData() . $this->packData() . $this->packData()));
 
         // Set socket mock to connection
-        $this->setValueToProtected($connection, 'socketConnection', $socketMock);
+        $ref = new \ReflectionProperty($connection, 'socketConnection');
+        $ref->setAccessible(true);
+        $ref->setValue($connection, $socketMock);
 
         // Testing send message
         $devices = $service->getInvalidDevices();

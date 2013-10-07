@@ -35,7 +35,7 @@ class Feedback implements FeedbackInterface
     /**
      * Construct
      *
-     * @param Connection
+     * @param Connection $connection
      */
     public function __construct($connection = null)
     {
@@ -50,7 +50,10 @@ class Feedback implements FeedbackInterface
     }
 
     /**
-     * {@inheritDoc}
+     * Set connection
+     *
+     * @param ConnectionInterface $connection
+     * @return Feedback
      */
     public function setConnection(ConnectionInterface $connection)
     {
@@ -60,7 +63,9 @@ class Feedback implements FeedbackInterface
     }
 
     /**
-     * {@inheritDoc}
+     * Get connection
+     *
+     * @return Connection
      */
     public function getConnection()
     {
@@ -68,7 +73,9 @@ class Feedback implements FeedbackInterface
     }
 
     /**
-     * {@inheritDoc}
+     * Get invalid devices
+     *
+     * @return array|Device[]
      */
     public function getInvalidDevices()
     {
@@ -89,9 +96,9 @@ class Feedback implements FeedbackInterface
         $this->connection->close();
 
         $feedback = array();
-        if (!empty($data)) {
-            foreach (str_split($data, 38) as $device_data) {
-                $feedback[] = new Device($device_data);
+        if ($data) {
+            foreach (str_split($data, 38) as $deviceData) {
+                $feedback[] = new Device($deviceData);
             }
         }
 
@@ -106,7 +113,9 @@ class Feedback implements FeedbackInterface
     }
 
     /**
-     * {@inheritDoc}
+     * Set logger
+     *
+     * @param LoggerInterface $logger
      */
     public function setLogger(LoggerInterface $logger = null)
     {
@@ -116,7 +125,9 @@ class Feedback implements FeedbackInterface
     }
 
     /**
-     * {@inheritDoc}
+     * Get logger
+     *
+     * @return LoggerInterface
      */
     public function getLogger()
     {

@@ -14,12 +14,13 @@
 
     "require": {
         "php": ">=5.3.3",
-        "request-stream/request-stream": "dev-master",
-        "psr/log": "*"
+        "request-stream/request-stream": "dev-master"
     },
 
     "suggest": {
-        "symfony/console": "Send push notifications from console"
+        "symfony/console": "Send push notifications from console",
+        "symfony/event-dispatcher": "Use events in apple apn push",
+        "monolog/monolog": "Use logger system"
     },
 
     "autoload": {

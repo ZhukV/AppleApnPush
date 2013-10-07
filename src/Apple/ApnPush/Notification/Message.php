@@ -44,13 +44,21 @@ class Message implements MessageInterface, \Serializable
     /**
      * Construct
      */
-    public function __construct()
+    public function __construct($deviceToken = null, $body = null)
     {
         $this->apsData = new ApsData;
         $this->customData = array();
         // Default expires for ApnPush
         $this->expires = new \DateTime('+12 hours', new \DateTimeZone('UTC'));
         $this->identifier = 0;
+
+        if (null !== $deviceToken) {
+            $this->setDeviceToken($deviceToken);
+        }
+
+        if (null !== $body) {
+            $this->setBody($body);
+        }
     }
 
     /**

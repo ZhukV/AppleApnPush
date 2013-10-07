@@ -1,0 +1,39 @@
+#!/usr/bin/env php
+<?php
+
+// Search autoload
+if (!file_exists($file = __DIR__ . '/vendor/autoload.php')) {
+    if(!file_exists($file = __DIR__ . '/../../vendor/autoload.php')) {
+        print <<<TXT
+Autoload file not found (Composer autoload).
+Please install composer.phar and run update or install command.
+
+
+TXT;
+        exit();
+    }
+}
+
+$autoload = include_once $file;
+
+if (!class_exists('Symfony\Component\Console\Application')) {
+    print <<<TXT
+Please install "symfony/console" package for use console commands
+
+
+TXT;
+    exit();
+}
+
+use Symfony\Component\Console\Application;
+use Apple\ApnPush\Command\PushCommand;
+use Apple\ApnPush\Command\FeedbackCommand;
+
+$application = new Application('apn.push', '2.*');
+
+$application->addCommands(array(
+    new PushCommand(),
+    new FeedbackCommand()
+));
+
+$application->run();
