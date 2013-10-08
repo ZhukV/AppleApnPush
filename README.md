@@ -11,7 +11,7 @@ Add AppleApnPush in your composer.json:
 ```js
 {
     "require": {
-        "apple/apn-push": "dev-master"
+        "apple/apn-push": "2.0.*@dev"
     }
 }
 ```
