@@ -31,7 +31,7 @@ class ArrayAdapter implements AdapterInterface, \Countable
      */
     public function isNextReceive()
     {
-        return count($this->_messages);
+        return count($this->_messages) > 0;
     }
 
     /**
