@@ -194,7 +194,7 @@ class Notification implements NotificationInterface
             $this->connection->create();
         }
 
-        $response = (strlen($payload) === $this->connection->write($payload, mb_strlen($payload)));
+        $response = (strlen($payload) === $this->connection->write($payload, strlen($payload)));
 
         if ($this->checkForErrors && $this->connection->isReadyRead()) {
             $responseApple = $this->connection->read(6);
