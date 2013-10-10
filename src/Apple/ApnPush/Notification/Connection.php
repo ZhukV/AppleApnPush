@@ -11,20 +11,22 @@
 
 namespace Apple\ApnPush\Notification;
 
-use Apple\ApnPush\Connection\AbstractSocketConnection;
+use Apple\ApnPush\Connection\Connection as BaseConnection;
 
 /**
  * Default connection for Apple push notification
  */
-class Connection extends AbstractSocketConnection
+class Connection extends BaseConnection
 {
     /**
      * Initialize connection
      */
     public function create()
     {
-        $this->init();
-        $this->socketConnection->create();
-        $this->socketConnection->setBlocking(0);
+        parent::create();
+
+        stream_set_blocking($this->resource, 0);
+
+        return $this;
     }
 }

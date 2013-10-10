@@ -19,18 +19,18 @@ namespace Apple\ApnPush\Feedback;
 class FeedbackTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @var \RequestStream\Stream\Socket\SocketClient
+     * @var \Apple\ApnPush\Feedback\Connection|\PHPUnit_Framework_MockObject_MockObject
      */
-    protected $socketConnection;
+    protected $connection;
 
     /**
      * {@inheritDoc}
      */
     public function setUp()
     {
-        $this->socketConnection = $this->getMock(
-            'RequestStream\Stream\Socket\SocketClient',
-            array('create', 'write', 'read', 'is', 'close', 'closeConnection')
+        $this->connection = $this->getMock(
+            'Apple\ApnPush\Feedback\Connection',
+            array('is', 'write', 'isReadyRead', 'create', 'close', 'read')
         );
     }
 
@@ -39,7 +39,7 @@ class FeedbackTest extends \PHPUnit_Framework_TestCase
      */
     public function tearDown()
     {
-        unset ($this->socketConnection);
+        unset ($this->connection);
     }
 
     /**
@@ -47,35 +47,22 @@ class FeedbackTest extends \PHPUnit_Framework_TestCase
      */
     public function testService()
     {
-        // Create service
-        $service = new Feedback();
-        $connection = new Connection(__FILE__, 'pass', false);
-        $service->setConnection($connection);
-
-        // Get socket connection mock
-        $socketMock = $this->socketConnection;
-
-        $socketMock->expects($this->any())
-            ->method('is')
+        $this->connection->expects($this->any())->method('is')
             ->will($this->returnValue(false));
 
-        $socketMock->expects($this->once())
-            ->method('create');
+        $this->connection->expects($this->once())->method('create');
 
-        $socketMock->expects($this->never())
-            ->method('write');
+        $this->connection->expects($this->never())->method('write');
 
-        $socketMock->expects($this->once())
-            ->method('read')
+        $this->connection->expects($this->once())->method('read')
             ->with($this->equalTo(-1))
             ->will($this->returnValue($this->packData() . $this->packData() . $this->packData()));
 
-        // Set socket mock to connection
-        $ref = new \ReflectionProperty($connection, 'socketConnection');
-        $ref->setAccessible(true);
-        $ref->setValue($connection, $socketMock);
+        // Create service
+        $service = new Feedback();
+        $service->setConnection($this->connection);
 
-        // Testing send message
+        // Testing get invalid devices
         $devices = $service->getInvalidDevices();
         $this->assertNotEmpty($devices);
         $this->assertEquals(3, count($devices));

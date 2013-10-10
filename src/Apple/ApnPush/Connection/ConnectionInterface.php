@@ -98,8 +98,9 @@ interface ConnectionInterface
      *
      * @param string  $data
      * @param integer $length
+     * @return int
      */
-    public function write($data, $length = null);
+    public function write($data, $length);
 
     /**
      * Is ready read
@@ -113,22 +114,21 @@ interface ConnectionInterface
      * @see: http://www.php.net/manual/function.stream-select.php
      *
      * @param integer $second
-     * @param integer $milisecond
+     * @param integer $uSeconds
      */
-    public function setReadTime($second, $milisecond = 0);
+    public function setReadTime($second, $uSeconds = 0);
 
     /**
      * Get time ready
      *
      * @return array
-     *  - second
-     *  - milisecond
      */
     public function getReadTime();
 
     /**
      * Read data from connection
      *
+     * @param int $length
      * @return string
      */
     public function read($length);

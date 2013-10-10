@@ -11,7 +11,7 @@
 
 namespace Apple\ApnPush\Feedback;
 
-use Apple\ApnPush\Connection\AbstractSocketConnection;
+use Apple\ApnPush\Connection\Connection as BaseConnection;
 use Apple\ApnPush\Connection\ConnectionInterface;
 
 /**
@@ -20,16 +20,16 @@ use Apple\ApnPush\Connection\ConnectionInterface;
  * @author Ryan Martinsen <ryan@ryanware.com>
  * @author Vitaliy Zhuk <zhuk2205@gmail.com>
  */
-class Connection extends AbstractSocketConnection
+class Connection extends BaseConnection
 {
     /**
      * {@inheritDoc}
      */
     public function create()
     {
-        $this->init();
-        $this->socketConnection->setFlag(STREAM_CLIENT_CONNECT|STREAM_CLIENT_PERSISTENT);
-        $this->socketConnection->create();
+        $this->socketClientFlags = STREAM_CLIENT_CONNECT|STREAM_CLIENT_PERSISTENT;
+
+        parent::create();
     }
 
     /**

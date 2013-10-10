@@ -24,35 +24,30 @@ class SendExceptionTest extends \PHPUnit_Framework_TestCase
     /**
      * Create new mock connection for testing exceptions
      *
-     * @param string $responseData
-     *   Binary response package
+     * @param string $responseData      Binary response package
+     * @return \Apple\ApnPush\Notification\Notification
      */
     protected function createNotification($responseData)
     {
-        $socketMock = $this->getMock(
-            'RequestStream\\Stream\\Socket\\SocketClient',
-            array('create', 'write', 'read', 'selectRead', 'setBlocking', 'is', 'close')
+        $connectionMock = $this->getMock(
+            'Apple\ApnPush\Notification\Connection',
+            array('is', 'isReadyRead', 'write', 'read', 'create')
         );
 
-        $socketMock->expects($this->once())
-            ->method('selectRead')
+        $connectionMock->expects($this->once())
+            ->method('isReadyRead')
             ->will($this->returnValue(true));
 
-        $socketMock->expects($this->once())
+        $connectionMock->expects($this->once())
             ->method('read')
             ->with(6)
             ->will($this->returnValue($responseData));
 
         $notification = new Notification;
         $payload = new PayloadFactory;
-        $connection = new Connection(__FILE__);
 
-        $notification->setConnection($connection);
+        $notification->setConnection($connectionMock);
         $notification->setPayloadFactory($payload);
-
-        $ref = new \ReflectionProperty($connection, 'socketConnection');
-        $ref->setAccessible(true);
-        $ref->setValue($connection, $socketMock);
 
         return $notification;
     }
@@ -71,7 +66,7 @@ class SendExceptionTest extends \PHPUnit_Framework_TestCase
 
         try {
             $notification->send($message);
-        } catch (SendExceptionInterface $exception) {
+        } catch (SendException $exception) {
             $this->assertEquals($statusCode, $exception->getStatusCode());
             throw $exception;
         }
