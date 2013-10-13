@@ -262,7 +262,7 @@ abstract class Connection implements ConnectionInterface
             }
         });
 
-        $resource = @stream_socket_client(
+        $resource = stream_socket_client(
             'ssl://' . $this->getUrl() . ':' . $this->getPort(),
             $errorCode,
             $errorStr,

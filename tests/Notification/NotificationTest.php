@@ -10,6 +10,7 @@
  */
 
 namespace Apple\ApnPush\Notification;
+
 use Symfony\Component\EventDispatcher\EventDispatcher;
 
 /**
@@ -87,8 +88,57 @@ class NotificationTest extends \PHPUnit_Framework_TestCase
      */
     public function testReopenConnection()
     {
-        // @todo
-        $this->markTestIncomplete('@todo');
+        $connection = $this->getMock(
+            'Apple\ApnPush\Notification\Connection',
+            array('isReadyRead', 'create', 'read', 'write', 'close')
+        );
+
+        $connectionResource = new \ReflectionProperty($connection, 'resource');
+        $connectionResource->setAccessible(true);
+
+        $connection->expects($this->any())->method('create')
+            ->will($this->returnCallback(function () use ($connection, $connectionResource){
+                $connectionResource->setValue($connection, true);
+            }));
+
+        $connection->expects($this->any())->method('close')
+            ->will($this->returnCallback(function() use ($connection, $connectionResource) {
+                $connectionResource->setValue($connection, null);
+            }));
+
+        $connection->expects($this->any())->method('write')
+            ->will($this->returnCallback(function($data) {
+                return strlen($data);
+            }));
+
+        $connection->expects($this->any())->method('isReadyRead')
+            ->will($this->returnCallback(function () use ($connection){
+                return !empty($connection->__IsError__);
+            }));
+
+        $connection->expects($this->any())->method('read')
+            ->with(6)->will($this->returnValue(null));
+
+        $notification = new Notification($connection);
+
+        // Send message without error
+        $status = $notification->sendMessage(str_repeat('af', 32), 'Hello world');
+        $this->assertTrue($status);
+        $this->assertTrue($notification->getConnection()->is());
+
+        // Send message with error and check close connection
+        $connection->__IsError__ = true;
+        try {
+            $notification->sendMessage(str_repeat('af', 32), 'Hello world');
+        } catch (SendException $e) {
+        }
+        $this->assertFalse($notification->getConnection()->is());
+
+        // Send message without error and check reopen connection
+        $connection->__IsError__ = false;
+        $status = $notification->sendMessage(str_repeat('af', 32), 'Hello  world');
+        $this->assertTrue($status);
+        $this->assertTrue($notification->getConnection()->is());
     }
 
     /**
