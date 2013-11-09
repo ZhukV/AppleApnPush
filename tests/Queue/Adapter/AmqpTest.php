@@ -113,45 +113,6 @@ class AmqpAdapterTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test get message without error
-     */
-    public function testGetMessageWithExistsMessage()
-    {
-        $message = new Message();
-        $message->setBody('Foo Bar');
-
-        $result = $this->getMock('AMQPEnvelope', array('getBody'));
-        $result->expects($this->once())->method('getBody')
-            ->with()->will($this->returnValue(serialize($message)));
-
-        $this->queue->expects($this->once())->method('get')
-            ->with(AMQP_AUTOACK)
-            ->will($this->returnValue($result));
-
-        $adapter = new AmqpAdapter();
-        $adapter->setQueue($this->queue);
-
-        $message = $adapter->getMessage();
-        $this->assertInstanceOf('Apple\ApnPush\Notification\Message', $message);
-        $this->assertEquals('Foo Bar', $message->getBody());
-    }
-
-    /**
-     * Test get message with message not found
-     */
-    public function testGetMessageWithNoExistsMessage()
-    {
-        $this->queue->expects($this->once())->method('get')
-            ->with(AMQP_AUTOACK)
-            ->will($this->returnValue(false));
-
-        $adapter = new AmqpAdapter();
-        $adapter->setQueue($this->queue);
-
-        $this->assertNull($adapter->getMessage());
-    }
-
-    /**
      * Test get message with error: Queue not found
      *
      * @expectedException \RuntimeException

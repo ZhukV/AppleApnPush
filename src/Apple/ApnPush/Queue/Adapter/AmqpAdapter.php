@@ -180,15 +180,18 @@ class AmqpAdapter implements AdapterInterface
             throw new \RuntimeException('Can\'n get message. Not found queue.');
         }
 
-        $amqpMessage = $this->queue->get(AMQP_AUTOACK);
+        $message = null;
 
-        if (false !== $amqpMessage && $body = $amqpMessage->getBody()) {
-            $message = unserialize($body);
+        $this->queue->consume(function (\AMQPEnvelope $amqpMessage, \AMQPQueue $queue) use (&$message) {
+            $message = unserialize($amqpMessage->getBody());
 
-            return $message;
-        }
+            $queue->ack($amqpMessage->getDeliveryTag());
 
-        return null;
+            // End consume process
+            return false;
+        }, AMQP_NOPARAM);
+
+        return $message;
     }
 
     /**
