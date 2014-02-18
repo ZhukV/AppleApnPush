@@ -107,4 +107,19 @@ class MessageTest extends \PHPUnit_Framework_TestCase
         $this->assertInstanceOf('Apple\ApnPush\Notification\ApsDataInterface', $newMessage->getApsData());
         $this->assertInstanceOf('DateTime', $newMessage->getExpires());
     }
+
+    /**
+     * Test content available
+     */
+    public function testContentAvailable()
+    {
+        $message = new Message();
+        $this->assertNull($message->getContentAvailable());
+        
+        $message->setContentAvailable(true);
+        $this->assertTrue($message->getContentAvailable());
+        
+        $message->setContentAvailable(false);
+        $this->assertFalse($message->getContentAvailable());
+    }
 }

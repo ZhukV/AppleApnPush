@@ -330,6 +330,29 @@ class Message implements MessageInterface, \Serializable
     }
 
     /**
+     * Set content available
+     *
+     * @param boolean $contentAvailable
+     * @return Message
+     */
+    public function setContentAvailable($contentAvailable)
+    {
+        $this->apsData->setContentAvailable($contentAvailable);
+
+        return $this;
+    }
+
+    /**
+     * Get content available
+     *
+     * @return boolean
+     */
+    public function getContentAvailable()
+    {
+        return $this->apsData->getContentAvailable();
+    }
+
+    /**
      * Prepare payload
      */
     protected function preparePayload()

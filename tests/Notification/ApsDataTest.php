@@ -28,17 +28,19 @@ class ApsDataTest extends \PHPUnit_Framework_TestCase
     /**
      * @dataProvider apsDataProvider
      */
-    public function testApsData($body, $sound, $badge)
+    public function testApsData($body, $sound, $badge, $contentAvailable)
     {
         $aps = new ApsData;
 
         $aps->setBody($body);
         $aps->setSound($sound);
         $aps->setBadge($badge);
+        $aps->setContentAvailable($contentAvailable);
 
         $this->assertEquals($body, $aps->getBody());
         $this->assertEquals($sound, $aps->getSound());
         $this->assertEquals($badge, $aps->getBadge());
+        $this->assertEquals($contentAvailable, $aps->getContentAvailable());
     }
 
     /**
@@ -47,14 +49,22 @@ class ApsDataTest extends \PHPUnit_Framework_TestCase
     public function apsDataProvider()
     {
         return array(
-            array(null, null, null),
-            array('foo', null, null),
-            array(null, 'foo.mp3', null),
-            array(null, null, 4),
-            array('foo', 'bar.mp3', null),
-            array(null, 'bar.mp3', 5),
-            array('foo', null, 3),
-            array('foo', 'bar.mp3', 20)
+            array(null, null, null, false),
+            array(null, null, null, true),
+            array('foo', null, null, false),
+            array('foo', null, null, true),
+            array(null, 'foo.mp3', null, false),
+            array(null, 'foo.mp3', null, true),
+            array(null, null, 4, false),
+            array(null, null, 4, true),
+            array('foo', 'bar.mp3', null, false),
+            array('foo', 'bar.mp3', null, true),
+            array(null, 'bar.mp3', 5, false),
+            array(null, 'bar.mp3', 5, true),
+            array('foo', null, 3, false),
+            array('foo', null, 3, true),
+            array('foo', 'bar.mp3', 20, false),
+            array('foo', 'bar.mp3', 20, true)
         );
     }
 
@@ -112,5 +122,29 @@ class ApsDataTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(array('bar' => 'foo'), $newAps->getBodyCustom());
         $this->assertEquals('test.acc', $newAps->getSound());
         $this->assertEquals(5, $newAps->getBadge());
+    }
+
+    /**
+     * Test serialize content available
+     */
+    public function testSerializeContentAvailable()
+    {
+        $aps = new ApsData();
+        $aps
+            ->setBody('foo')
+            ->setBodyCustom(array('bar' => 'foo'))
+            ->setSound('test.acc')
+            ->setBadge(5)
+            ->setContentAvailable(true);
+
+        $serializeData = serialize($aps);
+        /** @var ApsData $newAps */
+        $newAps = unserialize($serializeData);
+
+        $this->assertEquals('foo', $newAps->getBody());
+        $this->assertEquals(array('bar' => 'foo'), $newAps->getBodyCustom());
+        $this->assertEquals('test.acc', $newAps->getSound());
+        $this->assertEquals(5, $newAps->getBadge());
+        $this->assertEquals(true, $newAps->getContentAvailable());
     }
 }

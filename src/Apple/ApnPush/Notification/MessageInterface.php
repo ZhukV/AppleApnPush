@@ -130,6 +130,20 @@ interface MessageInterface extends PayloadDataInterface
     public function getSound();
 
     /**
+     * Set content available
+     *
+     * @param boolean $contentAvailable
+     */
+    public function setContentAvailable($contentAvailable);
+
+    /**
+     * Get content available
+     * 
+     * @return boolean
+     */
+    public function getContentAvailable();
+
+    /**
      * Set expires
      *
      * @param \DateTime $expires
