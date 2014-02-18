@@ -25,4 +25,3 @@ $notification = new Notification($connection);
 // Create amqp queue
 $amqp = Redis::create($notification);
 $amqp->runReceiver();
-
