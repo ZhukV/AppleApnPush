@@ -22,4 +22,6 @@ include_once __DIR__ . '/config.php';
 include_once __DIR__ . '/autoload.php';
 
 // Run autoload
-_autoload();
+if (false === _autoload()) {
+    exit();
+}

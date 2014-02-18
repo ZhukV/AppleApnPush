@@ -14,7 +14,7 @@ Please install composer.phar and run update or install command.
 
 TXT;
 
-            exit();
+            return false;
         }
     }
 
