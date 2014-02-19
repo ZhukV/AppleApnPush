@@ -8,7 +8,7 @@ php:
 before_script:
     # Add/Install required extensions for testing
     - echo "extension = amqp.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
-    - pecl install redis
+    - pecl info redis || pecl install redis
 
     # Install composer
     - wget http://getcomposer.org/composer.phar
