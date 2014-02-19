@@ -22,12 +22,12 @@ use Apple\ApnPush\Notification\Connection;
 $eventDispatcher = new EventDispatcher();
 
 // Add complete listener
-$eventDispatcher->addListener(NotificationEvents::SEND_MESSAGE_ERROR, function (){
+$eventDispatcher->addListener(NotificationEvents::SEND_MESSAGE_ERROR, function () {
     print "[*] Error with send message.\n";
 });
 
 // Add error listener
-$eventDispatcher->addListener(NotificationEvents::SEND_MESSAGE_COMPLETE, function (){
+$eventDispatcher->addListener(NotificationEvents::SEND_MESSAGE_COMPLETE, function () {
     print "[-] Complete send message.\n";
 });
 

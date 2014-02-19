@@ -72,4 +72,18 @@ interface ApsDataInterface extends PayloadDataInterface
      * @return integer
      */
     public function getBadge();
+
+    /**
+     * Set content available
+     * 
+     * @param boolean $contentAvailable
+     */
+    public function setContentAvailable($contentAvailable);
+
+    /**
+     * Get content available
+     * 
+     * @return boolean
+     */
+    public function getContentAvailable();
 }

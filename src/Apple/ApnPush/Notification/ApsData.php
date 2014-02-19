@@ -37,6 +37,12 @@ class ApsData implements ApsDataInterface, \Serializable
     protected $badge;
 
     /**
+     *
+     * @var boolean 
+     */
+    protected $contentAvailable;
+
+    /**
      * __clone
      */
     public function __clone()
@@ -45,6 +51,7 @@ class ApsData implements ApsDataInterface, \Serializable
         $this->bodyCustom = array();
         $this->sound = null;
         $this->badge = null;
+        $this->contentAvailable = null;
     }
 
     /**
@@ -218,6 +225,18 @@ class ApsData implements ApsDataInterface, \Serializable
         return $this->badge;
     }
 
+    public function setContentAvailable($contentAvailable)
+    {
+        $this->contentAvailable = (bool) $contentAvailable;
+
+        return $this;
+    }
+
+    public function getContentAvailable()
+    {
+        return $this->contentAvailable;
+    }
+
     /**
      * Get payload data
      *
@@ -237,6 +256,10 @@ class ApsData implements ApsDataInterface, \Serializable
             $apsData['badge'] = $this->badge;
         }
 
+        if (true === $this->contentAvailable) {
+            $apsData['content-available'] = 1;
+        }
+        
         return $apsData;
     }
 
@@ -253,6 +276,10 @@ class ApsData implements ApsDataInterface, \Serializable
             'sound' => $this->sound,
             'badge' => $this->badge
         );
+
+        if (true === $this->contentAvailable) {
+            $data['content-available'] = 1;
+        }
 
         return serialize($data);
     }
@@ -271,5 +298,9 @@ class ApsData implements ApsDataInterface, \Serializable
             ->setBodyCustom($data['body_custom'])
             ->setSound($data['sound'])
             ->setBadge($data['badge']);
+        
+        if (isset($data['content-available'])) {
+            $this->setContentAvailable($data['content-available']);
+        }
     }
 }

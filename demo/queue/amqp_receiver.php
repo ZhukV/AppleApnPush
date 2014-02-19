@@ -25,4 +25,3 @@ $notification = new Notification($connection);
 // Create amqp queue
 $amqp = Amqp::create($notification);
 $amqp->runReceiver();
-

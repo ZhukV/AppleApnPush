@@ -32,5 +32,3 @@ $message
 // Create amqp queue and send message
 $amqp = Amqp::create($notification);
 $amqp->addMessage($message);
-
-
