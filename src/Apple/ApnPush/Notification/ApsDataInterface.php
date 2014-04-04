@@ -85,5 +85,5 @@ interface ApsDataInterface extends PayloadDataInterface
      * 
      * @return boolean
      */
-    public function getContentAvailable();
+    public function isContentAvailable();
 }

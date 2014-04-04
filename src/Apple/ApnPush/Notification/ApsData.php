@@ -37,7 +37,6 @@ class ApsData implements ApsDataInterface, \Serializable
     protected $badge;
 
     /**
-     *
      * @var boolean 
      */
     protected $contentAvailable;
@@ -59,6 +58,7 @@ class ApsData implements ApsDataInterface, \Serializable
      * Attention: clear custom body data
      *
      * @param string $body
+     * @throws \InvalidArgumentException
      * @return ApsData
      */
     public function setBody($body)
@@ -70,7 +70,7 @@ class ApsData implements ApsDataInterface, \Serializable
             $body = (string) $body;
         }
 
-        if ($body !== null && !is_string($body) && !is_numeric($body)) {
+        if ($body !== null && !is_scalar($body)) {
             throw new \InvalidArgumentException(sprintf(
                 'Body message must be string, "%s" given.',
                 gettype($body)
@@ -116,7 +116,7 @@ class ApsData implements ApsDataInterface, \Serializable
             $localizeKey = (string) $localizeKey;
         }
 
-        if (!is_string($localizeKey) && !is_numeric($localizeKey)) {
+        if (!is_scalar($localizeKey)) {
             throw new \InvalidArgumentException(sprintf(
                 'Body message must be string, "%s" given',
                 gettype($localizeKey)
@@ -192,7 +192,7 @@ class ApsData implements ApsDataInterface, \Serializable
      * Set badge
      *
      * @param int $badge
-     * @throw \InvalidArgumentException
+     * @throws \OutOfRangeException
      * @return ApsData
      */
     public function setBadge($badge)
@@ -225,6 +225,12 @@ class ApsData implements ApsDataInterface, \Serializable
         return $this->badge;
     }
 
+    /**
+     * Set content available option
+     *
+     * @param bool $contentAvailable
+     * @return ApsData
+     */
     public function setContentAvailable($contentAvailable)
     {
         $this->contentAvailable = (bool) $contentAvailable;
@@ -232,7 +238,12 @@ class ApsData implements ApsDataInterface, \Serializable
         return $this;
     }
 
-    public function getContentAvailable()
+    /**
+     * Get content available option
+     *
+     * @return bool
+     */
+    public function isContentAvailable()
     {
         return $this->contentAvailable;
     }

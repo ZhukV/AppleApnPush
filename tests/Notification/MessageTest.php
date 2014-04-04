@@ -114,12 +114,12 @@ class MessageTest extends \PHPUnit_Framework_TestCase
     public function testContentAvailable()
     {
         $message = new Message();
-        $this->assertNull($message->getContentAvailable());
+        $this->assertNull($message->isContentAvailable());
         
         $message->setContentAvailable(true);
-        $this->assertTrue($message->getContentAvailable());
+        $this->assertTrue($message->isContentAvailable());
         
         $message->setContentAvailable(false);
-        $this->assertFalse($message->getContentAvailable());
+        $this->assertFalse($message->isContentAvailable());
     }
 }

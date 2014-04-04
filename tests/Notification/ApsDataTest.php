@@ -40,7 +40,7 @@ class ApsDataTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($body, $aps->getBody());
         $this->assertEquals($sound, $aps->getSound());
         $this->assertEquals($badge, $aps->getBadge());
-        $this->assertEquals($contentAvailable, $aps->getContentAvailable());
+        $this->assertEquals($contentAvailable, $aps->isContentAvailable());
     }
 
     /**
@@ -145,6 +145,6 @@ class ApsDataTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(array('bar' => 'foo'), $newAps->getBodyCustom());
         $this->assertEquals('test.acc', $newAps->getSound());
         $this->assertEquals(5, $newAps->getBadge());
-        $this->assertEquals(true, $newAps->getContentAvailable());
+        $this->assertEquals(true, $newAps->isContentAvailable());
     }
 }

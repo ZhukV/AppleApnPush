@@ -43,6 +43,9 @@ class Message implements MessageInterface, \Serializable
 
     /**
      * Construct
+     *
+     * @param string $deviceToken
+     * @param string $body
      */
     public function __construct($deviceToken = null, $body = null)
     {
@@ -343,13 +346,13 @@ class Message implements MessageInterface, \Serializable
     }
 
     /**
-     * Get content available
+     * Is content available
      *
      * @return boolean
      */
-    public function getContentAvailable()
+    public function isContentAvailable()
     {
-        return $this->apsData->getContentAvailable();
+        return $this->apsData->isContentAvailable();
     }
 
     /**

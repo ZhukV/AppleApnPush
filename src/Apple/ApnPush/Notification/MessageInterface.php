@@ -137,11 +137,11 @@ interface MessageInterface extends PayloadDataInterface
     public function setContentAvailable($contentAvailable);
 
     /**
-     * Get content available
+     * Is content available
      * 
      * @return boolean
      */
-    public function getContentAvailable();
+    public function isContentAvailable();
 
     /**
      * Set expires
