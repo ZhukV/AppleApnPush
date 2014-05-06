@@ -85,6 +85,8 @@ abstract class Connection implements ConnectionInterface
      *
      * @param int $second
      * @param int $uSecond
+     * @throws \InvalidArgumentException
+     * @return Connection
      */
     public function setReadTime($second, $uSecond = 0)
     {
@@ -97,7 +99,7 @@ abstract class Connection implements ConnectionInterface
 
         if (!is_integer($uSecond)) {
             throw new \InvalidArgumentException(sprintf(
-                'Milisecond must be a integer value, "%s" given.',
+                'Millisecond must be a integer value, "%s" given.',
                 gettype($uSecond)
             ));
         }
@@ -121,6 +123,8 @@ abstract class Connection implements ConnectionInterface
      * Set certificate file path for create connection
      *
      * @param string $certificateFile
+     * @throws \InvalidArgumentException
+     * @return Connection
      */
     public function setCertificateFile($certificateFile)
     {
@@ -157,6 +161,7 @@ abstract class Connection implements ConnectionInterface
      * Set certificate pass phrase
      *
      * @param string $certificatePassPhrase
+     * @return Connection
      */
     public function setCertificatePassPhrase($certificatePassPhrase)
     {
@@ -179,6 +184,7 @@ abstract class Connection implements ConnectionInterface
      * Set use sandbox mode
      *
      * @param bool $sandboxMode
+     * @return Connection
      */
     public function setSandboxMode($sandboxMode)
     {
@@ -255,12 +261,14 @@ abstract class Connection implements ConnectionInterface
         $errorMessage = null;
 
         // Register custom error handler for control technical error
+        // @codeCoverageIgnoreStart
         set_error_handler(function ($errCode, $errStr) use (&$errorMessage) {
             if (!$errorMessage) {
                 @list (, $errorMessage) = explode(':', $errStr, 2);
                 $errorMessage = trim($errorMessage);
             }
         });
+        // @codeCoverageIgnoreEnd
 
         $resource = stream_socket_client(
             'ssl://' . $this->getUrl() . ':' . $this->getPort(),
@@ -322,7 +330,7 @@ abstract class Connection implements ConnectionInterface
             throw new SocketErrorException('Can\'t read from socket. Socket not created.');
         }
 
-        return stream_get_contents($this->resource, -1, -1);
+        return stream_get_contents($this->resource, $length, -1);
     }
 
     /**

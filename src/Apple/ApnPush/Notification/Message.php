@@ -256,7 +256,11 @@ class Message implements MessageInterface, \Serializable
      */
     public function setExpires(\DateTime $expires)
     {
-        // TODO: Auto set UTC Timezone
+        if ($expires->getTimezone()->getName() != 'UTC') {
+            $expires = clone $expires;
+            $expires->setTimezone(new \DateTimeZone('UTC'));
+        }
+
         $this->expires = $expires;
 
         return $this;

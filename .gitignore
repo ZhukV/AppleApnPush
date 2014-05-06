@@ -1,5 +1,10 @@
-/.idea/
+# Composer files
 /vendor/
 composer.phar
 composer.lock
+
+# Other files
+/.idea/
 /demo/config.php
+/atlassian-ide-plugin.xml
+.DS_Store
