@@ -1,15 +1,9 @@
 <?php
 
-include_once __DIR__ . '/../include_config.php';
+include_once __DIR__ . '/../autoload.php';
 
 if (!interface_exists('Psr\Log\LoggerInterface')) {
-    print <<<TXT
-Please install "psr/log" for run this demo (Notification with logger system).
-
-
-TXT;
-
-    exit();
+    \Demo::error('Please install "psr/log" for run this demo (Notification with logger system).');
 }
 
 use Apple\ApnPush\Notification\Notification;

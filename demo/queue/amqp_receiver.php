@@ -1,15 +1,9 @@
 <?php
 
-include_once __DIR__ . '/../include_config.php';
+include_once __DIR__ . '/../autoload.php';
 
 if (!class_exists('AMQPConnection')) {
-    print <<<TXT
-Please install PHP Amqp Extension for run this demo (AMQP Queue).
-
-
-TXT;
-
-    exit();
+    \Demo::error('Please install PHP Amqp Extension for run this demo (AMQP Queue).');
 }
 
 use Apple\ApnPush\Notification\Notification;

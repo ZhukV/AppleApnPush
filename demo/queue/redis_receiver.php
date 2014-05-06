@@ -1,15 +1,9 @@
 <?php
 
-include_once __DIR__ . '/../include_config.php';
+include_once __DIR__ . '/../autoload.php';
 
 if (!class_exists('Redis')) {
-    print <<<TXT
-Please install PHP Redis Extension for run this demo (Redis Queue).
-
-
-TXT;
-
-    exit();
+    \Demo::error('Please install PHP Redis Extension for run this demo (Redis Queue).');
 }
 
 use Apple\ApnPush\Notification\Notification;

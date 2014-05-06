@@ -1,15 +1,9 @@
 <?php
 
-include_once __DIR__ . '/../include_config.php';
+include_once __DIR__ . '/../autoload.php';
 
 if (!class_exists('Symfony\Component\EventDispatcher\EventDispatcher')) {
-    print <<<TXT
-Please install "symfony/event-dispatcher" for run this demo (Notification with EventDispatcher).
-
-
-TXT;
-
-    exit();
+    \Demo::error('Please install "symfony/event-dispatcher" for run this demo (Notification with EventDispatcher).');
 }
 
 use Symfony\Component\EventDispatcher\EventDispatcher;

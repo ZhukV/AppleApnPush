@@ -1,6 +1,6 @@
 <?php
 
-include_once __DIR__ . '/../include_config.php';
+include_once __DIR__ . '/../autoload.php';
 
 use Apple\ApnPush\Notification\Notification;
 use Apple\ApnPush\Notification\Connection;
