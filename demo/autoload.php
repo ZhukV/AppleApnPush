@@ -71,13 +71,26 @@ namespace {
 
             throw new \StopException;
         }
+
+        /**
+         * Include common files
+         */
+        public static function includeCommonFiles()
+        {
+            include_once __DIR__ . '/StopException.php';
+        }
+
+        /**
+         * Boot demo environment
+         */
+        public static function boot()
+        {
+            Demo::includeCommonFiles();
+            Demo::registerExceptionHandler();
+            Demo::includeConfig();
+            Demo::autoload();
+        }
     }
 
-    class StopException extends \RuntimeException
-    {
-    }
-
-    Demo::registerExceptionHandler();
-    Demo::includeConfig();
-    Demo::autoload();
+    \Demo::boot();
 }

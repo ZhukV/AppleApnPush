@@ -7,4 +7,3 @@ composer.lock
 /.idea/
 /demo/config.php
 /atlassian-ide-plugin.xml
-.DS_Store

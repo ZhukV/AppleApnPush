@@ -6,18 +6,11 @@ if (!interface_exists('Psr\Log\LoggerInterface')) {
     \Demo::error('Please install "psr/log" for run this demo (Notification with logger system).');
 }
 
+include_once __DIR__ . '/CustomLogger.php';
+
 use Apple\ApnPush\Notification\Notification;
 use Apple\ApnPush\Notification\Connection;
 use Apple\ApnPush\Notification\SendException;
-use Psr\Log\AbstractLogger;
-
-class CustomLogger extends AbstractLogger
-{
-    public function log($level, $message, array $context = array())
-    {
-        print sprintf("%s: %s %s\n", $level, $message, json_encode($context));
-    }
-}
 
 // Create connection
 $connection = new Connection(CERTIFICATE_FILE, PASS_PHRASE, SANDBOX_MODE);
