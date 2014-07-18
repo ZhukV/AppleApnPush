@@ -14,6 +14,17 @@ namespace Apple\ApnPush\Queue\Adapter;
 use Apple\ApnPush\Notification\Message;
 use Apple\ApnPush\Queue\Adapter\AmqpAdapter;
 
+if( class_exists('\AMQPQueue', false) ) {
+    class AmqpQueueMock extends \AMQPQueue {
+        public function __construct() {}
+    }
+}
+if( class_exists('\AMQPExchange', false) ) {
+    class AmqpExchangeMock extends \AMQPExchange {
+        public function __construct() {}
+    }
+}
+
 class AmqpAdapterTest extends \PHPUnit_Framework_TestCase
 {
     /**
@@ -34,21 +45,19 @@ class AmqpAdapterTest extends \PHPUnit_Framework_TestCase
         if (!class_exists('AMQPConnection')) {
             $this->markTestSkipped('Not install PHP Amqp extension.');
         }
-
+        
         $this->queue = $this->getMock(
-            'AMQPQueue',
+            '\Apple\ApnPush\Queue\Adapter\AmqpQueueMock',
             array('get'),
             array(),
-            '',
-            false
+            ''
         );
 
         $this->exchange = $this->getMock(
-            'AMQPExchange',
+            '\Apple\ApnPush\Queue\Adapter\AmqpExchangeMock',
             array('publish'),
             array(),
-            '',
-            false
+            ''
         );
     }
 
