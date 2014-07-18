@@ -4,11 +4,13 @@ php:
     - 5.3
     - 5.4
     - 5.5
+    - 5.6
+    - hhvm
 
 before_script:
     # Add/Install required extensions for testing
-    - echo "extension = amqp.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
-    - pecl info redis || pecl install redis
+    - sh -c 'if [ $(php -r "echo (int) defined(\"HHVM_VERSION\");") -eq 0 ]; then echo "extension = amqp.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini; fi;'
+    - sh -c 'if [ $(php -r "echo (int) defined(\"HHVM_VERSION\");") -eq 0 ]; then echo "extension = redis.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini; fi;'
 
     # Install composer
     - wget http://getcomposer.org/composer.phar
