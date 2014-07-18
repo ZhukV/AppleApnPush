@@ -14,17 +14,6 @@ namespace Apple\ApnPush\Queue\Adapter;
 use Apple\ApnPush\Notification\Message;
 use Apple\ApnPush\Queue\Adapter\AmqpAdapter;
 
-if( class_exists('\AMQPQueue', false) ) {
-    class AmqpQueueMock extends \AMQPQueue {
-        public function __construct() {}
-    }
-}
-if( class_exists('\AMQPExchange', false) ) {
-    class AmqpExchangeMock extends \AMQPExchange {
-        public function __construct() {}
-    }
-}
-
 class AmqpAdapterTest extends \PHPUnit_Framework_TestCase
 {
     /**
