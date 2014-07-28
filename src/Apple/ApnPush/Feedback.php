@@ -15,7 +15,7 @@ use Apple\ApnPush\Feedback\Feedback as BaseFeedback;
 
 /**
  * This is a shortcut class
- * @see \Apple\ApnPush\Feedback\Feedback
+ * See \Apple\ApnPush\Feedback\Feedback
  */
 class Feedback extends BaseFeedback
 {

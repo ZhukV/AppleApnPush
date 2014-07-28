@@ -13,6 +13,9 @@ namespace Apple\ApnPush\Queue\Adapter;
 
 use Apple\ApnPush\Notification\MessageInterface;
 
+/**
+ * Redis queue adapter
+ */
 class RedisAdapter implements AdapterInterface
 {
     /**
@@ -36,6 +39,7 @@ class RedisAdapter implements AdapterInterface
      * Set sleepTimeout
      *
      * @param int $sleepTimeout
+     *
      * @return RedisAdapter
      */
     public function setSleepTimeout($sleepTimeout)
@@ -59,6 +63,7 @@ class RedisAdapter implements AdapterInterface
      * Set listKey
      *
      * @param string $listKey
+     *
      * @return RedisAdapter
      */
     public function setListKey($listKey)
@@ -82,6 +87,7 @@ class RedisAdapter implements AdapterInterface
      * Set redis
      *
      * @param \Redis $redis
+     *
      * @return RedisAdapter
      */
     public function setRedis(\Redis $redis = null)
@@ -114,15 +120,16 @@ class RedisAdapter implements AdapterInterface
     /**
      * Get message from queue
      *
-     * @throws \RuntimeException
      * @return \Apple\ApnPush\Notification\MessageInterface|null
+     *
+     * @throws \RuntimeException
      */
     public function getMessage()
     {
         static $useSleep = false;
 
         if (!$this->listKey) {
-           throw new \RuntimeException('Can\'t get message. Undefined list key.');
+            throw new \RuntimeException('Can\'t get message. Undefined list key.');
         }
 
         if (!$this->redis) {
@@ -133,8 +140,9 @@ class RedisAdapter implements AdapterInterface
             usleep($this->sleepTimeout);
         }
 
-        if($data = $this->redis->lPop($this->listKey)) {
+        if ($data = $this->redis->lPop($this->listKey)) {
             $useSleep = false;
+
             return unserialize($data);
         } else {
             $useSleep = true;
@@ -147,8 +155,10 @@ class RedisAdapter implements AdapterInterface
      * Add message to queue
      *
      * @param MessageInterface $message
-     * @throws \RuntimeException
+     *
      * @return bool
+     *
+     * @throws \RuntimeException
      */
     public function addMessage(MessageInterface $message)
     {

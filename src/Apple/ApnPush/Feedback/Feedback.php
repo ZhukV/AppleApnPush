@@ -53,6 +53,7 @@ class Feedback implements FeedbackInterface
      * Set connection
      *
      * @param ConnectionInterface $connection
+     *
      * @return Feedback
      */
     public function setConnection(ConnectionInterface $connection)
@@ -76,6 +77,8 @@ class Feedback implements FeedbackInterface
      * Get invalid devices
      *
      * @return array|Device[]
+     *
+     * @throws Exception\ConnectionUndefinedException
      */
     public function getInvalidDevices()
     {
@@ -96,6 +99,7 @@ class Feedback implements FeedbackInterface
         $this->connection->close();
 
         $feedback = array();
+
         if ($data) {
             foreach (str_split($data, 38) as $deviceData) {
                 $feedback[] = new Device($deviceData);
@@ -116,6 +120,8 @@ class Feedback implements FeedbackInterface
      * Set logger
      *
      * @param LoggerInterface $logger
+     *
+     * @return Feedback
      */
     public function setLogger(LoggerInterface $logger = null)
     {

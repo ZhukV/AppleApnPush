@@ -17,51 +17,18 @@ namespace Apple\ApnPush\Notification;
 class PayloadFactory implements PayloadFactoryInterface
 {
     /**
-     * @var boolean
-     */
-    protected $jsonUnescapedUnicode = false;
-
-    /**
-     * Set status enabled flag JSON_UNESCAPED_UNICODE
-     *
-     * @param boolean $status
-     * @throws \LogicException      if PHP version < 5.4
-     * @return PayloadFactory
-     */
-    public function setJsonUnescapedUnicode($status)
-    {
-        // Check PHP version
-        if (!version_compare(PHP_VERSION, '5.4.0', '>=')) {
-            throw new \LogicException(sprintf(
-                'Can\'t use JSON_UNESCAPED_UNICODE option on PHP %s. Support PHP >= 5.4.0',
-                PHP_VERSION
-            ));
-        }
-
-        $this->jsonUnescapedUnicode = (bool) $status;
-
-        return $this;
-    }
-
-    /**
-     * Get status enabled JSON_UNESCAPED_UNICODE
-     *
-     * @return bool
-     */
-    public function getJsonUnescapedUnicode()
-    {
-        return $this->jsonUnescapedUnicode;
-    }
-
-    /**
      * Create payload hash for message
      *
      * @param MessageInterface $message
+     *
      * @return string
+     *
+     * @throws SendException
      */
     public function createPayload(MessageInterface $message)
     {
-        $payload = pack('CNNnH*',
+        $payload = pack(
+            'CNNnH*',
             1, // Command
             $message->getIdentifier(),
             $message->getExpires()->format('U'),
@@ -71,7 +38,14 @@ class PayloadFactory implements PayloadFactoryInterface
 
         $jsonData = $this->createJsonPayload($message);
 
-        $payload .= pack('n', strlen($jsonData));
+        $payloadSize = strlen($jsonData);
+
+        // Check payload size
+        if ($payloadSize > 255) {
+            throw new SendException(SendException::ERROR_INVALID_PAYLOAD_SIZE, 1, $message->getIdentifier(), $message);
+        }
+
+        $payload .= pack('n', $payloadSize);
         $payload .= $jsonData;
 
         return $payload;
@@ -81,11 +55,12 @@ class PayloadFactory implements PayloadFactoryInterface
      * Create JSON payload
      *
      * @param MessageInterface $message
+     *
      * @return string
      */
     public function createJsonPayload(MessageInterface $message)
     {
-        if ($this->jsonUnescapedUnicode && version_compare(PHP_VERSION, '5.4.0', '>=')) {
+        if (version_compare(PHP_VERSION, '5.4.0', '>=')) {
             return json_encode($message->getPayloadData(), JSON_FORCE_OBJECT ^ JSON_UNESCAPED_UNICODE);
         } else {
             return json_encode($message->getPayloadData(), JSON_FORCE_OBJECT);

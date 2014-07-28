@@ -36,6 +36,7 @@ interface AdapterInterface
      * Add message to queue
      *
      * @param MessageInterface $message
+     *
      * @return bool
      */
     public function addMessage(MessageInterface $message);

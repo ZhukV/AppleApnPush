@@ -14,13 +14,17 @@ namespace Apple\ApnPush\Queue;
 use Apple\ApnPush\Notification\NotificationInterface;
 use Apple\ApnPush\Queue\Adapter\RedisAdapter;
 
+/**
+ * Redis queue
+ */
 class Redis extends Queue
 {
     /**
      * Create new instance from options
      *
      * @param NotificationInterface $notification
-     * @param array $options
+     * @param array                 $options
+     *
      * @return Redis
      */
     public static function create(NotificationInterface $notification, array $options = array())

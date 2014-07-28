@@ -15,6 +15,9 @@ use Apple\ApnPush\Notification\MessageInterface;
 use Apple\ApnPush\Notification\SendException;
 use Symfony\Component\EventDispatcher\Event;
 
+/**
+ * Send message error event
+ */
 class SendMessageErrorEvent extends Event
 {
     /**
@@ -31,7 +34,7 @@ class SendMessageErrorEvent extends Event
      * Construct
      *
      * @param MessageInterface $message
-     * @param SendException $exception
+     * @param SendException    $exception
      */
     public function __construct(MessageInterface $message, SendException $exception)
     {

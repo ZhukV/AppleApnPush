@@ -12,7 +12,7 @@
 namespace Apple\ApnPush\Exception;
 
 /**
- * Control certificate file
+ * Control socket errors
  */
 class SocketErrorException extends ApnPushException
 {

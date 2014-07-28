@@ -14,6 +14,9 @@ namespace Apple\ApnPush\Notification\Events;
 use Apple\ApnPush\Notification\MessageInterface;
 use Symfony\Component\EventDispatcher\Event;
 
+/**
+ * Send message complete event
+ */
 class SendMessageCompleteEvent extends Event
 {
     /**
@@ -34,7 +37,7 @@ class SendMessageCompleteEvent extends Event
     /**
      * Get message
      *
-     * @return MessageInterface $message
+     * @return MessageInterface
      */
     public function getMessage()
     {

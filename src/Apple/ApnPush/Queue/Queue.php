@@ -40,7 +40,7 @@ class Queue implements QueueInterface
     /**
      * Construct
      *
-     * @param AdapterInterface $adapter
+     * @param AdapterInterface      $adapter
      * @param NotificationInterface $notification
      */
     public function __construct(AdapterInterface $adapter = null, NotificationInterface $notification = null)
@@ -53,6 +53,7 @@ class Queue implements QueueInterface
      * Set queue adapter
      *
      * @param AdapterInterface $adapter
+     *
      * @return Queue
      */
     public function setAdapter(AdapterInterface $adapter = null)
@@ -69,13 +70,14 @@ class Queue implements QueueInterface
      */
     public function getAdapter()
     {
-       return $this->adapter;
+        return $this->adapter;
     }
 
     /**
      * Set notification
      *
      * @param NotificationInterface $notification
+     *
      * @return Queue
      */
     public function setNotification(NotificationInterface $notification = null)
@@ -99,8 +101,10 @@ class Queue implements QueueInterface
      * Set notificationControlError
      *
      * @param callable $notificationErrorHandler
-     * @throws \InvalidArgumentException
+     *
      * @return Queue
+     *
+     * @throws \InvalidArgumentException
      */
     public function setNotificationErrorHandler($notificationErrorHandler)
     {
@@ -127,8 +131,10 @@ class Queue implements QueueInterface
      * Add message to queue
      *
      * @param MessageInterface $message
-     * @throws \RuntimeException
+     *
      * @return bool
+     *
+     * @throws \RuntimeException
      */
     public function addMessage(MessageInterface $message)
     {

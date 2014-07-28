@@ -65,13 +65,34 @@ class Message implements MessageInterface, \Serializable
     }
 
     /**
-     * Set identifier
+     * Set identifier. Attention: the identifier must be a integer value, and this value
+     * cannot be larger than 4294967294 (32 bit unsigned long)!
      *
      * @param integer $identifier
+     *
      * @return Message
+     *
+     * @throws \InvalidArgumentException
+     * @throws \OutOfRangeException
      */
     public function setIdentifier($identifier)
     {
+        if (null !== $identifier) {
+            if (!is_int($identifier)) {
+                throw new \InvalidArgumentException(sprintf(
+                    'The identifier must be a integer value, "%s" given',
+                    gettype($identifier)
+                ));
+            }
+
+            if ($identifier && $identifier > 4294967294) {
+                throw new \OutOfRangeException(sprintf(
+                    'Invalid identifier value. Cannot be larger than 4294967294, "%s" given.',
+                    $identifier
+                ));
+            }
+        }
+
         $this->identifier = $identifier;
 
         return $this;
@@ -91,14 +112,19 @@ class Message implements MessageInterface, \Serializable
      * Set device token
      *
      * @param string $deviceToken
-     * @throws \InvalidArgumentException
+     *
      * @return Message
+     *
+     * @throws \InvalidArgumentException
      */
     public function setDeviceToken($deviceToken)
     {
         if (is_object($deviceToken)) {
             if (!method_exists($deviceToken, '__toString')) {
-                throw new \InvalidArgumentException(sprintf('Can\'t set device token from object "%s". Object must have __toString method.', get_class($deviceToken)));
+                throw new \InvalidArgumentException(sprintf(
+                    'Can\'t set device token from object "%s". Object must have __toString method.',
+                    get_class($deviceToken)
+                ));
             }
 
             $deviceToken = (string) $deviceToken;
@@ -119,10 +145,10 @@ class Message implements MessageInterface, \Serializable
             ));
         }
 
-        if (mb_strlen($deviceToken) != 64) {
+        if (strlen($deviceToken) != 64) {
             throw new \InvalidArgumentException(sprintf(
-                'Device token must be a 64 charsets, "%d".',
-                mb_strlen($deviceToken)
+                'Device token must be a 64 characters, "%d".',
+                strlen($deviceToken)
             ));
         }
 
@@ -145,6 +171,7 @@ class Message implements MessageInterface, \Serializable
      * Set aps data
      *
      * @param ApsDataInterface $apsData
+     *
      * @return Message
      */
     public function setApsData(ApsDataInterface $apsData)
@@ -168,6 +195,7 @@ class Message implements MessageInterface, \Serializable
      * Set body
      *
      * @param string $body
+     *
      * @return Message
      */
     public function setBody($body)
@@ -191,7 +219,8 @@ class Message implements MessageInterface, \Serializable
      * Set body localize
      *
      * @param string $localizeKey
-     * @param array $params
+     * @param array  $params
+     *
      * @return Message
      */
     public function setBodyLocalize($localizeKey, array $params = array())
@@ -205,6 +234,7 @@ class Message implements MessageInterface, \Serializable
      * Set custom data
      *
      * @param array $customData
+     *
      * @return Message
      */
     public function setCustomData(array $customData)
@@ -222,7 +252,8 @@ class Message implements MessageInterface, \Serializable
      * Add custom data
      *
      * @param string $key
-     * @param mixed $value
+     * @param mixed  $value
+     *
      * @return Message
      */
     public function addCustomData($key, $value = null)
@@ -252,16 +283,18 @@ class Message implements MessageInterface, \Serializable
      * Set expires of this message
      *
      * @param \DateTime $expires
+     *
      * @return Message
      */
     public function setExpires(\DateTime $expires)
     {
-        if ($expires->getTimezone()->getName() != 'UTC') {
-            $expires = clone $expires;
-            $expires->setTimezone(new \DateTimeZone('UTC'));
+        $value = clone $expires;
+
+        if ($value->getTimezone()->getName() != 'UTC') {
+            $value->setTimezone(new \DateTimeZone('UTC'));
         }
 
-        $this->expires = $expires;
+        $this->expires = $value;
 
         return $this;
     }
@@ -294,6 +327,7 @@ class Message implements MessageInterface, \Serializable
      * Set badge
      *
      * @param int $badge
+     *
      * @return Message
      */
     public function setBadge($badge)
@@ -317,6 +351,7 @@ class Message implements MessageInterface, \Serializable
      * Set sound
      *
      * @param string $sound
+     *
      * @return Message
      */
     public function setSound($sound)
@@ -339,7 +374,8 @@ class Message implements MessageInterface, \Serializable
     /**
      * Set content available
      *
-     * @param boolean $contentAvailable
+     * @param bool $contentAvailable
+     *
      * @return Message
      */
     public function setContentAvailable($contentAvailable)
@@ -352,7 +388,7 @@ class Message implements MessageInterface, \Serializable
     /**
      * Is content available
      *
-     * @return boolean
+     * @return bool
      */
     public function isContentAvailable()
     {

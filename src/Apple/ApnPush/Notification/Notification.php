@@ -59,7 +59,7 @@ class Notification implements NotificationInterface
         if (null !== $connection) {
             if ($connection instanceof ConnectionInterface) {
                 $this->connection = $connection;
-            } else if (is_string($connection)) {
+            } elseif (is_string($connection)) {
                 // Connection is a certificate path file
                 $this->connection = new Connection($connection);
             }
@@ -72,6 +72,7 @@ class Notification implements NotificationInterface
      * Set connection to manager
      *
      * @param ConnectionInterface $connection
+     *
      * @return Notification
      */
     public function setConnection(ConnectionInterface $connection)
@@ -95,6 +96,7 @@ class Notification implements NotificationInterface
      * Set payload factory for generate apn data
      *
      * @param PayloadFactoryInterface $payloadFactory
+     *
      * @return Notification
      */
     public function setPayloadFactory(PayloadFactoryInterface $payloadFactory)
@@ -118,6 +120,7 @@ class Notification implements NotificationInterface
      * Set logger for logging all actions
      *
      * @param LoggerInterface $logger
+     *
      * @return Notification
      */
     public function setLogger(LoggerInterface $logger = null)
@@ -141,6 +144,7 @@ class Notification implements NotificationInterface
      * Set event dispatcher
      *
      * @param EventDispatcherInterface $eventDispatcher
+     *
      * @return Notification
      */
     public function setEventDispatcher(EventDispatcherInterface $eventDispatcher = null)
@@ -164,11 +168,13 @@ class Notification implements NotificationInterface
      * Set message to iOS devices
      *
      * @param MessageInterface $message
+     *
+     * @return bool
+     *
      * @throws SendException
      * @throws Exception\PayloadFactoryUndefinedException
      * @throws Exception\ConnectionUndefinedException
      * @throws Exception\DeviceTokenNotFoundException
-     * @return bool
      */
     public function send(MessageInterface $message)
     {
@@ -237,11 +243,12 @@ class Notification implements NotificationInterface
     /**
      * Send message with parameters
      *
-     * @param string $deviceToken       Device token (/^[a-z0-9]{64}$/i)
-     * @param string $body              Message content
-     * @param integer $messIdentifier   Message identifier
-     * @param integer $badge
-     * @param string $sound             Path to sound file in application or sound key
+     * @param string  $deviceToken    Device token (/^[a-z0-9]{64}$/i)
+     * @param string  $body           Message content
+     * @param integer $messIdentifier Message identifier
+     * @param integer $badge          Badge
+     * @param string  $sound          Path to sound file in application or sound key
+     *
      * @return bool
      */
     public function sendMessage($deviceToken, $body, $messIdentifier = null, $badge = null, $sound = null)
@@ -270,6 +277,7 @@ class Notification implements NotificationInterface
      * Set status for require check errors
      *
      * @param bool $check
+     *
      * @return Notification
      */
     public function setCheckForErrors($check)

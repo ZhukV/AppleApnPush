@@ -23,7 +23,8 @@ class Amqp extends Queue
      * Create new instance from options
      *
      * @param NotificationInterface $notification
-     * @param array $options
+     * @param array                 $options
+     *
      * @return Amqp
      */
     public static function create(NotificationInterface $notification, array $options = array())

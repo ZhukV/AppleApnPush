@@ -76,14 +76,14 @@ interface ApsDataInterface extends PayloadDataInterface
     /**
      * Set content available
      * 
-     * @param boolean $contentAvailable
+     * @param bool $contentAvailable
      */
     public function setContentAvailable($contentAvailable);
 
     /**
      * Get content available
      * 
-     * @return boolean
+     * @return bool
      */
     public function isContentAvailable();
 }

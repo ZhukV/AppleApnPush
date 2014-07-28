@@ -20,6 +20,8 @@ class Connection extends BaseConnection
 {
     /**
      * Initialize connection
+     *
+     * @return Connection
      */
     public function create()
     {

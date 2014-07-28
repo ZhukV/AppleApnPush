@@ -37,7 +37,7 @@ class ApsData implements ApsDataInterface, \Serializable
     protected $badge;
 
     /**
-     * @var boolean 
+     * @var bool
      */
     protected $contentAvailable;
 
@@ -58,8 +58,10 @@ class ApsData implements ApsDataInterface, \Serializable
      * Attention: clear custom body data
      *
      * @param string $body
-     * @throws \InvalidArgumentException
+     *
      * @return ApsData
+     *
+     * @throws \InvalidArgumentException
      */
     public function setBody($body)
     {
@@ -96,9 +98,11 @@ class ApsData implements ApsDataInterface, \Serializable
      * Set body localize
      *
      * @param string $localizeKey
-     * @param array $localizeParams
-     * @throws \LogicException          If body message already exists.
+     * @param array  $localizeParams
+     *
      * @return ApsData
+     *
+     * @throws \LogicException If body message already exists.
      */
     public function setBodyLocalize($localizeKey, array $localizeParams = array())
     {
@@ -109,7 +113,10 @@ class ApsData implements ApsDataInterface, \Serializable
         }
 
         if ($this->body) {
-            throw new \LogicException('Can\'t set localized body, because body message already exists. Please clear body message (->setBody(null)).');
+            throw new \LogicException(
+                'Can\'t set localized body, because body message already exists.' .
+                'Please clear body message (->setBody(null)).'
+            );
         }
 
         if (is_object($localizeKey)) {
@@ -135,6 +142,7 @@ class ApsData implements ApsDataInterface, \Serializable
      * Set custom body
      *
      * @param array $bodyCustom
+     *
      * @return ApsData
      */
     public function setBodyCustom(array $bodyCustom = array())
@@ -158,8 +166,10 @@ class ApsData implements ApsDataInterface, \Serializable
      * Set sound
      *
      * @param string $sound
-     * @throws \InvalidArgumentException
+     *
      * @return ApsData
+     *
+     * @throws \InvalidArgumentException
      */
     public function setSound($sound)
     {
@@ -192,8 +202,10 @@ class ApsData implements ApsDataInterface, \Serializable
      * Set badge
      *
      * @param int $badge
-     * @throws \OutOfRangeException
+     *
      * @return ApsData
+     *
+     * @throws \OutOfRangeException
      */
     public function setBadge($badge)
     {
@@ -229,6 +241,7 @@ class ApsData implements ApsDataInterface, \Serializable
      * Set content available option
      *
      * @param bool $contentAvailable
+     *
      * @return ApsData
      */
     public function setContentAvailable($contentAvailable)
@@ -270,7 +283,7 @@ class ApsData implements ApsDataInterface, \Serializable
         if (true === $this->contentAvailable) {
             $apsData['content-available'] = 1;
         }
-        
+
         return $apsData;
     }
 
@@ -309,7 +322,7 @@ class ApsData implements ApsDataInterface, \Serializable
             ->setBodyCustom($data['body_custom'])
             ->setSound($data['sound'])
             ->setBadge($data['badge']);
-        
+
         if (isset($data['content-available'])) {
             $this->setContentAvailable($data['content-available']);
         }

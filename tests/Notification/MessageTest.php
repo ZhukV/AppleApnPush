@@ -32,7 +32,9 @@ class MessageTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @dataProvider deviceTokenProvider
+     * Test set device token
+     *
+     * @dataProvider providerDeviceToken
      */
     public function testSetDeviceToken($token, $exception)
     {
@@ -49,13 +51,62 @@ class MessageTest extends \PHPUnit_Framework_TestCase
     /**
      * Provider for testing device token
      */
-    public function deviceTokenProvider()
+    public function providerDeviceToken()
     {
         return array(
             array('foo_bar', true),
             array(str_repeat('aq', 32), true),
             array(str_repeat('af', 32), false)
         );
+    }
+
+    /**
+     * Set set message identifier
+     *
+     * @dataProvider providerIdentifier
+     */
+    public function testSetIdentifier($identifier, $invalid, $outOfRange)
+    {
+        if ($invalid) {
+            $this->setExpectedException('InvalidArgumentException');
+        } elseif ($outOfRange) {
+            $this->setExpectedException('OutOfRangeException');
+        }
+
+        $message = new Message();
+
+        $message->setIdentifier($identifier);
+        $this->assertEquals($message->getIdentifier(), $identifier);
+    }
+
+    /**
+     * Provider for testing identifier
+     */
+    public function providerIdentifier()
+    {
+        return array(
+            array(array(), true, false),
+            array((object) array(), true, false),
+            array('foo-bar', true, false),
+            array('1234', true, false),
+            array(123456789, false, false), // Correct
+            array(4294967295, false, true)
+        );
+    }
+
+    /**
+     * Test set expires
+     */
+    public function testSetExpires()
+    {
+        $message = new Message();
+
+        $expires = new \DateTime('now', new \DateTimeZone('Europe/Paris'));
+
+        $message->setExpires($expires);
+
+        $this->assertEquals('Europe/Paris', $expires->getTimezone()->getName());
+        $this->assertEquals('UTC', $message->getExpires()->getTimezone()->getName());
     }
 
     /**
@@ -94,7 +145,7 @@ class MessageTest extends \PHPUnit_Framework_TestCase
         $message = new Message();
         $message
             ->setCustomData(array('foo' => 'bar'))
-            ->setIdentifier('foo')
+            ->setIdentifier(12345)
             ->setDeviceToken(str_repeat('af', 32));
 
         $serializeData = serialize($message);
@@ -102,7 +153,7 @@ class MessageTest extends \PHPUnit_Framework_TestCase
         $newMessage = unserialize($serializeData);
 
         $this->assertEquals(array('foo' => 'bar'), $newMessage->getCustomData());
-        $this->assertEquals('foo', $newMessage->getIdentifier());
+        $this->assertEquals(12345, $newMessage->getIdentifier());
         $this->assertEquals(str_repeat('af', 32), $newMessage->getDeviceToken());
         $this->assertInstanceOf('Apple\ApnPush\Notification\ApsDataInterface', $newMessage->getApsData());
         $this->assertInstanceOf('DateTime', $newMessage->getExpires());

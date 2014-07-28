@@ -75,21 +75,21 @@ interface ConnectionInterface
     /**
      * Is connection
      *
-     * @return boolean
+     * @return bool
      */
     public function is();
 
     /**
      * Set sandbox mode
      *
-     * @param boolean $sandbox
+     * @param bool $sandbox
      */
     public function setSandboxMode($sandbox);
 
     /**
      * Get sandbox mode
      *
-     * @return boolean
+     * @return bool
      */
     public function getSandboxMode();
 
@@ -98,6 +98,7 @@ interface ConnectionInterface
      *
      * @param string  $data
      * @param integer $length
+     *
      * @return int
      */
     public function write($data, $length);
@@ -105,13 +106,13 @@ interface ConnectionInterface
     /**
      * Is ready read
      *
-     * @return boolean
+     * @return bool
      */
     public function isReadyRead();
 
     /**
      * Set time ready
-     * @see: http://www.php.net/manual/function.stream-select.php
+     * For more information please see http://www.php.net/manual/function.stream-select.php
      *
      * @param integer $second
      * @param integer $uSeconds
@@ -129,6 +130,7 @@ interface ConnectionInterface
      * Read data from connection
      *
      * @param int $length
+     *
      * @return string
      */
     public function read($length);

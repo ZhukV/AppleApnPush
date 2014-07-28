@@ -50,9 +50,11 @@ class Device
     /**
      * Unpacks the APNS data into the required fields
      *
-     * @param  string            $data
-     * @throws FeedbackException
+     * @param string $data
+     *
      * @return Device
+     *
+     * @throws FeedbackException
      */
     public function unpack($data)
     {

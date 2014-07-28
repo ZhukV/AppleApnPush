@@ -15,7 +15,7 @@ use Apple\ApnPush\Queue\Queue as BaseQueue;
 
 /**
  * This is a shortcut class
- * @see \Apple\ApnPush\Queue\Queue
+ * See \Apple\ApnPush\Queue\Queue
  */
 class Queue extends BaseQueue
 {

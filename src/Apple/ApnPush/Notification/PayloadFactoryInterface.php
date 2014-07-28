@@ -12,7 +12,7 @@
 namespace Apple\ApnPush\Notification;
 
 /**
- * Interface for cotnrol payload factory
+ * Interface for control payload factory
  */
 interface PayloadFactoryInterface
 {
@@ -22,18 +22,4 @@ interface PayloadFactoryInterface
      * @param MessageInterface $message
      */
     public function createPayload(MessageInterface $message);
-
-    /**
-     * Set json unescaped unicode
-     *
-     * @param bool $status
-     */
-    public function setJsonUnescapedUnicode($status);
-
-    /**
-     * Get json unescaped unicode status
-     *
-     * @return boolean
-     */
-    public function getJsonUnescapedUnicode();
 }

@@ -35,8 +35,7 @@ class FeedbackCommand extends Command
             ->addArgument('certificate-file', InputArgument::REQUIRED, 'Certificate file')
             ->addOption('pass-phrase', 'p', InputOption::VALUE_OPTIONAL, 'Pass phrase for certificate file')
             ->addOption('sandbox', null, InputOption::VALUE_NONE, 'Usage sandbox mode')
-            ->addOption('inline', null, InputOption::VALUE_NONE, 'Inline view')
-        ;
+            ->addOption('inline', null, InputOption::VALUE_NONE, 'Inline view');
     }
 
     /**

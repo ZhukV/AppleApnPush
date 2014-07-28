@@ -22,7 +22,7 @@ class ArrayAdapter implements AdapterInterface, \Countable
     /**
      * @var array|MessageInterface[]
      */
-    private $_messages = array();
+    private $messages = array();
 
     /**
      * Is adapter can receive next message
@@ -31,7 +31,7 @@ class ArrayAdapter implements AdapterInterface, \Countable
      */
     public function isNextReceive()
     {
-        return count($this->_messages) > 0;
+        return count($this->messages) > 0;
     }
 
     /**
@@ -41,18 +41,19 @@ class ArrayAdapter implements AdapterInterface, \Countable
      */
     public function getMessage()
     {
-        return array_shift($this->_messages);
+        return array_shift($this->messages);
     }
 
     /**
      * Add message to queue
      *
      * @param MessageInterface $message
+     *
      * @return bool
      */
     public function addMessage(MessageInterface $message)
     {
-        return array_push($this->_messages, $message);
+        return array_push($this->messages, $message);
     }
 
     /**
@@ -62,6 +63,6 @@ class ArrayAdapter implements AdapterInterface, \Countable
      */
     public function count()
     {
-        return count($this->_messages);
+        return count($this->messages);
     }
 }

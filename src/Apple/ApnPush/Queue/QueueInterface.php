@@ -15,6 +15,9 @@ use Apple\ApnPush\Notification\MessageInterface;
 use Apple\ApnPush\Notification\NotificationInterface;
 use Apple\ApnPush\Queue\Adapter\AdapterInterface;
 
+/**
+ * All queue should be implements of this interface
+ */
 interface QueueInterface
 {
     /**
@@ -63,7 +66,8 @@ interface QueueInterface
      * Add message to queue
      *
      * @param MessageInterface $message
-     * @return bool         Status of send message
+     *
+     * @return bool
      */
     public function addMessage(MessageInterface $message);
 

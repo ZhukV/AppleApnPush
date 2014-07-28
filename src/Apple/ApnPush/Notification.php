@@ -15,7 +15,7 @@ use Apple\ApnPush\Notification\Notification as BaseNotification;
 
 /**
  * This is a shortcut class
- * @see \Apple\ApnPush\Notification\Notification
+ * See \Apple\ApnPush\Notification\Notification
  */
 class Notification extends BaseNotification
 {

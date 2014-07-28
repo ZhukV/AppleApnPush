@@ -11,6 +11,9 @@
 
 namespace Apple\ApnPush\Exception;
 
+/**
+ * Control invalid message errors
+ */
 class InvalidMessageException extends ApnPushException
 {
 }

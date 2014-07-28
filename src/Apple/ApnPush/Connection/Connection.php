@@ -30,7 +30,7 @@ abstract class Connection implements ConnectionInterface
     protected $certificatePassPhrase;
 
     /**
-     * @var boolean
+     * @var bool
      */
     protected $sandboxMode;
 
@@ -54,7 +54,7 @@ abstract class Connection implements ConnectionInterface
      *
      * @param string  $certificateFile
      * @param string  $certificatePassPhrase
-     * @param boolean $sandboxMode
+     * @param bool    $sandboxMode
      */
     public function __construct($certificateFile = null, $certificatePassPhrase = null, $sandboxMode = false)
     {
@@ -85,8 +85,10 @@ abstract class Connection implements ConnectionInterface
      *
      * @param int $second
      * @param int $uSecond
-     * @throws \InvalidArgumentException
+     *
      * @return Connection
+     *
+     * @throws \InvalidArgumentException
      */
     public function setReadTime($second, $uSecond = 0)
     {
@@ -123,8 +125,10 @@ abstract class Connection implements ConnectionInterface
      * Set certificate file path for create connection
      *
      * @param string $certificateFile
-     * @throws \InvalidArgumentException
+     *
      * @return Connection
+     *
+     * @throws \InvalidArgumentException
      */
     public function setCertificateFile($certificateFile)
     {
@@ -161,6 +165,7 @@ abstract class Connection implements ConnectionInterface
      * Set certificate pass phrase
      *
      * @param string $certificatePassPhrase
+     *
      * @return Connection
      */
     public function setCertificatePassPhrase($certificatePassPhrase)
@@ -173,7 +178,7 @@ abstract class Connection implements ConnectionInterface
     /**
      * Get certificate pass phrase
      *
-     * @return string|null
+     * @return string
      */
     public function getCertificatePassPhrase()
     {
@@ -184,6 +189,7 @@ abstract class Connection implements ConnectionInterface
      * Set use sandbox mode
      *
      * @param bool $sandboxMode
+     *
      * @return Connection
      */
     public function setSandboxMode($sandboxMode)
@@ -230,7 +236,7 @@ abstract class Connection implements ConnectionInterface
     /**
      * Is connection active
      *
-     * @return boolean
+     * @return bool
      */
     public function is()
     {
@@ -239,6 +245,11 @@ abstract class Connection implements ConnectionInterface
 
     /**
      * Create connection
+     *
+     * @return Connection
+     *
+     * @throws CertificateFileNotFoundException
+     * @throws SocketErrorException
      */
     public function create()
     {
@@ -248,7 +259,9 @@ abstract class Connection implements ConnectionInterface
         }
 
         if (!$this->certificateFile) {
-            throw new CertificateFileNotFoundException('Not found certificate file. Please set certificate file to connection.');
+            throw new CertificateFileNotFoundException(
+                'Not found certificate file. Please set certificate file to connection.'
+            );
         }
 
         $context = stream_context_create(array(
@@ -297,16 +310,19 @@ abstract class Connection implements ConnectionInterface
         }
 
         $this->resource = $resource;
+
         return $this;
     }
 
     /**
      * Write data to connection
      *
-     * @param string $data
+     * @param string  $data
      * @param integer $length
-     * @throws SocketErrorException
+     *
      * @return int
+     *
+     * @throws SocketErrorException
      */
     public function write($data, $length)
     {
@@ -321,8 +337,10 @@ abstract class Connection implements ConnectionInterface
      * Read data from connection
      *
      * @param int $length
-     * @throws SocketErrorException
+     *
      * @return string
+     *
+     * @throws SocketErrorException
      */
     public function read($length)
     {
@@ -337,7 +355,8 @@ abstract class Connection implements ConnectionInterface
      * Is ready read
      *
      * @throws SocketErrorException
-     * @return boolean
+     *
+     * @return bool
      */
     public function isReadyRead()
     {
@@ -355,6 +374,8 @@ abstract class Connection implements ConnectionInterface
 
     /**
      * Close connection
+     *
+     * @return Connection
      */
     public function close()
     {

@@ -90,7 +90,8 @@ interface MessageInterface extends PayloadDataInterface
     /**
      * Add custom data
      *
-     * @param string $customData
+     * @param string $dataKey
+     * @param mixed  $dataValue
      */
     public function addCustomData($dataKey, $dataValue);
 
@@ -132,14 +133,14 @@ interface MessageInterface extends PayloadDataInterface
     /**
      * Set content available
      *
-     * @param boolean $contentAvailable
+     * @param bool $contentAvailable
      */
     public function setContentAvailable($contentAvailable);
 
     /**
      * Is content available
      * 
-     * @return boolean
+     * @return bool
      */
     public function isContentAvailable();
 

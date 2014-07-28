@@ -94,8 +94,9 @@ class SendException extends ApnPushException
     /**
      * Parse exception from apple response
      *
-     * @param string $binaryData
+     * @param string           $binaryData
      * @param MessageInterface $message
+     *
      * @return SendException
      */
     public static function parseFromAppleResponse($binaryData, MessageInterface $message = null)
@@ -154,6 +155,8 @@ class SendException extends ApnPushException
 
     /**
      * __toString
+     *
+     * @return string
      */
     public function __toString()
     {

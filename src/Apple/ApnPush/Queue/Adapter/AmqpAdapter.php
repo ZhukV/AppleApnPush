@@ -47,6 +47,7 @@ class AmqpAdapter implements AdapterInterface
      * Set amqp queue
      *
      * @param \AMQPQueue $queue
+     *
      * @return AmqpAdapter
      */
     public function setQueue(\AMQPQueue $queue = null)
@@ -70,6 +71,7 @@ class AmqpAdapter implements AdapterInterface
      * Set exchange
      *
      * @param \AMQPExchange $exchange
+     *
      * @return AmqpAdapter
      */
     public function setExchange(\AMQPExchange $exchange = null)
@@ -93,6 +95,7 @@ class AmqpAdapter implements AdapterInterface
      * Set routingKey
      *
      * @param string $routingKey
+     *
      * @return AmqpAdapter
      */
     public function setRoutingKey($routingKey)
@@ -116,6 +119,7 @@ class AmqpAdapter implements AdapterInterface
      * Set publishFlag
      *
      * @param int $publishFlag
+     *
      * @return AmqpAdapter
      */
     public function setPublishFlag($publishFlag)
@@ -139,6 +143,7 @@ class AmqpAdapter implements AdapterInterface
      * Set publishOptions
      *
      * @param array $publishOptions
+     *
      * @return AmqpAdapter
      */
     public function setPublishOptions($publishOptions)
@@ -171,8 +176,9 @@ class AmqpAdapter implements AdapterInterface
     /**
      * Get message from queue
      *
-     * @throws \RuntimeException
      * @return \Apple\ApnPush\Notification\MessageInterface|null
+     *
+     * @throws \RuntimeException
      */
     public function getMessage()
     {
@@ -198,8 +204,10 @@ class AmqpAdapter implements AdapterInterface
      * Add message to queue
      *
      * @param MessageInterface $message
-     * @throws \RuntimeException
+     *
      * @return bool
+     *
+     * @throws \RuntimeException
      */
     public function addMessage(MessageInterface $message)
     {
@@ -211,6 +219,11 @@ class AmqpAdapter implements AdapterInterface
             throw new \RuntimeException('Can\'t send message. Exchange not found.');
         }
 
-        return $this->exchange->publish(serialize($message), $this->routingKey, $this->publishFlag, $this->publishOptions);
+        return $this->exchange->publish(
+            serialize($message),
+            $this->routingKey,
+            $this->publishFlag,
+            $this->publishOptions
+        );
     }
 }
