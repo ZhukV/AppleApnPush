@@ -90,4 +90,13 @@ interface NotificationInterface
      * @param bool $check
      */
     public function setCheckForErrors($check);
+
+    /**
+     * Set try recreate connection if apn server returned empty data
+     *
+     * @param bool $recreateConnection
+     *
+     * @return Notification
+     */
+    public function setRecreateConnection($recreateConnection);
 }

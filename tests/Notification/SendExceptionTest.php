@@ -34,11 +34,11 @@ class SendExceptionTest extends \PHPUnit_Framework_TestCase
             array('is', 'isReadyRead', 'write', 'read', 'create')
         );
 
-        $connectionMock->expects($this->once())
+        $connectionMock->expects($this->any())
             ->method('isReadyRead')
             ->will($this->returnValue(true));
 
-        $connectionMock->expects($this->once())
+        $connectionMock->expects($this->any())
             ->method('read')
             ->with(6)
             ->will($this->returnValue($responseData));

@@ -157,11 +157,14 @@ class NotificationTest extends \PHPUnit_Framework_TestCase
         $this->connection->expects($this->any())->method('is')
             ->will($this->returnValue(true));
 
-        $this->connection->expects($this->once())->method('isReadyRead')
+        $this->connection->expects($this->any())->method('isReadyRead')
             ->will($this->returnValue(true));
 
         $this->connection->expects($this->once())->method('write')
             ->will($this->returnCallback(function ($a) { return mb_strlen($a); }));
+
+        $this->connection->expects($this->once())->method('read')
+            ->will($this->returnValue('123456'));
 
         $eventDispatcher = $this->getMock(
             'Symfony\Component\EventDispatcher\EventDispatcher',

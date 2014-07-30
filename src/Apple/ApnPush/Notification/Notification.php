@@ -49,6 +49,13 @@ class Notification implements NotificationInterface
     protected $checkForErrors = true;
 
     /**
+     * Recreate connection if apn server returned empty data
+     *
+     * @var bool
+     */
+    protected $recreateConnection = true;
+
+    /**
      * Construct
      *
      * @param string|ConnectionInterface $connection
@@ -190,8 +197,6 @@ class Notification implements NotificationInterface
             throw new Exception\DeviceTokenNotFoundException();
         }
 
-        $payload = $this->payloadFactory->createPayload($message);
-
         if (!$this->connection->is()) {
             if ($this->logger) {
                 $this->logger->debug('Create connection...');
@@ -200,12 +205,10 @@ class Notification implements NotificationInterface
             $this->connection->create();
         }
 
-        $response = (strlen($payload) === $this->connection->write($payload, strlen($payload)));
-
-        if ($this->checkForErrors && $this->connection->isReadyRead()) {
-            $responseApple = $this->connection->read(6);
-            $error = SendException::parseFromAppleResponse($responseApple, $message);
-
+        try {
+            // Send payload data to apns server
+            $response = $this->sendPayload($message);
+        } catch (SendException $error) {
             if ($this->eventDispatcher) {
                 // Call to event: Error send message
                 $event = new SendMessageErrorEvent($message, $error);
@@ -285,5 +288,98 @@ class Notification implements NotificationInterface
         $this->checkForErrors = $check;
 
         return $this;
+    }
+
+    /**
+     * Is check for errors
+     *
+     * @return bool
+     */
+    public function isCheckForErrors()
+    {
+        return $this->checkForErrors;
+    }
+
+    /**
+     * Set try recreate connection if apn server returned empty data
+     *
+     * @param bool $recreateConnection
+     *
+     * @return Notification
+     */
+    public function setRecreateConnection($recreateConnection)
+    {
+        $this->recreateConnection = (bool) $recreateConnection;
+
+        return $this;
+    }
+
+    /**
+     * Is try recreate connection if apn server returned empty data
+     *
+     * @return bool
+     */
+    public function isRecreateConnection()
+    {
+        return $this->recreateConnection;
+    }
+
+    /**
+     * Send payload data to apple apns server
+     *
+     * @param MessageInterface $message
+     *
+     * @return bool
+     *
+     * @throws SendException
+     */
+    private function sendPayload(MessageInterface $message)
+    {
+        $payload = $this->payloadFactory->createPayload($message);
+
+        $response = $this->writePayload($payload);
+
+        if ($this->checkForErrors && $this->connection->isReadyRead()) {
+            $responseApn = $this->connection->read(6);
+
+            if (!$responseApn && $this->recreateConnection) {
+                // Not read data from apn server. Close connection?
+                if ($this->logger) {
+                    $this->logger->debug(
+                        'APN server returned empty data. Close connection? Try recreate connection...'
+                    );
+                }
+
+                // Try recreate connection
+                $this->connection->close();
+                $this->connection->create();
+
+                $response = $this->writePayload($payload);
+
+                if ($this->connection->isReadyRead()) {
+                    $responseApn = $this->connection->read(6);
+                } else {
+                    return $response;
+                }
+            }
+
+            $error = SendException::parseFromAppleResponse($responseApn, $message);
+
+            throw $error;
+        }
+
+        return $response;
+    }
+
+    /**
+     * Write payload data to connection
+     *
+     * @param string $payload
+     *
+     * @return bool
+     */
+    private function writePayload($payload)
+    {
+        return strlen($payload) === $this->connection->write($payload, strlen($payload));
     }
 }

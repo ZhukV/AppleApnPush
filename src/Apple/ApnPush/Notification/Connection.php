@@ -25,6 +25,8 @@ class Connection extends BaseConnection
      */
     public function create()
     {
+        $this->socketClientFlags = STREAM_CLIENT_CONNECT | STREAM_CLIENT_PERSISTENT;
+
         parent::create();
 
         stream_set_blocking($this->resource, 0);
