@@ -146,7 +146,8 @@ class MessageTest extends \PHPUnit_Framework_TestCase
         $message
             ->setCustomData(array('foo' => 'bar'))
             ->setIdentifier(12345)
-            ->setDeviceToken(str_repeat('af', 32));
+            ->setDeviceToken(str_repeat('af', 32))
+            ->setExtra(array('foo' => 'bar'));
 
         $serializeData = serialize($message);
         /** @var Message $newMessage */
@@ -157,6 +158,7 @@ class MessageTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(str_repeat('af', 32), $newMessage->getDeviceToken());
         $this->assertInstanceOf('Apple\ApnPush\Notification\ApsDataInterface', $newMessage->getApsData());
         $this->assertInstanceOf('DateTime', $newMessage->getExpires());
+        $this->assertEquals(array('foo' => 'bar'), $newMessage->getExtra());
     }
 
     /**

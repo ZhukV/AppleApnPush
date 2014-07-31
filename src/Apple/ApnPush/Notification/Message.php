@@ -42,6 +42,13 @@ class Message implements MessageInterface, \Serializable
     protected $identifier;
 
     /**
+     * Common extra data for serialization
+     *
+     * @var array
+     */
+    protected $extra;
+
+    /**
      * Construct
      *
      * @param string $deviceToken
@@ -396,6 +403,37 @@ class Message implements MessageInterface, \Serializable
     }
 
     /**
+     * Set extra data for serialization
+     *
+     * @param array $extra
+     *
+     * @return Message
+     */
+    public function setExtra(array $extra)
+    {
+        $this->extra = $extra;
+
+        return $this;
+    }
+
+    /**
+     * Get extra for serialization
+     *
+     * @param string $key
+     * @param mixed  $defaultValue
+     *
+     * @return array
+     */
+    public function getExtra($key = null, $defaultValue = null)
+    {
+        if (null === $key) {
+            return $this->extra;
+        }
+
+        return isset($this->extra[$key]) ? $this->extra[$key] : $defaultValue;
+    }
+
+    /**
      * Prepare payload
      */
     protected function preparePayload()
@@ -416,7 +454,8 @@ class Message implements MessageInterface, \Serializable
             'device_token' => $this->deviceToken,
             'custom_data' => $this->customData,
             'expires' => $this->expires->format(\DateTime::ISO8601),
-            'identifier' => $this->identifier
+            'identifier' => $this->identifier,
+            'extra' => $this->extra
         );
 
         return serialize($data);
@@ -449,6 +488,10 @@ class Message implements MessageInterface, \Serializable
 
         if ($data['identifier']) {
             $this->setIdentifier($data['identifier']);
+        }
+
+        if ($data['extra']) {
+            $this->setExtra($data['extra']);
         }
     }
 }
