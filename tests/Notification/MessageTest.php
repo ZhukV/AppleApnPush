@@ -56,7 +56,8 @@ class MessageTest extends \PHPUnit_Framework_TestCase
         return array(
             array('foo_bar', true),
             array(str_repeat('aq', 32), true),
-            array(str_repeat('af', 32), false)
+            array(str_repeat('af', 32), false),
+            array(str_repeat('AF', 32), false)
         );
     }
 

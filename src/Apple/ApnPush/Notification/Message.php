@@ -144,10 +144,10 @@ class Message implements MessageInterface, \Serializable
             ));
         }
 
-        if (preg_match('/[^0-9a-f]/', $deviceToken)) {
+        if (preg_match('/[^0-9a-fA-F]/', $deviceToken)) {
             throw new \InvalidArgumentException(sprintf(
                 'Device token must be mask "%s". Device token: "%s"',
-                '/[^0-9a-f]/',
+                '/[^0-9a-fA-F]/',
                 $deviceToken
             ));
         }
