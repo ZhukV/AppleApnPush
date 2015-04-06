@@ -41,7 +41,7 @@ class PayloadFactory implements PayloadFactoryInterface
         $payloadSize = strlen($jsonData);
 
         // Check payload size
-        if ($payloadSize > 255) {
+        if ($payloadSize > 2048) {
             throw new SendException(SendException::ERROR_INVALID_PAYLOAD_SIZE, 1, $message->getIdentifier(), $message);
         }
 
