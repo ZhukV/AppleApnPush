@@ -101,7 +101,20 @@ class SendException extends ApnPushException
      */
     public static function parseFromAppleResponse($binaryData, MessageInterface $message = null)
     {
-        if (false === $response = @unpack("Ccommand/Cstatus/Nidentifier", $binaryData)) {
+        $unpackError = false;
+
+        // Register custom error handler for control unpack error
+        set_error_handler(function () use (&$unpackError) {
+            $unpackError = true;
+        });
+
+        // Unpack response
+        $response = unpack("Ccommand/Cstatus/Nidentifier", $binaryData);
+
+        // Restore custom error handler
+        restore_error_handler();
+
+        if ($unpackError) {
             return new static(self::ERROR_UNPACK_RESPONSE, 0, 0, $message);
         }
 

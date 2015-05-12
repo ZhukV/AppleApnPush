@@ -18,4 +18,4 @@ before_script:
 
     # Installation suggestion package
     - php composer.phar require psr/log dev-master
-    - php composer.phar require symfony/event-dispatcher dev-master
+    - php composer.phar require symfony/event-dispatcher 2.3

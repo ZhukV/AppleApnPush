@@ -277,8 +277,8 @@ abstract class Connection implements ConnectionInterface
         // @codeCoverageIgnoreStart
         set_error_handler(function ($errCode, $errStr) use (&$errorMessage) {
             if (!$errorMessage) {
-                @list (, $errorMessage) = explode(':', $errStr, 2);
-                $errorMessage = trim($errorMessage);
+                $parts = explode(':', $errStr, 2);
+                $errorMessage = isset($parts[1]) ? trim($parts[1]) : 'Undefined';
             }
         });
         // @codeCoverageIgnoreEnd
