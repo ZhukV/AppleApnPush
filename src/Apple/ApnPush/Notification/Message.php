@@ -223,6 +223,30 @@ class Message implements MessageInterface, \Serializable
     }
 
     /**
+     * Set category
+     *
+     * @param string $category
+     *
+     * @return Message
+     */
+    public function setCategory($category)
+    {
+        $this->apsData->setCategory($category);
+
+        return $this;
+    }
+
+    /**
+     * Get category
+     *
+     * @return string
+     */
+    public function getCategory()
+    {
+        return $this->apsData->getCategory();
+    }
+
+    /**
      * Set body localize
      *
      * @param string $localizeKey

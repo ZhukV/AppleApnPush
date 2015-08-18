@@ -67,6 +67,20 @@ interface MessageInterface extends PayloadDataInterface
     public function getBody();
 
     /**
+     * Set category
+     *
+     * @param string $category
+     */
+    public function setCategory($category);
+
+    /**
+     * Get category
+     *
+     * @return string
+     */
+    public function getCategory();
+
+    /**
      * Set APS data
      *
      * @param ApsDataInterface $apsData
