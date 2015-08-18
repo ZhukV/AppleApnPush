@@ -32,6 +32,11 @@ class ApsData implements ApsDataInterface, \Serializable
     protected $sound;
 
     /**
+     * @var string
+     */
+    protected $category;
+
+    /**
      * @var integer
      */
     protected $badge;
@@ -92,6 +97,43 @@ class ApsData implements ApsDataInterface, \Serializable
     public function getBody()
     {
         return $this->body;
+    }
+
+    /**
+     * Set category for iOS 8 notification actions
+     *
+     * @param string $category
+     *
+     * @return ApsData
+     *
+     * @throws \InvalidArgumentException
+     */
+    public function setCategory($category)
+    {
+        if (is_object($category)) {
+            $category = (string) $category;
+        }
+
+        if ($category !== null && !is_scalar($category)) {
+            throw new \InvalidArgumentException(sprintf(
+                'Category must be string, "%s" given.',
+                gettype($category)
+            ));
+        }
+
+        $this->category = $category;
+
+        return $this;
+    }
+
+    /**
+     * Get category
+     *
+     * @return string
+     */
+    public function getCategory()
+    {
+        return $this->category;
     }
 
     /**
@@ -280,6 +322,10 @@ class ApsData implements ApsDataInterface, \Serializable
             $apsData['badge'] = $this->badge;
         }
 
+        if (null !== $this->category) {
+            $apsData['category'] = $this->category;
+        }
+
         if (true === $this->contentAvailable) {
             $apsData['content-available'] = 1;
         }
@@ -298,7 +344,8 @@ class ApsData implements ApsDataInterface, \Serializable
             'body' => $this->body,
             'body_custom' => $this->bodyCustom,
             'sound' => $this->sound,
-            'badge' => $this->badge
+            'badge' => $this->badge,
+            'category' => $this->category
         );
 
         if (true === $this->contentAvailable) {
@@ -321,7 +368,8 @@ class ApsData implements ApsDataInterface, \Serializable
             ->setBody($data['body'])
             ->setBodyCustom($data['body_custom'])
             ->setSound($data['sound'])
-            ->setBadge($data['badge']);
+            ->setBadge($data['badge'])
+            ->setCategory($data['category']);
 
         if (isset($data['content-available'])) {
             $this->setContentAvailable($data['content-available']);
