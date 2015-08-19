@@ -31,6 +31,20 @@ interface ApsDataInterface extends PayloadDataInterface
     public function getBody();
 
     /**
+     * Set category for iOS 8 notification actions
+     *
+     * @param string $category
+     */
+    public function setCategory($category);
+
+    /**
+     * Get category
+     *
+     * @return mixed
+     */
+    public function getCategory();
+
+    /**
      * Set body localize
      *
      * @param string $localizeKey
