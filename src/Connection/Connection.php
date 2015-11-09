@@ -33,7 +33,7 @@ abstract class Connection implements ConnectionInterface
     /**
      * @var array
      */
-    protected $readTime = [1, 0];
+    protected $readTime = array(1, 0);
 
     /**
      * @var resource
@@ -92,7 +92,7 @@ abstract class Connection implements ConnectionInterface
             ));
         }
 
-        $this->readTime = [$second, $uSecond];
+        $this->readTime = array($second, $uSecond);
 
         return $this;
     }
@@ -166,12 +166,12 @@ abstract class Connection implements ConnectionInterface
             return $this;
         }
 
-        $context = stream_context_create([
-            'ssl' => [
+        $context = stream_context_create(array(
+            'ssl' => array(
                 'local_cert' => $this->certificate->getPath(),
                 'passphrase' => $this->certificate->getPassPhrase(),
-            ],
-        ]);
+            ),
+        ));
 
         $errorMessage = null;
 
@@ -266,7 +266,7 @@ abstract class Connection implements ConnectionInterface
             throw new SocketErrorException('Can\'t check ready read. Socket not created.');
         }
 
-        $selectRead = [$this->resource];
+        $selectRead = array($this->resource);
         $null = null;
 
         list ($seconds, $uSeconds) = $this->readTime;
