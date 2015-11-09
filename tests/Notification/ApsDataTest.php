@@ -1,6 +1,6 @@
 <?php
 
-/**
+/*
  * This file is part of the AppleApnPush package
  *
  * (c) Vitaliy Zhuk <zhuk2205@gmail.com>

@@ -6,12 +6,14 @@ if (!class_exists('AMQPConnection')) {
     \Demo::error('Please install PHP Amqp Extension for run this demo (AMQP Queue).');
 }
 
+use Apple\ApnPush\Certificate\Certificate;
 use Apple\ApnPush\Notification\Notification;
 use Apple\ApnPush\Queue\Amqp;
 use Apple\ApnPush\Notification\Connection;
 
 // Create connection
-$connection = new Connection(CERTIFICATE_FILE, PASS_PHRASE, SANDBOX_MODE);
+$certificate = new Certificate(CERTIFICATE_FILE, PASS_PHRASE);
+$connection = new Connection($certificate, SANDBOX_MODE);
 
 // Create notification
 $notification = new Notification($connection);

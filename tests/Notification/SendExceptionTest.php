@@ -1,6 +1,6 @@
 <?php
 
-/**
+/*
  * This file is part of the AppleApnPush package
  *
  * (c) Vitaliy Zhuk <zhuk2205@gmail.com>
@@ -31,7 +31,10 @@ class SendExceptionTest extends \PHPUnit_Framework_TestCase
     {
         $connectionMock = $this->getMock(
             'Apple\ApnPush\Notification\Connection',
-            array('is', 'isReadyRead', 'write', 'read', 'create')
+            array('is', 'isReadyRead', 'write', 'read', 'connect'),
+            array(),
+            '',
+            false
         );
 
         $connectionMock->expects($this->any())

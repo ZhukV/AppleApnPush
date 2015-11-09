@@ -7,6 +7,7 @@ if (!class_exists('Symfony\Component\EventDispatcher\EventDispatcher')) {
 }
 
 use Symfony\Component\EventDispatcher\EventDispatcher;
+use Apple\ApnPush\Certificate\Certificate;
 use Apple\ApnPush\Notification\Notification;
 use Apple\ApnPush\Notification\NotificationEvents;
 use Apple\ApnPush\Notification\SendException;
@@ -26,7 +27,8 @@ $eventDispatcher->addListener(NotificationEvents::SEND_MESSAGE_COMPLETE, functio
 });
 
 // Create connection
-$connection = new Connection(CERTIFICATE_FILE, PASS_PHRASE, SANDBOX_MODE);
+$certificate = new Certificate(CERTIFICATE_FILE, PASS_PHRASE);
+$connection = new Connection($certificate, SANDBOX_MODE);
 
 // Create notification
 $notification = new Notification($connection);

@@ -14,11 +14,13 @@ $notification = new Notification('/path/to/your/certificate.pem');
 Create notification with connection object:
 
 ```php
+use Apple\ApnPush\Certificate\Certificate;
 use Apple\ApnPush\Notification;
 use Apple\ApnPush\Notification\Connection;
 
-// Third argument - sandbox mode
-$connection = new Connection('/path/to/your/certificate.pem', 'your_passphrase', false);
+$certificate = new Certificate('/path/to/your/certificate.pem', 'your_passphrase');
+// Second argument - sandbox mode
+$connection = new Connection($certificate, false);
 $notification = new Notification($connection);
 ```
 

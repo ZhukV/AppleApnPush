@@ -15,11 +15,13 @@ print_r($feedback->getInvalidDevices());
 Or create feedback connection:
 
 ```php
-use Apple\ApnPush\Feedback;
+use Apple\ApnPush\Certificate\Certificate;
+use Apple\ApnPush\Feedback\Feedback;
 use Apple\ApnPush\Feedback\Connection;
 
-// Third parameter - sandbox mode
-$connection = new Connection('/path/to/your/certificate.pem', 'pass_phrase', false);
+$certificate = new Certificate('/path/to/your/certificate.pem', 'pass_phrase');
+// Second parameter - sandbox mode
+$connection = new Connection($certificate, false);
 $feedback = new Feedback($connection);
 print_r($feedback->getInvalidDevices());
 ```

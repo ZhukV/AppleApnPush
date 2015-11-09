@@ -1,6 +1,6 @@
 <?php
 
-/**
+/*
  * This file is part of the AppleApnPush package
  *
  * (c) Vitaliy Zhuk <zhuk2205@gmail.com>
@@ -31,7 +31,10 @@ class NotificationTest extends \PHPUnit_Framework_TestCase
 
         $this->connection = $this->getMock(
             'Apple\ApnPush\Notification\Connection',
-            array('is', 'write', 'isReadyRead', 'create', 'close', 'read')
+            array('is', 'write', 'isReadyRead', 'connect', 'close', 'read'),
+            array(),
+            '',
+            false
         );
     }
 
@@ -51,7 +54,7 @@ class NotificationTest extends \PHPUnit_Framework_TestCase
         $this->connection->expects($this->once())->method('is')
             ->with()->will($this->returnValue(false));
 
-        $this->connection->expects($this->once())->method('create');
+        $this->connection->expects($this->once())->method('connect');
         $this->connection->expects($this->once())->method('write')
             ->will($this->returnCallback(function($message){
                 return strlen($message);
@@ -90,13 +93,16 @@ class NotificationTest extends \PHPUnit_Framework_TestCase
     {
         $connection = $this->getMock(
             'Apple\ApnPush\Notification\Connection',
-            array('isReadyRead', 'create', 'read', 'write', 'close')
+            array('isReadyRead', 'connect', 'read', 'write', 'close'),
+            array(),
+            '',
+            false
         );
 
         $connectionResource = new \ReflectionProperty($connection, 'resource');
         $connectionResource->setAccessible(true);
 
-        $connection->expects($this->any())->method('create')
+        $connection->expects($this->any())->method('connect')
             ->will($this->returnCallback(function () use ($connection, $connectionResource){
                 $connectionResource->setValue($connection, true);
             }));

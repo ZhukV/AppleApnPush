@@ -27,7 +27,7 @@ use Apple\ApnPush\Queue\Adapter\ArrayAdapter;
 $adapter = new ArrayAdapter();
 
 // Create notification
-$notification = new Notification(/** Path to your certificate file **/);
+$notification = new Notification('/path/to/you/certificate.pem');
 
 // Create queue
 $queue = new Queue($adapter, $notification);
@@ -55,7 +55,3 @@ $handler = function (SendException $e) {
 $queue->setNotificationErrorHandler($handler);
 $queue->runReceiver();
 ```
-
-
-
-

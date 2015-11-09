@@ -8,12 +8,14 @@ if (!interface_exists('Psr\Log\LoggerInterface')) {
 
 include_once __DIR__ . '/CustomLogger.php';
 
+use Apple\ApnPush\Certificate\Certificate;
 use Apple\ApnPush\Notification\Notification;
 use Apple\ApnPush\Notification\Connection;
 use Apple\ApnPush\Notification\SendException;
 
 // Create connection
-$connection = new Connection(CERTIFICATE_FILE, PASS_PHRASE, SANDBOX_MODE);
+$certificate = new Certificate(CERTIFICATE_FILE, PASS_PHRASE);
+$connection = new Connection($certificate, SANDBOX_MODE);
 
 // Create custom logger
 $logger = new CustomLogger();
