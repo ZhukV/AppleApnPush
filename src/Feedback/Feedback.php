@@ -11,6 +11,7 @@
 
 namespace Apple\ApnPush\Feedback;
 
+use Apple\ApnPush\Certificate\Certificate;
 use Apple\ApnPush\Connection\ConnectionInterface;
 use Apple\ApnPush\Exception;
 use Psr\Log\LoggerInterface;
@@ -35,7 +36,7 @@ class Feedback implements FeedbackInterface
     /**
      * Construct
      *
-     * @param Connection $connection
+     * @param ConnectionInterface|string $connection
      */
     public function __construct($connection = null)
     {
@@ -44,7 +45,8 @@ class Feedback implements FeedbackInterface
                 $this->connection = $connection;
             } elseif (is_string($connection)) {
                 // Connection is a certificate path file
-                $this->connection = new Connection($connection);
+                $certificate = new Certificate($connection, null);
+                $this->connection = new Connection($certificate);
             }
         }
     }
@@ -58,6 +60,11 @@ class Feedback implements FeedbackInterface
      */
     public function setConnection(ConnectionInterface $connection)
     {
+        if ($this->connection) {
+            // Close old connection
+            $this->connection->close();
+        }
+
         $this->connection = $connection;
 
         return $this;
