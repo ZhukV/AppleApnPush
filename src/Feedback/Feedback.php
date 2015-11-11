@@ -91,7 +91,7 @@ class Feedback implements FeedbackInterface
                 $this->logger->debug('Create feedback connection...');
             }
 
-            $this->connection->create();
+            $this->connection->connect();
         }
 
         $data = $this->connection->read(-1);
