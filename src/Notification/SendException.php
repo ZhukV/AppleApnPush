@@ -58,7 +58,7 @@ class SendException extends ApnPushException
     protected $command;
 
     /**
-     * @var string
+     * @var integer
      */
     protected $identifier;
 
@@ -72,7 +72,7 @@ class SendException extends ApnPushException
      *
      * @param integer          $statusCode
      * @param integer          $command
-     * @param string           $identifier
+     * @param integer          $identifier
      * @param MessageInterface $message
      */
     public function __construct($statusCode, $command, $identifier, MessageInterface $message = null)
@@ -149,7 +149,7 @@ class SendException extends ApnPushException
     /**
      * Get identifier
      *
-     * @return string
+     * @return integer
      */
     public function getIdentifier()
     {
