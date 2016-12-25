@@ -11,26 +11,71 @@ Installation
 
 Add AppleApnPush in your composer.json:
 
-```js
+````json
 {
     "require": {
-        "apple/apn-push": "~2.1"
+        "apple/apn-push": "~3.0.0"
     }
 }
-```
+````
 
 Now tell composer to download the library by running the command:
 
-``` bash
+```bash
 $ php composer.phar update apple/apn-push
 ```
 
-Documentation
--------------
+Easy usage
+----------
 
-The bulk of the documentation is stored in the `doc/index.md` file in this library:
+You can use builder for create sender for next send push notifications to device:
 
-[Read the Documentation](doc/index.md)
+```php
+<?php
+
+use Apple\ApnPush\Certificate\Certificate;
+use Apple\ApnPush\Protocol\Http\Authenticator\CertificateAuthenticator;
+use Apple\ApnPush\Sender\Builder\Http20Builder;
+use Apple\ApnPush\Model\ApsData;
+use Apple\ApnPush\Model\DeviceToken;
+use Apple\ApnPush\Model\Message;
+use Apple\ApnPush\Model\Receiver;
+use Apple\ApnPush\Exception\SendMessage\SendMessageException;
+
+// Create certificate and authenticator
+$certificate = new Certificate(__DIR__.'/cert.pem', '');
+$authenticator = new CertificateAuthenticator($certificate);
+
+// Create builder
+$builder = new Http20Builder($authenticator);
+$builder->addDefaultVisitors();
+
+// Build sender
+$sender = $builder->build();
+
+// Create APS data
+$apsData = new ApsData();
+$apsData = $apsData->withBody('hi some fail');
+
+// Create message
+$message = new Message($apsData);
+
+// Create receiver
+$receiver = new Receiver(
+    new DeviceToken('6b4d687c1292f1ff05b5653951be4e5f838ce6d39d6b1be1801fe8dcc35713c1'),
+    'you.topic.id'
+);
+
+try {
+    // Send message to receiver
+    $sender->send($receiver, $message);
+    print "Success send message\n";
+} catch (SendMessageException $e) {
+    print 'Fail send message: '.$e->getMessage()."\n";
+}
+
+```
+
 
 License
 -------
@@ -45,3 +90,10 @@ Reporting an issue or a feature request
 ---------------------------------------
 
 Issues and feature requests are tracked in the [Github issue tracker](https://github.com/ZhukV/AppleApnPush/issues).
+
+Contributors:
+-------------
+
+Thanks to [everyone participating] (https://github.com/ZhukV/AppleApnPush/graphs/contributors) in the development of this AppleApnPush library!
+
+* Ryan Martinsen [popthestack] (https://github.com/popthestack)

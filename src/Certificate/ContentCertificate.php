@@ -46,7 +46,7 @@ class ContentCertificate implements CertificateInterface
      * @param string $passPhrase
      * @param string $tmpDir
      */
-    public function __construct($content, $passPhrase, $tmpDir = null)
+    public function __construct(string $content, string $passPhrase, string $tmpDir)
     {
         $this->content = $content;
         $this->passPhrase = $passPhrase;
@@ -54,9 +54,9 @@ class ContentCertificate implements CertificateInterface
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
-    public function getPath()
+    public function getPath() : string
     {
         if ($this->certificateFilePath) {
             $this->removeTemporaryFile($this->certificateFilePath);
@@ -69,9 +69,9 @@ class ContentCertificate implements CertificateInterface
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
-    public function getPassPhrase()
+    public function getPassPhrase() : string
     {
         return $this->passPhrase;
     }
@@ -91,18 +91,16 @@ class ContentCertificate implements CertificateInterface
      * Create a temporary file
      *
      * @return string Path to temporary file
+     *
+     * @throws \RuntimeException
      */
-    private function createTemporaryFile()
+    private function createTemporaryFile() : string
     {
         $tmpDir = $this->tmpDir;
 
-        if (!$tmpDir) {
-            $tmpDir = sys_get_temp_dir();
-        }
+        $tmpFileName = md5(uniqid(mt_rand(), true)).'.pem';
 
-        $tmpFileName = md5(uniqid(mt_rand(), true)) . '.pem';
-
-        $tmpFilePath = $tmpDir . '/' . $tmpFileName;
+        $tmpFilePath = $tmpDir.'/'.$tmpFileName;
 
         $errorCode = $errorMessage = null;
 
@@ -119,6 +117,7 @@ class ContentCertificate implements CertificateInterface
                 // Error create directory
                 throw new \RuntimeException(sprintf(
                     'Can not create temporary directory "%s". Error: %s [%d].',
+                    $tmpDir,
                     $errorMessage ?: 'Undefined',
                     $errorCode ?: '0'
                 ));
@@ -132,7 +131,8 @@ class ContentCertificate implements CertificateInterface
             // Error create file
             throw new \RuntimeException(sprintf(
                 'Can not create temporary certificate file "%s". Error: %s [%d].',
-                $errorMessage ?: 'Undefied',
+                $tmpFilePath,
+                $errorMessage ?: 'Undefined',
                 $errorCode ?: '0'
             ));
         }

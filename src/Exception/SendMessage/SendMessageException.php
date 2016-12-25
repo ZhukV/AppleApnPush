@@ -9,11 +9,11 @@
  * file that was distributed with this source code
  */
 
-namespace Apple\ApnPush\Exception;
+namespace Apple\ApnPush\Exception\SendMessage;
 
 /**
- * Control certificate file not found
+ * Abstract exception for control all errors in send message processes.
  */
-class CertificateFileNotFoundException extends \Exception
+abstract class SendMessageException extends \Exception
 {
 }

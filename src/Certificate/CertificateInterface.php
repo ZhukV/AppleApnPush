@@ -21,12 +21,12 @@ interface CertificateInterface
      *
      * @return string
      */
-    public function getPath();
+    public function getPath() : string;
 
     /**
      * Get pass phrase
      *
      * @return string
      */
-    public function getPassPhrase();
+    public function getPassPhrase() : string;
 }

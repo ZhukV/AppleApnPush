@@ -34,9 +34,9 @@ class Certificate implements CertificateInterface
      * @param string $path
      * @param string $passPhrase
      *
-     * @throws CertificateFileNotFoundException
+     * @throws \Apple\ApnPush\Exception\CertificateFileNotFoundException
      */
-    public function __construct($path, $passPhrase)
+    public function __construct(string $path, string $passPhrase)
     {
         if (!file_exists($path) || !is_file($path)) {
             throw new CertificateFileNotFoundException(sprintf(
@@ -54,7 +54,7 @@ class Certificate implements CertificateInterface
      *
      * @return string
      */
-    public function getPath()
+    public function getPath() : string
     {
         return $this->path;
     }
@@ -64,7 +64,7 @@ class Certificate implements CertificateInterface
      *
      * @return string
      */
-    public function getPassPhrase()
+    public function getPassPhrase() : string
     {
         return $this->passPhrase;
     }
