@@ -30,7 +30,7 @@ use Apple\ApnPush\Sender\Sender;
 use Apple\ApnPush\Sender\SenderInterface;
 
 /**
- * Builder for create sender with HTTP 2.0 protocol
+ * Builder for create sender with HTTP/2 protocol
  */
 class Http20Builder implements BuilderInterface
 {
