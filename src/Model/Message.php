@@ -32,7 +32,7 @@ class Message
     private $priority;
 
     /**
-     * @var \DateTime
+     * @var Expiration
      */
     private $expiration;
 
