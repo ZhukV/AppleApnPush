@@ -122,6 +122,8 @@ class ExceptionFactoryTest extends TestCase
      */
     public function provideReasons()
     {
+        $lastUse = \DateTime::createFromFormat('!Y/m/d', '2017/01/01');
+
         return [
             ['BadCollapseId', new BadCollapseIdException()],
             ['BadDeviceToken', new BadDeviceTokenException()],
@@ -144,7 +146,7 @@ class ExceptionFactoryTest extends TestCase
             ['MissingProviderToken', new MissingProviderTokenException()],
             ['BadPath', new BadPathException()],
             ['MethodNotAllowed', new MethodNotAllowedException()],
-            ['Unregistered', new UnregisteredException(new \DateTime()), ['timestamp' => (new \DateTime())->format('U')]],
+            ['Unregistered', new UnregisteredException($lastUse), ['timestamp' => $lastUse->format('U')]],
             ['PayloadTooLarge', new PayloadTooLargeException()],
             ['TooManyProviderTokenUpdates', new TooManyProviderTokenUpdatesException()],
             ['TooManyRequests', new TooManyRequestsException()],
