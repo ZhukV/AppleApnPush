@@ -2,6 +2,7 @@ Apple Apn Push
 ==============
 
 [![SensioLabsInsight](https://insight.sensiolabs.com/projects/53f2239f-c4cc-4643-85c9-a9f79850e863/mini.png)](https://insight.sensiolabs.com/projects/53f2239f-c4cc-4643-85c9-a9f79850e863)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/ZhukV/AppleApnPush/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/ZhukV/AppleApnPush/?branch=master)
 [![Build Status](https://travis-ci.org/ZhukV/AppleApnPush.svg?branch=master)](https://travis-ci.org/ZhukV/AppleApnPush)
 
 Send push notifications to apple devices (iPhone, iPad, iPod).

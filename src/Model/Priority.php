@@ -22,11 +22,6 @@ class Priority
     private $value;
 
     /**
-     * @var bool
-     */
-    private $null;
-
-    /**
      * Create immediately priority
      *
      * @return Priority
