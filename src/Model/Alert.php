@@ -72,7 +72,7 @@ class Alert
     {
         $cloned = clone $this;
 
-        $this->titleLocalized = new Localized('');
+        $cloned->titleLocalized = new Localized('');
         $cloned->title = $title;
 
         return $cloned;
