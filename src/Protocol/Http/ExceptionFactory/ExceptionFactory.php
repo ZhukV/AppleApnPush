@@ -95,7 +95,6 @@ class ExceptionFactory implements ExceptionFactoryInterface
         $reason = strtolower($reason);
 
         switch ($reason) {
-            // Bad request (400)
             case 'badcollapseid':
                 return new BadCollapseIdException();
 
@@ -135,7 +134,6 @@ class ExceptionFactory implements ExceptionFactoryInterface
             case 'topicdisallowed':
                 return new TopicDisallowedException();
 
-            // Access denied (403)
             case 'badcertificate':
                 return new BadCertificateException();
 
@@ -154,15 +152,12 @@ class ExceptionFactory implements ExceptionFactoryInterface
             case 'missingprovidertoken':
                 return new MissingProviderTokenException();
 
-            // Not found (404)
             case 'badpath':
                 return new BadPathException();
 
-            // Method not allowed (405)
             case 'methodnotallowed':
                 return new MethodNotAllowedException();
 
-            // Gone (410)
             case 'unregistered':
                 $timestamp = array_key_exists('timestamp', $json) ? $json['timestamp'] : 0;
                 $lastConfirmed = new \DateTime('now', new \DateTimeZone('UTC'));
@@ -170,18 +165,15 @@ class ExceptionFactory implements ExceptionFactoryInterface
 
                 return new UnregisteredException($lastConfirmed);
 
-            // Request entity too large (413)
             case 'payloadtoolarge':
                 return new PayloadTooLargeException();
 
-            // Too many requests (429)
             case 'toomanyprovidertokenupdates':
                 return new TooManyProviderTokenUpdatesException();
 
             case 'toomanyrequests':
                 return new TooManyRequestsException();
-
-            // Internal server error (500)
+            
             case 'internalservererror':
                 return new InternalServerErrorException();
 
