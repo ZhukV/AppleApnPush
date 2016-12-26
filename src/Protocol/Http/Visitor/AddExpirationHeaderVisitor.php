@@ -11,7 +11,7 @@
 
 namespace Apple\ApnPush\Protocol\Http\Visitor;
 
-use Apple\ApnPush\Model\Message;
+use Apple\ApnPush\Model\Notification;
 use Apple\ApnPush\Protocol\Http\Request;
 
 /**
@@ -22,9 +22,9 @@ class AddExpirationHeaderVisitor implements HttpProtocolVisitorInterface
     /**
      * {@inheritdoc}
      */
-    public function visit(Message $message, Request $request) : Request
+    public function visit(Notification $notification, Request $request) : Request
     {
-        $expiration = $message->getExpiration();
+        $expiration = $notification->getExpiration();
 
         if (!$expiration->isNull()) {
             $request = $request->withHeader('apns-expiration', $expiration->getValue());

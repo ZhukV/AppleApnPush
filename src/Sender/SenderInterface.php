@@ -11,22 +11,22 @@
 
 namespace Apple\ApnPush\Sender;
 
-use Apple\ApnPush\Model\Message;
+use Apple\ApnPush\Model\Notification;
 use Apple\ApnPush\Model\Receiver;
 
 /**
- * All senders for send push message to device should implement this interface
+ * All senders for send notifications to device should implement this interface
  */
 interface SenderInterface
 {
     /**
      * Send message to device
      *
-     * @param Receiver $receiver
-     * @param Message  $message
-     * @param bool     $sandbox
+     * @param Receiver     $receiver
+     * @param Notification $notification
+     * @param bool         $sandbox
      *
-     * @throws \Apple\ApnPush\Exception\SendMessage\SendMessageException
+     * @throws \Apple\ApnPush\Exception\SendNotification\SendNotificationException
      */
-    public function send(Receiver $receiver, Message $message, bool $sandbox = false);
+    public function send(Receiver $receiver, Notification $notification, bool $sandbox = false);
 }

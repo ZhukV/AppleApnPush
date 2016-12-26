@@ -11,12 +11,12 @@
 
 namespace Apple\ApnPush\Sender;
 
-use Apple\ApnPush\Model\Message;
+use Apple\ApnPush\Model\Notification;
 use Apple\ApnPush\Model\Receiver;
 use Apple\ApnPush\Protocol\ProtocolInterface;
 
 /**
- * Default message sender
+ * Default notification sender
  */
 class Sender implements SenderInterface
 {
@@ -38,8 +38,8 @@ class Sender implements SenderInterface
     /**
      * {@inheritdoc}
      */
-    public function send(Receiver $receiver, Message $message, bool $sandbox = false)
+    public function send(Receiver $receiver, Notification $notification, bool $sandbox = false)
     {
-        $this->protocol->send($receiver, $message, $sandbox);
+        $this->protocol->send($receiver, $notification, $sandbox);
     }
 }

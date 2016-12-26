@@ -11,11 +11,13 @@
 
 namespace Tests\Apple\ApnPush\Protocol;
 
-use Apple\ApnPush\Encoder\MessageEncoderInterface;
-use Apple\ApnPush\Exception\SendMessage\SendMessageException;
-use Apple\ApnPush\Model\ApsData;
+use Apple\ApnPush\Encoder\PayloadEncoderInterface;
+use Apple\ApnPush\Exception\SendNotification\SendNotificationException;
+use Apple\ApnPush\Model\Alert;
+use Apple\ApnPush\Model\Aps;
 use Apple\ApnPush\Model\DeviceToken;
-use Apple\ApnPush\Model\Message;
+use Apple\ApnPush\Model\Notification;
+use Apple\ApnPush\Model\Payload;
 use Apple\ApnPush\Model\Receiver;
 use Apple\ApnPush\Protocol\Http\Authenticator\AuthenticatorInterface;
 use Apple\ApnPush\Protocol\Http\ExceptionFactory\ExceptionFactoryInterface;
@@ -40,9 +42,9 @@ class HttpProtocolTest extends TestCase
     private $httpSender;
 
     /**
-     * @var MessageEncoderInterface|\PHPUnit_Framework_MockObject_MockObject
+     * @var PayloadEncoderInterface|\PHPUnit_Framework_MockObject_MockObject
      */
-    private $messageEncoder;
+    private $payloadEncoder;
 
     /**
      * @var UriFactoryInterface|\PHPUnit_Framework_MockObject_MockObject
@@ -71,7 +73,7 @@ class HttpProtocolTest extends TestCase
     {
         $this->authenticator = self::createMock(AuthenticatorInterface::class);
         $this->httpSender = self::createMock(HttpSenderInterface::class);
-        $this->messageEncoder = self::createMock(MessageEncoderInterface::class);
+        $this->payloadEncoder = self::createMock(PayloadEncoderInterface::class);
         $this->uriFactory = self::createMock(UriFactoryInterface::class);
         $this->visitor = self::createMock(HttpProtocolVisitorInterface::class);
         $this->exceptionFactory = self::createMock(ExceptionFactoryInterface::class);
@@ -79,7 +81,7 @@ class HttpProtocolTest extends TestCase
         $this->protocol = new HttpProtocol(
             $this->authenticator,
             $this->httpSender,
-            $this->messageEncoder,
+            $this->payloadEncoder,
             $this->uriFactory,
             $this->visitor,
             $this->exceptionFactory
@@ -93,11 +95,12 @@ class HttpProtocolTest extends TestCase
     {
         $deviceToken = new DeviceToken(str_repeat('af', 32));
         $receiver = new Receiver($deviceToken, 'com.test');
-        $message = new Message(new ApsData());
+        $payload = new Payload(new Aps(new Alert()));
+        $notification = new Notification($payload);
 
-        $this->messageEncoder->expects(self::once())
+        $this->payloadEncoder->expects(self::once())
             ->method('encode')
-            ->with($message)
+            ->with($payload)
             ->willReturn('{"aps":{}}');
 
         $this->uriFactory->expects(self::once())
@@ -114,30 +117,31 @@ class HttpProtocolTest extends TestCase
 
         $this->visitor->expects(self::once())
             ->method('visit')
-            ->with($message, self::isInstanceOf(Request::class));
+            ->with($notification, self::isInstanceOf(Request::class));
 
         $this->httpSender->expects(self::once())
             ->method('send')
             ->with(self::isInstanceOf(Request::class))
             ->willReturn(new Response(200, '{}'));
 
-        $this->protocol->send($receiver, $message, false);
+        $this->protocol->send($receiver, $notification, false);
     }
 
     /**
      * @test
      *
-     * @expectedException \Apple\ApnPush\Exception\SendMessage\SendMessageException
+     * @expectedException \Apple\ApnPush\Exception\SendNotification\SendNotificationException
      */
     public function shouldFailSend()
     {
         $deviceToken = new DeviceToken(str_repeat('af', 32));
         $receiver = new Receiver($deviceToken, 'com.test');
-        $message = new Message(new ApsData());
+        $payload = new Payload(new Aps(new Alert()));
+        $notification = new Notification($payload);
 
-        $this->messageEncoder->expects(self::once())
+        $this->payloadEncoder->expects(self::once())
             ->method('encode')
-            ->with($message)
+            ->with($payload)
             ->willReturn('{"aps":{}}');
 
         $this->uriFactory->expects(self::once())
@@ -154,7 +158,7 @@ class HttpProtocolTest extends TestCase
 
         $this->visitor->expects(self::once())
             ->method('visit')
-            ->with($message, self::isInstanceOf(Request::class));
+            ->with($notification, self::isInstanceOf(Request::class));
 
         $this->httpSender->expects(self::once())
             ->method('send')
@@ -167,8 +171,8 @@ class HttpProtocolTest extends TestCase
         $this->exceptionFactory->expects(self::once())
             ->method('create')
             ->with(new Response(404, '{}'))
-            ->willReturn(self::createMock(SendMessageException::class));
+            ->willReturn(self::createMock(SendNotificationException::class));
 
-        $this->protocol->send($receiver, $message, false);
+        $this->protocol->send($receiver, $notification, false);
     }
 }

@@ -11,7 +11,7 @@
 
 namespace Tests\Apple\ApnPush\Sender\Builder;
 
-use Apple\ApnPush\Encoder\MessageEncoderInterface;
+use Apple\ApnPush\Encoder\PayloadEncoderInterface;
 use Apple\ApnPush\Protocol\Http\Authenticator\AuthenticatorInterface;
 use Apple\ApnPush\Protocol\Http\ExceptionFactory\ExceptionFactoryInterface;
 use Apple\ApnPush\Protocol\Http\Sender\HttpSenderInterface;
@@ -38,7 +38,7 @@ class Http20BuilderTest extends TestCase
 
         $exceptionFactory = self::createMock(ExceptionFactoryInterface::class);
         $httpSender = self::createMock(HttpSenderInterface::class);
-        $messageEncoder = self::createMock(MessageEncoderInterface::class);
+        $messageEncoder = self::createMock(PayloadEncoderInterface::class);
         $uriFactory = self::createMock(UriFactoryInterface::class);
         $visitor = self::createMock(HttpProtocolVisitorInterface::class);
 

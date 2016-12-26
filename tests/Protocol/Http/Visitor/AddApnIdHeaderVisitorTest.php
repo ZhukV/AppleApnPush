@@ -11,9 +11,11 @@
 
 namespace Tests\Apple\ApnPush\Protocol\Http\Visitor;
 
+use Apple\ApnPush\Model\Alert;
 use Apple\ApnPush\Model\ApnId;
-use Apple\ApnPush\Model\ApsData;
-use Apple\ApnPush\Model\Message;
+use Apple\ApnPush\Model\Aps;
+use Apple\ApnPush\Model\Notification;
+use Apple\ApnPush\Model\Payload;
 use Apple\ApnPush\Protocol\Http\Request;
 use Apple\ApnPush\Protocol\Http\Visitor\AddApnIdHeaderVisitor;
 use PHPUnit\Framework\TestCase;
@@ -38,10 +40,11 @@ class AddApnIdHeaderVisitorTest extends TestCase
      */
     public function shouldAddHeaderForApnId()
     {
-        $message = new Message(new ApsData(), ApnId::fromId('550e8400-e29b-41d4-a716-446655440000'));
+        $payload = new Payload(new Aps(new Alert()));
+        $notification = new Notification($payload, ApnId::fromId('550e8400-e29b-41d4-a716-446655440000'));
         $request = new Request('https://domain.com', '{}');
 
-        $visitedRequest = $this->visitor->visit($message, $request);
+        $visitedRequest = $this->visitor->visit($notification, $request);
 
         $headers = $visitedRequest->getHeaders();
 
@@ -55,10 +58,11 @@ class AddApnIdHeaderVisitorTest extends TestCase
      */
     public function shouldNotAddHeaderForApnId()
     {
-        $message = new Message(new ApsData());
+        $payload = new Payload(new Aps(new Alert()));
+        $notification = new Notification($payload);
         $request = new Request('https://domain.com', '{}');
 
-        $visitedRequest = $this->visitor->visit($message, $request);
+        $visitedRequest = $this->visitor->visit($notification, $request);
 
         $headers = $visitedRequest->getHeaders();
         self::assertEquals([], $headers);

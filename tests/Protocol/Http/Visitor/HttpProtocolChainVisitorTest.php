@@ -11,7 +11,8 @@
 
 namespace Tests\Apple\ApnPush\Protocol\Http\Visitor;
 
-use Apple\ApnPush\Model\Message;
+use Apple\ApnPush\Model\Notification;
+use Apple\ApnPush\Model\Payload;
 use Apple\ApnPush\Protocol\Http\Request;
 use Apple\ApnPush\Protocol\Http\Visitor\HttpProtocolChainVisitor;
 use Apple\ApnPush\Protocol\Http\Visitor\HttpProtocolVisitorInterface;
@@ -24,7 +25,7 @@ class HttpProtocolChainVisitorTest extends TestCase
      */
     public function shouldSuccessCallsWithPriority()
     {
-        $message = self::createMock(Message::class);
+        $notification = self::createMock(Notification::class);
         $request = self::createMock(Request::class);
 
         $visitor1 = $this->createVisitor();
@@ -35,7 +36,7 @@ class HttpProtocolChainVisitorTest extends TestCase
 
         $visitor3->expects(self::exactly(2))
             ->method('visit')
-            ->with($message, $request)
+            ->with($notification, $request)
             ->willReturnCallback(function () use (&$calls, $request) {
                 $calls[] = 3;
 
@@ -44,7 +45,7 @@ class HttpProtocolChainVisitorTest extends TestCase
 
         $visitor1->expects(self::exactly(2))
             ->method('visit')
-            ->with($message, $request)
+            ->with($notification, $request)
             ->willReturnCallback(function () use (&$calls, $request) {
                 $calls[] = 1;
 
@@ -53,7 +54,7 @@ class HttpProtocolChainVisitorTest extends TestCase
 
         $visitor2->expects(self::exactly(2))
             ->method('visit')
-            ->with($message, $request)
+            ->with($notification, $request)
             ->willReturnCallback(function () use (&$calls, $request) {
                 $calls[] = 2;
 
@@ -65,9 +66,9 @@ class HttpProtocolChainVisitorTest extends TestCase
         $chain->add($visitor1, 0);
         $chain->add($visitor2, 1);
 
-        $chain->visit($message, $request);
+        $chain->visit($notification, $request);
         // Call to second iteration
-        $chain->visit($message, $request);
+        $chain->visit($notification, $request);
 
         self::assertEquals([
             2, 1, 3,
@@ -82,7 +83,7 @@ class HttpProtocolChainVisitorTest extends TestCase
      */
     public function shouldNotCallNextCheckedIfPreviouslyCheckWithError()
     {
-        $message = self::createMock(Message::class);
+        $notification = self::createMock(Notification::class);
         $request = self::createMock(Request::class);
 
         $visitor1 = $this->createVisitor();
@@ -91,7 +92,7 @@ class HttpProtocolChainVisitorTest extends TestCase
 
         $visitor1->expects(self::once())
             ->method('visit')
-            ->with($message, $request)
+            ->with($notification, $request)
             ->willThrowException(new \InvalidArgumentException());
 
         $visitor2->expects(self::never())
@@ -105,7 +106,7 @@ class HttpProtocolChainVisitorTest extends TestCase
         $chain->add($visitor2, 2);
         $chain->add($visitor3, 1);
 
-        $chain->visit($message, $request);
+        $chain->visit($notification, $request);
     }
 
     /**

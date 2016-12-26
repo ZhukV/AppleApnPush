@@ -11,10 +11,12 @@
 
 namespace Tests\Apple\ApnPush\Protocol\Http\Visitor;
 
+use Apple\ApnPush\Model\Alert;
 use Apple\ApnPush\Model\ApnId;
-use Apple\ApnPush\Model\ApsData;
+use Apple\ApnPush\Model\Aps;
 use Apple\ApnPush\Model\Expiration;
-use Apple\ApnPush\Model\Message;
+use Apple\ApnPush\Model\Notification;
+use Apple\ApnPush\Model\Payload;
 use Apple\ApnPush\Model\Priority;
 use Apple\ApnPush\Protocol\Http\Request;
 use Apple\ApnPush\Protocol\Http\Visitor\AddExpirationHeaderVisitor;
@@ -42,10 +44,11 @@ class AddExpirationHeaderVisitorTest extends TestCase
     {
         $storeTo = new \DateTime();
 
-        $message = new Message(new ApsData(), ApnId::fromNull(), Priority::fromNull(), Expiration::storeTo($storeTo));
+        $payload = new Payload(new Aps(new Alert()));
+        $notification = new Notification($payload, ApnId::fromNull(), Priority::fromNull(), Expiration::storeTo($storeTo));
         $request = new Request('https://domain.com', '{}');
 
-        $visitedRequest = $this->visitor->visit($message, $request);
+        $visitedRequest = $this->visitor->visit($notification, $request);
 
         $headers = $visitedRequest->getHeaders();
 
@@ -59,10 +62,11 @@ class AddExpirationHeaderVisitorTest extends TestCase
      */
     public function shouldNotAddHeaderForExpiration()
     {
-        $message = new Message(new ApsData());
+        $payload = new Payload(new Aps(new Alert()));
+        $notification = new Notification($payload);
         $request = new Request('https://domain.com', '{}');
 
-        $visitedRequest = $this->visitor->visit($message, $request);
+        $visitedRequest = $this->visitor->visit($notification, $request);
 
         $headers = $visitedRequest->getHeaders();
         self::assertEquals([], $headers);

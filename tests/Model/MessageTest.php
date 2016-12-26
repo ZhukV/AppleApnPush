@@ -11,8 +11,9 @@
 
 namespace Tests\Apple\ApnPush\Model;
 
-use Apple\ApnPush\Model\ApsData;
-use Apple\ApnPush\Model\Message;
+use Apple\ApnPush\Model\Alert;
+use Apple\ApnPush\Model\Aps;
+use Apple\ApnPush\Model\Payload;
 use PHPUnit\Framework\TestCase;
 
 class MessageTest extends TestCase
@@ -25,7 +26,7 @@ class MessageTest extends TestCase
      */
     public function shouldThrowExceptionIfTrySetInvalidCustomData()
     {
-        $message = new Message(new ApsData());
+        $message = new Payload(new Aps(new Alert()));
         $message->withCustomData('some', new \stdClass());
     }
 }

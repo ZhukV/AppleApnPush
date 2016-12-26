@@ -11,7 +11,7 @@
 
 namespace Apple\ApnPush\Protocol\Http\Visitor;
 
-use Apple\ApnPush\Model\Message;
+use Apple\ApnPush\Model\Notification;
 use Apple\ApnPush\Protocol\Http\Request;
 
 /**
@@ -46,13 +46,13 @@ class HttpProtocolChainVisitor implements HttpProtocolVisitorInterface
     /**
      * {@inheritdoc}
      */
-    public function visit(Message $message, Request $request) : Request
+    public function visit(Notification $notification, Request $request) : Request
     {
         // Clone all visitors because \SplPriorityQueue remove object after iteration
         $visitors = clone $this->visitors;
 
         foreach ($visitors as $visitor) {
-            $request = $visitor->visit($message, $request);
+            $request = $visitor->visit($notification, $request);
         }
 
         return $request;

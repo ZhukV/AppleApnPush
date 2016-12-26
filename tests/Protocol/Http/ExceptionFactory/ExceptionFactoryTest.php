@@ -11,35 +11,35 @@
 
 namespace Tests\Apple\ApnPush\Protocol\Http\ExceptionFactory;
 
-use Apple\ApnPush\Exception\SendMessage\BadCertificateEnvironmentException;
-use Apple\ApnPush\Exception\SendMessage\BadCertificateException;
-use Apple\ApnPush\Exception\SendMessage\BadCollapseIdException;
-use Apple\ApnPush\Exception\SendMessage\BadDeviceTokenException;
-use Apple\ApnPush\Exception\SendMessage\BadExpirationDateException;
-use Apple\ApnPush\Exception\SendMessage\BadMessageIdException;
-use Apple\ApnPush\Exception\SendMessage\BadPathException;
-use Apple\ApnPush\Exception\SendMessage\BadPriorityException;
-use Apple\ApnPush\Exception\SendMessage\BadTopicException;
-use Apple\ApnPush\Exception\SendMessage\DeviceTokenNotForTopicException;
-use Apple\ApnPush\Exception\SendMessage\DuplicateHeadersException;
-use Apple\ApnPush\Exception\SendMessage\ExpiredProviderTokenException;
-use Apple\ApnPush\Exception\SendMessage\ForbiddenException;
-use Apple\ApnPush\Exception\SendMessage\IdleTimeoutException;
-use Apple\ApnPush\Exception\SendMessage\InternalServerErrorException;
-use Apple\ApnPush\Exception\SendMessage\InvalidProviderTokenException;
-use Apple\ApnPush\Exception\SendMessage\MethodNotAllowedException;
-use Apple\ApnPush\Exception\SendMessage\MissingDeviceTokenException;
-use Apple\ApnPush\Exception\SendMessage\MissingProviderTokenException;
-use Apple\ApnPush\Exception\SendMessage\MissingTopicException;
-use Apple\ApnPush\Exception\SendMessage\PayloadEmptyException;
-use Apple\ApnPush\Exception\SendMessage\PayloadTooLargeException;
-use Apple\ApnPush\Exception\SendMessage\ServiceUnavailableException;
-use Apple\ApnPush\Exception\SendMessage\ShutdownException;
-use Apple\ApnPush\Exception\SendMessage\TooManyProviderTokenUpdatesException;
-use Apple\ApnPush\Exception\SendMessage\TooManyRequestsException;
-use Apple\ApnPush\Exception\SendMessage\TopicDisallowedException;
-use Apple\ApnPush\Exception\SendMessage\UndefinedErrorException;
-use Apple\ApnPush\Exception\SendMessage\UnregisteredException;
+use Apple\ApnPush\Exception\SendNotification\BadCertificateEnvironmentException;
+use Apple\ApnPush\Exception\SendNotification\BadCertificateException;
+use Apple\ApnPush\Exception\SendNotification\BadCollapseIdException;
+use Apple\ApnPush\Exception\SendNotification\BadDeviceTokenException;
+use Apple\ApnPush\Exception\SendNotification\BadExpirationDateException;
+use Apple\ApnPush\Exception\SendNotification\BadMessageIdException;
+use Apple\ApnPush\Exception\SendNotification\BadPathException;
+use Apple\ApnPush\Exception\SendNotification\BadPriorityException;
+use Apple\ApnPush\Exception\SendNotification\BadTopicException;
+use Apple\ApnPush\Exception\SendNotification\DeviceTokenNotForTopicException;
+use Apple\ApnPush\Exception\SendNotification\DuplicateHeadersException;
+use Apple\ApnPush\Exception\SendNotification\ExpiredProviderTokenException;
+use Apple\ApnPush\Exception\SendNotification\ForbiddenException;
+use Apple\ApnPush\Exception\SendNotification\IdleTimeoutException;
+use Apple\ApnPush\Exception\SendNotification\InternalServerErrorException;
+use Apple\ApnPush\Exception\SendNotification\InvalidProviderTokenException;
+use Apple\ApnPush\Exception\SendNotification\MethodNotAllowedException;
+use Apple\ApnPush\Exception\SendNotification\MissingDeviceTokenException;
+use Apple\ApnPush\Exception\SendNotification\MissingProviderTokenException;
+use Apple\ApnPush\Exception\SendNotification\MissingTopicException;
+use Apple\ApnPush\Exception\SendNotification\PayloadEmptyException;
+use Apple\ApnPush\Exception\SendNotification\PayloadTooLargeException;
+use Apple\ApnPush\Exception\SendNotification\ServiceUnavailableException;
+use Apple\ApnPush\Exception\SendNotification\ShutdownException;
+use Apple\ApnPush\Exception\SendNotification\TooManyProviderTokenUpdatesException;
+use Apple\ApnPush\Exception\SendNotification\TooManyRequestsException;
+use Apple\ApnPush\Exception\SendNotification\TopicDisallowedException;
+use Apple\ApnPush\Exception\SendNotification\UndefinedErrorException;
+use Apple\ApnPush\Exception\SendNotification\UnregisteredException;
 use Apple\ApnPush\Protocol\Http\ExceptionFactory\ExceptionFactory;
 use Apple\ApnPush\Protocol\Http\Response;
 use PHPUnit\Framework\TestCase;
@@ -62,7 +62,7 @@ class ExceptionFactoryTest extends TestCase
     /**
      * @test
      *
-     * @expectedException \Apple\ApnPush\Exception\SendMessage\MissingContentInResponseException
+     * @expectedException \Apple\ApnPush\Exception\SendNotification\MissingContentInResponseException
      * @expectedExceptionMessage Missing content in response.
      */
     public function shouldFailIfContentNotFound()
@@ -74,7 +74,7 @@ class ExceptionFactoryTest extends TestCase
     /**
      * @test
      *
-     * @expectedException \Apple\ApnPush\Exception\SendMessage\InvalidResponseException
+     * @expectedException \Apple\ApnPush\Exception\SendNotification\InvalidResponseException
      */
     public function shouldFailIfInvalidJson()
     {
@@ -85,7 +85,7 @@ class ExceptionFactoryTest extends TestCase
     /**
      * @test
      *
-     * @expectedException \Apple\ApnPush\Exception\SendMessage\MissingErrorReasonInResponseException
+     * @expectedException \Apple\ApnPush\Exception\SendNotification\MissingErrorReasonInResponseException
      * @expectedExceptionMessage Missing error reason in response.
      */
     public function shouldFailIfMissingReason()

@@ -11,11 +11,11 @@
 
 namespace Apple\ApnPush\Protocol\Http\Visitor;
 
-use Apple\ApnPush\Model\Message;
+use Apple\ApnPush\Model\Notification;
 use Apple\ApnPush\Protocol\Http\Request;
 
 /**
- * All visitors for visit for message and request before send request to Apple Apn Push service should implement
+ * All visitors for visit for notification and request before send request to Apple Apn Push service should implement
  * this interface.
  */
 interface HttpProtocolVisitorInterface
@@ -23,10 +23,10 @@ interface HttpProtocolVisitorInterface
     /**
      * Visit before send request to Apple Apn Push service
      *
-     * @param Message $message
-     * @param Request $request
+     * @param Notification $notification
+     * @param Request      $request
      *
      * @return Request Should return modified request
      */
-    public function visit(Message $message, Request $request) : Request;
+    public function visit(Notification $notification, Request $request) : Request;
 }

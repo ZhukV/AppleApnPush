@@ -11,9 +11,11 @@
 
 namespace Tests\Apple\ApnPush\Sender;
 
-use Apple\ApnPush\Model\ApsData;
+use Apple\ApnPush\Model\Alert;
+use Apple\ApnPush\Model\Aps;
 use Apple\ApnPush\Model\DeviceToken;
-use Apple\ApnPush\Model\Message;
+use Apple\ApnPush\Model\Notification;
+use Apple\ApnPush\Model\Payload;
 use Apple\ApnPush\Model\Receiver;
 use Apple\ApnPush\Protocol\ProtocolInterface;
 use Apple\ApnPush\Sender\Sender;
@@ -47,12 +49,13 @@ class SenderTest extends TestCase
     {
         $token = new DeviceToken(str_repeat('af', 32));
         $receiver = new Receiver($token, 'com.domain');
-        $message = new Message(new ApsData());
+        $payload = new Payload(new Aps(new Alert()));
+        $notification = new Notification($payload);
 
         $this->protocol->expects(self::once())
             ->method('send')
-            ->with($receiver, $message, false);
+            ->with($receiver, $notification, false);
 
-        $this->sender->send($receiver, $message, false);
+        $this->sender->send($receiver, $notification, false);
     }
 }

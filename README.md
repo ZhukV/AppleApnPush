@@ -44,41 +44,40 @@ You can use builder for create sender for next send push notifications to device
 use Apple\ApnPush\Certificate\Certificate;
 use Apple\ApnPush\Protocol\Http\Authenticator\CertificateAuthenticator;
 use Apple\ApnPush\Sender\Builder\Http20Builder;
-use Apple\ApnPush\Model\ApsData;
+use Apple\ApnPush\Model\Alert;
+use Apple\ApnPush\Model\Aps;
+use Apple\ApnPush\Model\Payload;
+use Apple\ApnPush\Model\Notification;
 use Apple\ApnPush\Model\DeviceToken;
-use Apple\ApnPush\Model\Message;
 use Apple\ApnPush\Model\Receiver;
-use Apple\ApnPush\Exception\SendMessage\SendMessageException;
+use Apple\ApnPush\Exception\SendNotification\SendNotificationException;
 
 // Create certificate and authenticator
 $certificate = new Certificate(__DIR__.'/cert.pem', '');
 $authenticator = new CertificateAuthenticator($certificate);
 
-// Create builder
+// Build sender
 $builder = new Http20Builder($authenticator);
 $builder->addDefaultVisitors();
 
-// Build sender
 $sender = $builder->build();
 
-// Create APS data
-$apsData = new ApsData();
-$apsData = $apsData->withBody('hi some fail');
+// Create payload
+$alert = new Alert('hello ;)');
+$aps = new Aps($alert);
+$payload = new Payload($aps);
 
-// Create message
-$message = new Message($apsData);
+// Create notification
+$notification = new Notification($payload);
 
-// Create receiver
 $receiver = new Receiver(
-    new DeviceToken('6b4d687c1292f1ff05b5653951be4e5f838ce6d39d6b1be1801fe8dcc35713c1'),
-    'you.topic.id'
+    new DeviceToken('6b4d687c1292f1ff05b5653951be4e5f838ce6d39d6b1be1801fe8dcc35713c9'),
+    'you.app.id'
 );
 
 try {
-    // Send message to receiver
-    $sender->send($receiver, $message);
-    print "Success send message\n";
-} catch (SendMessageException $e) {
+    $sender->send($receiver, $notification);
+} catch (SendNotificationException $e) {
     print 'Fail send message: '.$e->getMessage()."\n";
 }
 

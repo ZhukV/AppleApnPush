@@ -11,22 +11,22 @@
 
 namespace Apple\ApnPush\Protocol;
 
-use Apple\ApnPush\Model\Message;
+use Apple\ApnPush\Model\Notification;
 use Apple\ApnPush\Model\Receiver;
 
 /**
- * All protocols for send push notification should implement this interface
+ * All protocols for send notification should implement this interface
  */
 interface ProtocolInterface
 {
     /**
      * Send message
      *
-     * @param Receiver $receiver
-     * @param Message  $message
-     * @param bool     $sandbox
+     * @param Receiver     $receiver
+     * @param Notification $notification
+     * @param bool         $sandbox
      *
-     * @throws \Apple\ApnPush\Exception\SendMessage\SendMessageException
+     * @throws \Apple\ApnPush\Exception\SendNotification\SendNotificationException
      */
-    public function send(Receiver $receiver, Message $message, bool $sandbox);
+    public function send(Receiver $receiver, Notification $notification, bool $sandbox);
 }

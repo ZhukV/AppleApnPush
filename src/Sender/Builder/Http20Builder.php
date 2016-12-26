@@ -11,8 +11,8 @@
 
 namespace Apple\ApnPush\Sender\Builder;
 
-use Apple\ApnPush\Encoder\MessageEncoder;
-use Apple\ApnPush\Encoder\MessageEncoderInterface;
+use Apple\ApnPush\Encoder\PayloadEncoder;
+use Apple\ApnPush\Encoder\PayloadEncoderInterface;
 use Apple\ApnPush\Protocol\Http\Authenticator\AuthenticatorInterface;
 use Apple\ApnPush\Protocol\Http\ExceptionFactory\ExceptionFactory;
 use Apple\ApnPush\Protocol\Http\ExceptionFactory\ExceptionFactoryInterface;
@@ -45,7 +45,7 @@ class Http20Builder implements BuilderInterface
     private $uriFactory;
 
     /**
-     * @var MessageEncoderInterface
+     * @var PayloadEncoderInterface
      */
     private $messageEncoder;
 
@@ -74,7 +74,7 @@ class Http20Builder implements BuilderInterface
         $this->authenticator = $authenticator;
         $this->visitors = new \SplPriorityQueue();
         $this->uriFactory = new UriFactory();
-        $this->messageEncoder = new MessageEncoder();
+        $this->messageEncoder = new PayloadEncoder();
         $this->httpSender = new CurlHttpSender();
         $this->exceptionFactory = new ExceptionFactory();
     }
@@ -139,11 +139,11 @@ class Http20Builder implements BuilderInterface
     /**
      * Set message encoder
      *
-     * @param MessageEncoderInterface $messageEncoder
+     * @param PayloadEncoderInterface $messageEncoder
      *
      * @return Http20Builder
      */
-    public function setMessageEncoder(MessageEncoderInterface $messageEncoder) : Http20Builder
+    public function setMessageEncoder(PayloadEncoderInterface $messageEncoder) : Http20Builder
     {
         $this->messageEncoder = $messageEncoder;
 

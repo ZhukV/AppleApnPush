@@ -11,7 +11,7 @@
 
 namespace Apple\ApnPush\Protocol\Http\Visitor;
 
-use Apple\ApnPush\Model\Message;
+use Apple\ApnPush\Model\Notification;
 use Apple\ApnPush\Protocol\Http\Request;
 
 /**
@@ -22,9 +22,9 @@ class AddApnIdHeaderVisitor implements HttpProtocolVisitorInterface
     /**
      * {@inheritdoc}
      */
-    public function visit(Message $message, Request $request) : Request
+    public function visit(Notification $notification, Request $request) : Request
     {
-        $apnId = $message->getId();
+        $apnId = $notification->getId();
 
         if (!$apnId->isNull()) {
             $request = $request->withHeader('apns-id', $apnId->getValue());
