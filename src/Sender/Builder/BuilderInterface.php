@@ -19,7 +19,7 @@ use Apple\ApnPush\Sender\SenderInterface;
 interface BuilderInterface
 {
     /**
-     * Build sender for send message to device via Apn Push service
+     * Build sender for send notification to device via Apn Push service
      *
      * @return SenderInterface
      */

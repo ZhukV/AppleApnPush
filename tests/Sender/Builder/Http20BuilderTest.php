@@ -52,7 +52,7 @@ class Http20BuilderTest extends TestCase
             ->setAuthenticator($authenticator)
             ->setExceptionFactory($exceptionFactory)
             ->setHttpSender($httpSender)
-            ->setMessageEncoder($messageEncoder)
+            ->setPayloadEncoder($messageEncoder)
             ->setUriFactory($uriFactory)
             ->addDefaultVisitors()
             ->addVisitor($visitor);

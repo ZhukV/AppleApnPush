@@ -15,7 +15,7 @@ use Apple\ApnPush\Model\Notification;
 use Apple\ApnPush\Protocol\Http\Request;
 
 /**
- * Chain visitor for visit for message and request before send request
+ * Chain visitor for visit for notification and request before send request
  */
 class HttpProtocolChainVisitor implements HttpProtocolVisitorInterface
 {

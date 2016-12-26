@@ -12,7 +12,7 @@
 namespace Apple\ApnPush\Model;
 
 /**
- * Expiration of message
+ * Expiration of notification
  */
 class Expiration
 {
@@ -27,7 +27,7 @@ class Expiration
     private $null;
 
     /**
-     * Create new expiration with store message to time
+     * Create new expiration with store notification to time
      *
      * @param \DateTime $availableTo
      *
@@ -43,7 +43,7 @@ class Expiration
     }
 
     /**
-     * Create new expiration without store message
+     * Create new expiration without store notification
      *
      * @return Expiration
      */

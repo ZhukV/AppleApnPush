@@ -16,7 +16,7 @@ use Apple\ApnPush\Model\Aps;
 use Apple\ApnPush\Model\Payload;
 
 /**
- * The encoder for encode notification message to string for next send to Apple Push Notification Service
+ * The encoder for encode notification payload to string for next send to Apple Push Notification Service
  */
 class PayloadEncoder implements PayloadEncoderInterface
 {

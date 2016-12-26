@@ -20,7 +20,7 @@ use Apple\ApnPush\Model\Receiver;
 interface SenderInterface
 {
     /**
-     * Send message to device
+     * Send notification to receiver
      *
      * @param Receiver     $receiver
      * @param Notification $notification

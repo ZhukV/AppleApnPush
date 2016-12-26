@@ -40,7 +40,7 @@ class HttpProtocol implements ProtocolInterface
     /**
      * @var PayloadEncoderInterface
      */
-    private $messageEncoder;
+    private $payloadEncoder;
 
     /**
      * @var UriFactoryInterface
@@ -62,7 +62,7 @@ class HttpProtocol implements ProtocolInterface
      *
      * @param AuthenticatorInterface       $authenticator
      * @param HttpSenderInterface          $httpSender
-     * @param PayloadEncoderInterface      $messageEncoder
+     * @param PayloadEncoderInterface      $payloadEncoder
      * @param UriFactoryInterface          $uriFactory
      * @param HttpProtocolVisitorInterface $visitor
      * @param ExceptionFactoryInterface    $exceptionFactory
@@ -70,14 +70,14 @@ class HttpProtocol implements ProtocolInterface
     public function __construct(
         AuthenticatorInterface $authenticator,
         HttpSenderInterface $httpSender,
-        PayloadEncoderInterface $messageEncoder,
+        PayloadEncoderInterface $payloadEncoder,
         UriFactoryInterface $uriFactory,
         HttpProtocolVisitorInterface $visitor,
         ExceptionFactoryInterface $exceptionFactory
     ) {
         $this->authenticator = $authenticator;
         $this->httpSender = $httpSender;
-        $this->messageEncoder = $messageEncoder;
+        $this->payloadEncoder = $payloadEncoder;
         $this->uriFactory = $uriFactory;
         $this->visitor = $visitor;
         $this->exceptionFactory = $exceptionFactory;
@@ -108,7 +108,7 @@ class HttpProtocol implements ProtocolInterface
      */
     private function doSend(Receiver $receiver, Notification $notification, bool $sandbox)
     {
-        $payloadEncoded = $this->messageEncoder->encode($notification->getPayload());
+        $payloadEncoded = $this->payloadEncoder->encode($notification->getPayload());
         $uri = $this->uriFactory->create($receiver->getToken(), $sandbox);
 
         $request = new Request($uri, $payloadEncoded);

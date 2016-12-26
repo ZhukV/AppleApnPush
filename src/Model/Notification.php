@@ -99,7 +99,7 @@ class Notification
     }
 
     /**
-     * Get identifier of message
+     * Get identifier of notification
      *
      * @return ApnId
      */

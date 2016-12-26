@@ -47,7 +47,7 @@ class Http20Builder implements BuilderInterface
     /**
      * @var PayloadEncoderInterface
      */
-    private $messageEncoder;
+    private $payloadEncoder;
 
     /**
      * @var AuthenticatorInterface
@@ -74,7 +74,7 @@ class Http20Builder implements BuilderInterface
         $this->authenticator = $authenticator;
         $this->visitors = new \SplPriorityQueue();
         $this->uriFactory = new UriFactory();
-        $this->messageEncoder = new PayloadEncoder();
+        $this->payloadEncoder = new PayloadEncoder();
         $this->httpSender = new CurlHttpSender();
         $this->exceptionFactory = new ExceptionFactory();
     }
@@ -137,15 +137,15 @@ class Http20Builder implements BuilderInterface
     }
 
     /**
-     * Set message encoder
+     * Set notification encoder
      *
-     * @param PayloadEncoderInterface $messageEncoder
+     * @param PayloadEncoderInterface $payloadEncoder
      *
      * @return Http20Builder
      */
-    public function setMessageEncoder(PayloadEncoderInterface $messageEncoder) : Http20Builder
+    public function setPayloadEncoder(PayloadEncoderInterface $payloadEncoder) : Http20Builder
     {
-        $this->messageEncoder = $messageEncoder;
+        $this->payloadEncoder = $payloadEncoder;
 
         return $this;
     }
@@ -188,7 +188,7 @@ class Http20Builder implements BuilderInterface
         $protocol = new HttpProtocol(
             $this->authenticator,
             $this->httpSender,
-            $this->messageEncoder,
+            $this->payloadEncoder,
             $this->uriFactory,
             $chainVisitor,
             $this->exceptionFactory
