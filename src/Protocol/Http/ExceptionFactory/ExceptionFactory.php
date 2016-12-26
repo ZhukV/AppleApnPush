@@ -176,7 +176,7 @@ class ExceptionFactory implements ExceptionFactoryInterface
 
             case 'internalservererror':
                 return new InternalServerErrorException();
-            
+
             case 'serviceunavailable':
                 return new ServiceUnavailableException();
 
