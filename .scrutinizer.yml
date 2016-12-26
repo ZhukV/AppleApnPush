@@ -9,6 +9,3 @@ checks:
 filter:
     excluded_paths:
         - tests/*
-
-tools:
-    external_code_coverage: true
