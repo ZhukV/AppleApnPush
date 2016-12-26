@@ -11,8 +11,6 @@
 
 namespace Apple\ApnPush\Model;
 
-use \JsonSerializable;
-
 /**
  * Payload model
  */
@@ -78,7 +76,7 @@ class Payload
      */
     public function withCustomData(string $name, $value)
     {
-        if ($value && !is_array($value) && !is_scalar($value) && !$value instanceof JsonSerializable) {
+        if ($value && !is_array($value) && !is_scalar($value) && !$value instanceof \JsonSerializable) {
             throw new \InvalidArgumentException(sprintf(
                 'The custom data value should be a scalar or \JsonSerializable instance, but "%s" given.',
                 is_object($value) ? get_class($value) : gettype($value)
