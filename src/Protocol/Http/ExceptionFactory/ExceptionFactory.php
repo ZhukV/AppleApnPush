@@ -173,11 +173,10 @@ class ExceptionFactory implements ExceptionFactoryInterface
 
             case 'toomanyrequests':
                 return new TooManyRequestsException();
-            
+
             case 'internalservererror':
                 return new InternalServerErrorException();
-
-            // Service unavailable (503)
+            
             case 'serviceunavailable':
                 return new ServiceUnavailableException();
 
