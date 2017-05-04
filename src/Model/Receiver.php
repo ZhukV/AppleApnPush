@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the AppleApnPush package
  *
@@ -44,7 +46,7 @@ class Receiver
      *
      * @return DeviceToken
      */
-    public function getToken() : DeviceToken
+    public function getToken(): DeviceToken
     {
         return $this->token;
     }
@@ -54,7 +56,7 @@ class Receiver
      *
      * @return string
      */
-    public function getTopic() : string
+    public function getTopic(): string
     {
         return $this->topic;
     }

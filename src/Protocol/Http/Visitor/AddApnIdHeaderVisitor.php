@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the AppleApnPush package
  *
@@ -22,11 +24,11 @@ class AddApnIdHeaderVisitor implements HttpProtocolVisitorInterface
     /**
      * {@inheritdoc}
      */
-    public function visit(Notification $notification, Request $request) : Request
+    public function visit(Notification $notification, Request $request): Request
     {
         $apnId = $notification->getId();
 
-        if (!$apnId->isNull()) {
+        if ($apnId) {
             $request = $request->withHeader('apns-id', $apnId->getValue());
         }
 

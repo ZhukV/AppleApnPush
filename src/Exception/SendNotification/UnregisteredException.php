@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the AppleApnPush package
  *
@@ -39,7 +41,7 @@ class UnregisteredException extends SendNotificationException
      *
      * @return \DateTime
      */
-    public function getLastConfirmed() : \DateTime
+    public function getLastConfirmed(): \DateTime
     {
         return $this->lastConfirmed;
     }

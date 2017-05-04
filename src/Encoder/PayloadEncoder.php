@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the AppleApnPush package
  *
@@ -23,7 +25,7 @@ class PayloadEncoder implements PayloadEncoderInterface
     /**
      * {@inheritdoc}
      */
-    public function encode(Payload $payload) : string
+    public function encode(Payload $payload): string
     {
         $data = [
             'aps' => $this->convertApsToArray($payload->getAps()),
@@ -41,7 +43,7 @@ class PayloadEncoder implements PayloadEncoderInterface
      *
      * @return array
      */
-    private function convertApsToArray(Aps $aps) : array
+    private function convertApsToArray(Aps $aps): array
     {
         $data = [
             'alert' => $this->convertAlertToArray($aps->getAlert()),
@@ -77,7 +79,7 @@ class PayloadEncoder implements PayloadEncoderInterface
      *
      * @return array
      */
-    private function convertAlertToArray(Alert $alert) : array
+    private function convertAlertToArray(Alert $alert): array
     {
         $data = [];
 

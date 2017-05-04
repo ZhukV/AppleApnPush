@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the AppleApnPush package
  *
@@ -28,7 +30,7 @@ class DeviceToken
      *
      * @throws \InvalidArgumentException
      */
-    public function __construct($token)
+    public function __construct(string $token)
     {
         if (!preg_match('/^[0-9a-fA-F]{64}$/', $token)) {
             throw new \InvalidArgumentException(sprintf(

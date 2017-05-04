@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the AppleApnPush package
  *
@@ -26,7 +28,7 @@ interface HttpSenderInterface
      *
      * @return Response
      */
-    public function send(Request $request) : Response;
+    public function send(Request $request): Response;
 
     /**
      * Close connection

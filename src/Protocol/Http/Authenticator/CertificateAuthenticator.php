@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the AppleApnPush package
  *
@@ -37,7 +39,7 @@ class CertificateAuthenticator implements AuthenticatorInterface
     /**
      * {@inheritdoc}
      */
-    public function authenticate(Request $request) : Request
+    public function authenticate(Request $request): Request
     {
         $request = $request->withCertificate($this->certificate->getPath());
         $request = $request->withCertificatePassPhrase($this->certificate->getPassPhrase());

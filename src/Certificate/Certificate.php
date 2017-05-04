@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the AppleApnPush package
  *
@@ -34,7 +36,7 @@ class Certificate implements CertificateInterface
      * @param string $path
      * @param string $passPhrase
      *
-     * @throws \Apple\ApnPush\Exception\CertificateFileNotFoundException
+     * @throws CertificateFileNotFoundException
      */
     public function __construct(string $path, string $passPhrase)
     {
@@ -54,7 +56,7 @@ class Certificate implements CertificateInterface
      *
      * @return string
      */
-    public function getPath() : string
+    public function getPath(): string
     {
         return $this->path;
     }
@@ -64,7 +66,7 @@ class Certificate implements CertificateInterface
      *
      * @return string
      */
-    public function getPassPhrase() : string
+    public function getPassPhrase(): string
     {
         return $this->passPhrase;
     }

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the AppleApnPush package
  *
@@ -51,9 +53,9 @@ class Notification
         Expiration $expiration = null
     ) {
         $this->payload = $payload;
-        $this->priority = $priority ?: Priority::fromNull();
-        $this->id = $id ?: ApnId::fromNull();
-        $this->expiration = $expiration ?: Expiration::fromNull();
+        $this->priority = $priority;
+        $this->id = $id;
+        $this->expiration = $expiration;
     }
 
     /**
@@ -89,7 +91,7 @@ class Notification
      *
      * @return Notification
      */
-    public function withId(ApnId $apnId) : Notification
+    public function withId(ApnId $apnId = null): Notification
     {
         $cloned = clone $this;
 
@@ -103,7 +105,7 @@ class Notification
      *
      * @return ApnId
      */
-    public function getId() : ApnId
+    public function getId(): ?ApnId
     {
         return $this->id;
     }
@@ -115,7 +117,7 @@ class Notification
      *
      * @return Notification
      */
-    public function withPriority(Priority $priority) : Notification
+    public function withPriority(Priority $priority = null): Notification
     {
         $cloned = clone $this;
 
@@ -129,7 +131,7 @@ class Notification
      *
      * @return Priority
      */
-    public function getPriority() : Priority
+    public function getPriority(): ?Priority
     {
         return $this->priority;
     }
@@ -141,7 +143,7 @@ class Notification
      *
      * @return Notification
      */
-    public function withExpiration(Expiration $expiration) : Notification
+    public function withExpiration(Expiration $expiration = null): Notification
     {
         $cloned = clone $this;
 
@@ -155,7 +157,7 @@ class Notification
      *
      * @return Expiration
      */
-    public function getExpiration() : Expiration
+    public function getExpiration(): ?Expiration
     {
         return $this->expiration;
     }

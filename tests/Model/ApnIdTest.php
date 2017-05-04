@@ -24,7 +24,7 @@ class ApnIdTest extends TestCase
      */
     public function shouldThrowsExceptionIfIdIsInvalid()
     {
-        ApnId::fromId('asd');
+        new ApnId('asd');
     }
 
     /**
@@ -32,31 +32,8 @@ class ApnIdTest extends TestCase
      */
     public function shouldSuccessCreateFromId()
     {
-        $id = ApnId::fromId('6c109fec-9123-11e6-ae22-56b6b6499611');
+        $id = new ApnId('6c109fec-9123-11e6-ae22-56b6b6499611');
 
         self::assertEquals('6c109fec-9123-11e6-ae22-56b6b6499611', $id->getValue());
-    }
-
-    /**
-     * @test
-     */
-    public function shouldSuccessCreateNullId()
-    {
-        $id = ApnId::fromNull();
-
-        self::assertTrue($id->isNull());
-    }
-
-    /**
-     * @test
-     *
-     * @expectedException \LogicException
-     * @expectedExceptionMessage Can not get value from null Apn ID object.
-     */
-    public function shouldThrowExceptionInGetValueIfIdIsNull()
-    {
-        $id = ApnId::fromNull();
-
-        $id->getValue();
     }
 }

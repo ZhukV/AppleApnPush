@@ -18,22 +18,10 @@ class ExpirationTest extends TestCase
 {
     /**
      * @test
-     *
-     * @expectedException \LogicException
-     * @expectedExceptionMessage Can not get value of expiration from null value.
-     */
-    public function shouldThrowExceptionInGetValueIfExpirationIsNull()
-    {
-        $expiration = Expiration::fromNull();
-        $expiration->getValue();
-    }
-
-    /**
-     * @test
      */
     public function shouldReturnZeroIfNotStore()
     {
-        $expiration = Expiration::notStore();
+        $expiration = new Expiration();
         $value = $expiration->getValue();
 
         self::assertEquals(0, $value);
@@ -42,10 +30,10 @@ class ExpirationTest extends TestCase
     /**
      * @test
      */
-    public function shouldSuccessGetValue()
+    public function shouldSuccessCreate()
     {
         $now = new \DateTime();
-        $expiration = Expiration::storeTo($now);
+        $expiration = new Expiration($now);
 
         $value = $expiration->getValue();
 

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the AppleApnPush package
  *
@@ -22,12 +24,12 @@ class AddExpirationHeaderVisitor implements HttpProtocolVisitorInterface
     /**
      * {@inheritdoc}
      */
-    public function visit(Notification $notification, Request $request) : Request
+    public function visit(Notification $notification, Request $request): Request
     {
         $expiration = $notification->getExpiration();
 
-        if (!$expiration->isNull()) {
-            $request = $request->withHeader('apns-expiration', $expiration->getValue());
+        if ($expiration) {
+            $request = $request->withHeader('apns-expiration', (string) $expiration->getValue());
         }
 
         return $request;

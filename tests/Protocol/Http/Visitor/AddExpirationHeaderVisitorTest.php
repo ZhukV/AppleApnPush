@@ -45,7 +45,7 @@ class AddExpirationHeaderVisitorTest extends TestCase
         $storeTo = new \DateTime();
 
         $payload = new Payload(new Aps(new Alert()));
-        $notification = new Notification($payload, ApnId::fromNull(), Priority::fromNull(), Expiration::storeTo($storeTo));
+        $notification = new Notification($payload, null, null, new Expiration($storeTo));
         $request = new Request('https://domain.com', '{}');
 
         $visitedRequest = $this->visitor->visit($notification, $request);
@@ -54,6 +54,24 @@ class AddExpirationHeaderVisitorTest extends TestCase
 
         self::assertEquals([
             'apns-expiration' => $storeTo->format('U')
+        ], $headers);
+    }
+
+    /**
+     * @test
+     */
+    public function shouldAddHeaderForZeroExpiration()
+    {
+        $payload = new Payload(new Aps(new Alert()));
+        $notification = new Notification($payload, null, null, new Expiration());
+        $request = new Request('https://domain.com', '{}');
+
+        $visitedRequest = $this->visitor->visit($notification, $request);
+
+        $headers = $visitedRequest->getHeaders();
+
+        self::assertEquals([
+            'apns-expiration' => 0
         ], $headers);
     }
 

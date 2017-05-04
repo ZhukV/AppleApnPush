@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the AppleApnPush package
  *
@@ -63,7 +65,7 @@ class Aps
      *
      * @return Aps
      */
-    public function withAlert(Alert $alert) : Aps
+    public function withAlert(Alert $alert): Aps
     {
         $cloned = clone $this;
 
@@ -77,7 +79,7 @@ class Aps
      *
      * @return Alert
      */
-    public function getAlert() : Alert
+    public function getAlert(): Alert
     {
         return $this->alert;
     }
@@ -89,7 +91,7 @@ class Aps
      *
      * @return Aps
      */
-    public function withCategory(string $category) : Aps
+    public function withCategory(string $category): Aps
     {
         $cloned = clone $this;
 
@@ -103,7 +105,7 @@ class Aps
      *
      * @return string
      */
-    public function getCategory() : string
+    public function getCategory(): string
     {
         return $this->category;
     }
@@ -115,7 +117,7 @@ class Aps
      *
      * @return Aps
      */
-    public function withSound(string $sound) : Aps
+    public function withSound(string $sound): Aps
     {
         $cloned = clone $this;
 
@@ -129,7 +131,7 @@ class Aps
      *
      * @return string
      */
-    public function getSound() : string
+    public function getSound(): string
     {
         return $this->sound;
     }
@@ -141,7 +143,7 @@ class Aps
      *
      * @return Aps
      */
-    public function withBadge(int $badge) : Aps
+    public function withBadge(int $badge): Aps
     {
         $cloned = clone $this;
 
@@ -155,7 +157,7 @@ class Aps
      *
      * @return int
      */
-    public function getBadge() : int
+    public function getBadge(): int
     {
         return $this->badge;
     }
@@ -167,7 +169,7 @@ class Aps
      *
      * @return Aps
      */
-    public function withContentAvailable(bool $contentAvailable) : Aps
+    public function withContentAvailable(bool $contentAvailable): Aps
     {
         $cloned = clone $this;
 
@@ -181,7 +183,7 @@ class Aps
      *
      * @return bool
      */
-    public function isContentAvailable() : bool
+    public function isContentAvailable(): bool
     {
         return $this->contentAvailable;
     }
@@ -193,7 +195,7 @@ class Aps
      *
      * @return Aps
      */
-    public function withThreadId(string $threadId) : Aps
+    public function withThreadId(string $threadId): Aps
     {
         $cloned = clone $this;
 
@@ -207,7 +209,7 @@ class Aps
      *
      * @return string
      */
-    public function getThreadId() : string
+    public function getThreadId(): string
     {
         return $this->threadId;
     }

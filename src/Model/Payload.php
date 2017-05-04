@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the AppleApnPush package
  *
@@ -45,7 +47,7 @@ class Payload
      *
      * @return Payload
      */
-    public function withAps(Aps $aps) : Payload
+    public function withAps(Aps $aps): Payload
     {
         $cloned = clone $this;
 
@@ -59,7 +61,7 @@ class Payload
      *
      * @return Aps
      */
-    public function getAps() : Aps
+    public function getAps(): Aps
     {
         return $this->aps;
     }

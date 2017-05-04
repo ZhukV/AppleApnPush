@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the AppleApnPush package
  *
@@ -22,12 +24,12 @@ class AddPriorityHeaderVisitor implements HttpProtocolVisitorInterface
     /**
      * {@inheritdoc}
      */
-    public function visit(Notification $notification, Request $request) : Request
+    public function visit(Notification $notification, Request $request): Request
     {
         $priority = $notification->getPriority();
 
-        if (!$priority->isNull()) {
-            $request = $request->withHeader('apns-priority', $priority->getValue());
+        if ($priority) {
+            $request = $request->withHeader('apns-priority', (string) $priority->getValue());
         }
 
         return $request;

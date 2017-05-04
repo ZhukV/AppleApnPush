@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the AppleApnPush package
  *
@@ -22,39 +24,22 @@ class ApnId
     private $value;
 
     /**
-     * Create ApnID from null
+     * Constructor.
      *
-     * @return ApnId
-     */
-    public static function fromNull() : ApnId
-    {
-        return new self('');
-    }
-
-    /**
-     * Create from id
-     *
-     * @param string $id
-     *
-     * @return ApnId
+     * @param string $value
      *
      * @throws \InvalidArgumentException
      */
-    public static function fromId(string $id) : ApnId
+    public function __construct(string $value)
     {
-        self::validateId($id);
+        if (!preg_match('/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/', $value)) {
+            throw new \InvalidArgumentException(sprintf(
+                'Invalid UUID identifier "%s".',
+                $value
+            ));
+        }
 
-        return new self($id);
-    }
-
-    /**
-     * Is null Apn ID?
-     *
-     * @return bool
-     */
-    public function isNull()
-    {
-        return $this->value === '';
+        $this->value = $value;
     }
 
     /**
@@ -64,39 +49,8 @@ class ApnId
      *
      * @throws \LogicException
      */
-    public function getValue() : string
+    public function getValue(): string
     {
-        if ($this->isNull()) {
-            throw new \LogicException('Can not get value from null Apn ID object.');
-        }
-
         return (string) $this->value;
-    }
-
-    /**
-     * Constructor.
-     *
-     * @param string $id
-     */
-    private function __construct($id)
-    {
-        $this->value = $id;
-    }
-
-    /**
-     * Validate ID
-     *
-     * @param string $id
-     *
-     * @throws \InvalidArgumentException
-     */
-    private static function validateId(string $id)
-    {
-        if (!preg_match('/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/', $id)) {
-            throw new \InvalidArgumentException(sprintf(
-                'Invalid UUID identifier "%s".',
-                $id
-            ));
-        }
     }
 }

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the AppleApnPush package
  *
@@ -27,7 +29,7 @@ class CurlHttpSender implements HttpSenderInterface
     /**
      * {@inheritdoc}
      */
-    public function send(Request $request) : Response
+    public function send(Request $request): Response
     {
         $this->initializeCurlResource();
         $this->prepareCurlResourceByRequest($request);

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the AppleApnPush package
  *
@@ -28,5 +30,5 @@ interface HttpProtocolVisitorInterface
      *
      * @return Request Should return modified request
      */
-    public function visit(Notification $notification, Request $request) : Request;
+    public function visit(Notification $notification, Request $request): Request;
 }

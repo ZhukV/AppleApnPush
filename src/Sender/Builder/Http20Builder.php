@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the AppleApnPush package
  *
@@ -86,7 +88,7 @@ class Http20Builder implements BuilderInterface
      *
      * @return Http20Builder
      */
-    public function setAuthenticator(AuthenticatorInterface $authenticator) : Http20Builder
+    public function setAuthenticator(AuthenticatorInterface $authenticator): Http20Builder
     {
         $this->authenticator = $authenticator;
 
@@ -101,7 +103,7 @@ class Http20Builder implements BuilderInterface
      *
      * @return Http20Builder
      */
-    public function addVisitor(HttpProtocolVisitorInterface $visitor, int $priority = 0) : Http20Builder
+    public function addVisitor(HttpProtocolVisitorInterface $visitor, int $priority = 0): Http20Builder
     {
         $this->visitors->insert($visitor, $priority);
 
@@ -113,7 +115,7 @@ class Http20Builder implements BuilderInterface
      *
      * @return Http20Builder
      */
-    public function addDefaultVisitors() : Http20Builder
+    public function addDefaultVisitors(): Http20Builder
     {
         $this->addVisitor(new AddExpirationHeaderVisitor());
         $this->addVisitor(new AddPriorityHeaderVisitor());
@@ -129,7 +131,7 @@ class Http20Builder implements BuilderInterface
      *
      * @return Http20Builder
      */
-    public function setUriFactory(UriFactoryInterface $uriFactory) : Http20Builder
+    public function setUriFactory(UriFactoryInterface $uriFactory): Http20Builder
     {
         $this->uriFactory = $uriFactory;
 
@@ -143,7 +145,7 @@ class Http20Builder implements BuilderInterface
      *
      * @return Http20Builder
      */
-    public function setPayloadEncoder(PayloadEncoderInterface $payloadEncoder) : Http20Builder
+    public function setPayloadEncoder(PayloadEncoderInterface $payloadEncoder): Http20Builder
     {
         $this->payloadEncoder = $payloadEncoder;
 
@@ -157,7 +159,7 @@ class Http20Builder implements BuilderInterface
      *
      * @return Http20Builder
      */
-    public function setHttpSender(HttpSenderInterface $httpSender) : Http20Builder
+    public function setHttpSender(HttpSenderInterface $httpSender): Http20Builder
     {
         $this->httpSender = $httpSender;
 
@@ -171,7 +173,7 @@ class Http20Builder implements BuilderInterface
      *
      * @return Http20Builder
      */
-    public function setExceptionFactory(ExceptionFactoryInterface $exceptionFactory) : Http20Builder
+    public function setExceptionFactory(ExceptionFactoryInterface $exceptionFactory): Http20Builder
     {
         $this->exceptionFactory = $exceptionFactory;
 
@@ -181,7 +183,7 @@ class Http20Builder implements BuilderInterface
     /**
      * {@inheritdoc}
      */
-    public function build() : SenderInterface
+    public function build(): SenderInterface
     {
         $chainVisitor = $this->createChainVisitor();
 
@@ -202,7 +204,7 @@ class Http20Builder implements BuilderInterface
      *
      * @return HttpProtocolChainVisitor
      */
-    private function createChainVisitor() : HttpProtocolChainVisitor
+    private function createChainVisitor(): HttpProtocolChainVisitor
     {
         $chainVisitors = new HttpProtocolChainVisitor();
         $visitors = clone $this->visitors;

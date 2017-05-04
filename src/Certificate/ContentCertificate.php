@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the AppleApnPush package
  *
@@ -56,7 +58,7 @@ class ContentCertificate implements CertificateInterface
     /**
      * {@inheritdoc}
      */
-    public function getPath() : string
+    public function getPath(): string
     {
         if ($this->certificateFilePath) {
             $this->removeTemporaryFile($this->certificateFilePath);
@@ -71,7 +73,7 @@ class ContentCertificate implements CertificateInterface
     /**
      * {@inheritdoc}
      */
-    public function getPassPhrase() : string
+    public function getPassPhrase(): string
     {
         return $this->passPhrase;
     }
@@ -94,11 +96,11 @@ class ContentCertificate implements CertificateInterface
      *
      * @throws \RuntimeException
      */
-    private function createTemporaryFile() : string
+    private function createTemporaryFile(): string
     {
         $tmpDir = $this->tmpDir;
 
-        $tmpFileName = md5(uniqid(mt_rand(), true)).'.pem';
+        $tmpFileName = md5(uniqid((string) mt_rand(), true)).'.pem';
 
         $tmpFilePath = $tmpDir.'/'.$tmpFileName;
 

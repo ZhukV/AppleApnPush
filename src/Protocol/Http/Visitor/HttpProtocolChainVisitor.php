@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the AppleApnPush package
  *
@@ -46,7 +48,7 @@ class HttpProtocolChainVisitor implements HttpProtocolVisitorInterface
     /**
      * {@inheritdoc}
      */
-    public function visit(Notification $notification, Request $request) : Request
+    public function visit(Notification $notification, Request $request): Request
     {
         // Clone all visitors because \SplPriorityQueue remove object after iteration
         $visitors = clone $this->visitors;

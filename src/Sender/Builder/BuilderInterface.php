@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the AppleApnPush package
  *
@@ -23,5 +25,5 @@ interface BuilderInterface
      *
      * @return SenderInterface
      */
-    public function build() : SenderInterface;
+    public function build(): SenderInterface;
 }

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the AppleApnPush package
  *
@@ -25,5 +27,5 @@ interface AuthenticatorInterface
      *
      * @return Request
      */
-    public function authenticate(Request $request) : Request;
+    public function authenticate(Request $request): Request;
 }

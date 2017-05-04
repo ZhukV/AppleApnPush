@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the AppleApnPush package
  *
@@ -60,7 +62,7 @@ class Request
      *
      * @return string
      */
-    public function getUrl() : string
+    public function getUrl(): string
     {
         return $this->url;
     }
@@ -73,7 +75,7 @@ class Request
      *
      * @return Request
      */
-    public function withHeader(string $name, string $value) : Request
+    public function withHeader(string $name, string $value): Request
     {
         $cloned = clone $this;
 
@@ -89,7 +91,7 @@ class Request
      *
      * @return Request
      */
-    public function withHeaders(array $headers) : Request
+    public function withHeaders(array $headers): Request
     {
         $cloned = clone $this;
 
@@ -105,7 +107,7 @@ class Request
      *
      * @return array
      */
-    public function getHeaders() : array
+    public function getHeaders(): array
     {
         return $this->headers;
     }
@@ -115,7 +117,7 @@ class Request
      *
      * @return string
      */
-    public function getContent() : string
+    public function getContent(): string
     {
         return $this->content;
     }
@@ -127,7 +129,7 @@ class Request
      *
      * @return Request
      */
-    public function withCertificate(string $certificate) : Request
+    public function withCertificate(string $certificate): Request
     {
         $cloned = clone $this;
 
@@ -153,7 +155,7 @@ class Request
      *
      * @return Request
      */
-    public function withCertificatePassPhrase(string $passPhrase) : Request
+    public function withCertificatePassPhrase(string $passPhrase): Request
     {
         $cloned = clone $this;
 

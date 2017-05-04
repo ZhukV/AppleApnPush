@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the AppleApnPush package
  *
@@ -68,7 +70,7 @@ class Alert
      *
      * @return Alert
      */
-    public function withTitle(string $title) : Alert
+    public function withTitle(string $title): Alert
     {
         $cloned = clone $this;
 
@@ -85,7 +87,7 @@ class Alert
      *
      * @return Alert
      */
-    public function withLocalizedTitle(Localized $localized) : Alert
+    public function withLocalizedTitle(Localized $localized): Alert
     {
         $cloned = clone $this;
 
@@ -100,7 +102,7 @@ class Alert
      *
      * @return string
      */
-    public function getTitle() : string
+    public function getTitle(): string
     {
         return $this->title;
     }
@@ -110,7 +112,7 @@ class Alert
      *
      * @return Localized
      */
-    public function getTitleLocalized() : Localized
+    public function getTitleLocalized(): Localized
     {
         return $this->titleLocalized;
     }
@@ -122,7 +124,7 @@ class Alert
      *
      * @return Alert
      */
-    public function withBody(string $body) : Alert
+    public function withBody(string $body): Alert
     {
         $cloned = clone $this;
 
@@ -139,7 +141,7 @@ class Alert
      *
      * @return Alert
      */
-    public function withLocalizedBody(Localized $localized) : Alert
+    public function withLocalizedBody(Localized $localized): Alert
     {
         $cloned = clone $this;
 
@@ -154,7 +156,7 @@ class Alert
      *
      * @return Localized
      */
-    public function getBodyLocalized() : Localized
+    public function getBodyLocalized(): Localized
     {
         return $this->bodyLocalized;
     }
@@ -164,7 +166,7 @@ class Alert
      *
      * @return string
      */
-    public function getBody() : string
+    public function getBody(): string
     {
         return $this->body;
     }
@@ -176,7 +178,7 @@ class Alert
      *
      * @return Alert
      */
-    public function withLocalizedAction(Localized $localized) : Alert
+    public function withLocalizedAction(Localized $localized): Alert
     {
         $cloned = clone $this;
 
@@ -190,7 +192,7 @@ class Alert
      *
      * @return Localized
      */
-    public function getLocalizedAction() : Localized
+    public function getLocalizedAction(): Localized
     {
         return $this->actionLocalized;
     }
@@ -202,7 +204,7 @@ class Alert
      *
      * @return Alert
      */
-    public function withLaunchImage(string $launchImage) : Alert
+    public function withLaunchImage(string $launchImage): Alert
     {
         $cloned = clone $this;
 
@@ -216,7 +218,7 @@ class Alert
      *
      * @return string
      */
-    public function getLaunchImage() : string
+    public function getLaunchImage(): string
     {
         return $this->launchImage;
     }

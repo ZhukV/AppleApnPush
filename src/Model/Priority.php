@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the AppleApnPush package
  *
@@ -22,11 +24,30 @@ class Priority
     private $value;
 
     /**
+     * Constructor.
+     *
+     * @param int $priority
+     *
+     * @throws \InvalidArgumentException
+     */
+    public function __construct(int $priority)
+    {
+        if (!in_array($priority, [5, 10], true)) {
+            throw new \InvalidArgumentException(sprintf(
+                'Invalid priority "%d". Can be 5 or 10.',
+                $priority
+            ));
+        }
+
+        $this->value = $priority;
+    }
+
+    /**
      * Create immediately priority
      *
      * @return Priority
      */
-    public static function immediately() : Priority
+    public static function immediately(): Priority
     {
         return new self(10);
     }
@@ -36,29 +57,9 @@ class Priority
      *
      * @return Priority
      */
-    public static function powerConsiderations() : Priority
+    public static function powerConsiderations(): Priority
     {
         return new self(5);
-    }
-
-    /**
-     * Create new priority instance via null
-     *
-     * @return Priority
-     */
-    public static function fromNull()
-    {
-        return new self(0);
-    }
-
-    /**
-     * Is null object?
-     *
-     * @return bool
-     */
-    public function isNull()
-    {
-        return $this->value === 0;
     }
 
     /**
@@ -66,18 +67,8 @@ class Priority
      *
      * @return int
      */
-    public function getValue() : int
+    public function getValue(): int
     {
         return $this->value;
-    }
-
-    /**
-     * Constructor.
-     *
-     * @param int $priority
-     */
-    private function __construct(int $priority)
-    {
-        $this->value = $priority;
     }
 }

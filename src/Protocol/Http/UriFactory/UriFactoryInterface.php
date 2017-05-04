@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the AppleApnPush package
  *
@@ -26,5 +28,5 @@ interface UriFactoryInterface
      *
      * @return string
      */
-    public function create(DeviceToken $deviceToken, bool $sandbox) : string;
+    public function create(DeviceToken $deviceToken, bool $sandbox): string;
 }

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the AppleApnPush package
  *
@@ -43,7 +45,7 @@ class Response
      *
      * @return int
      */
-    public function getStatusCode() : int
+    public function getStatusCode(): int
     {
         return $this->statusCode;
     }
@@ -53,7 +55,7 @@ class Response
      *
      * @return string
      */
-    public function getContent() : string
+    public function getContent(): string
     {
         return $this->content;
     }

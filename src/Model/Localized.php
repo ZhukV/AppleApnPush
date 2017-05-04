@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the AppleApnPush package
  *
@@ -43,7 +45,7 @@ class Localized
      *
      * @return string
      */
-    public function getKey() : string
+    public function getKey(): string
     {
         return $this->key;
     }
@@ -53,7 +55,7 @@ class Localized
      *
      * @return array
      */
-    public function getArgs() : array
+    public function getArgs(): array
     {
         return $this->args;
     }

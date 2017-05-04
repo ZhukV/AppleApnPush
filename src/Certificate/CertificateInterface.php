@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the AppleApnPush package
  *
@@ -21,12 +23,12 @@ interface CertificateInterface
      *
      * @return string
      */
-    public function getPath() : string;
+    public function getPath(): string;
 
     /**
      * Get pass phrase
      *
      * @return string
      */
-    public function getPassPhrase() : string;
+    public function getPassPhrase(): string;
 }

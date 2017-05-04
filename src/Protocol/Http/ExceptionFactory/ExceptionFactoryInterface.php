@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the AppleApnPush package
  *
@@ -26,5 +28,5 @@ interface ExceptionFactoryInterface
      *
      * @return SendNotificationException
      */
-    public function create(Response $response) : SendNotificationException;
+    public function create(Response $response): SendNotificationException;
 }
