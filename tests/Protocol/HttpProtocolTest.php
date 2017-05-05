@@ -71,12 +71,12 @@ class HttpProtocolTest extends TestCase
      */
     protected function setUp()
     {
-        $this->authenticator = self::createMock(AuthenticatorInterface::class);
-        $this->httpSender = self::createMock(HttpSenderInterface::class);
-        $this->payloadEncoder = self::createMock(PayloadEncoderInterface::class);
-        $this->uriFactory = self::createMock(UriFactoryInterface::class);
-        $this->visitor = self::createMock(HttpProtocolVisitorInterface::class);
-        $this->exceptionFactory = self::createMock(ExceptionFactoryInterface::class);
+        $this->authenticator = $this->createMock(AuthenticatorInterface::class);
+        $this->httpSender = $this->createMock(HttpSenderInterface::class);
+        $this->payloadEncoder = $this->createMock(PayloadEncoderInterface::class);
+        $this->uriFactory = $this->createMock(UriFactoryInterface::class);
+        $this->visitor = $this->createMock(HttpProtocolVisitorInterface::class);
+        $this->exceptionFactory = $this->createMock(ExceptionFactoryInterface::class);
 
         $this->protocol = new HttpProtocol(
             $this->authenticator,
@@ -171,7 +171,7 @@ class HttpProtocolTest extends TestCase
         $this->exceptionFactory->expects(self::once())
             ->method('create')
             ->with(new Response(404, '{}'))
-            ->willReturn(self::createMock(SendNotificationException::class));
+            ->willReturn($this->createMock(SendNotificationException::class));
 
         $this->protocol->send($receiver, $notification, false);
     }

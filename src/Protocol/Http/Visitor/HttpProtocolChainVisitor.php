@@ -40,7 +40,7 @@ class HttpProtocolChainVisitor implements HttpProtocolVisitorInterface
      * @param HttpProtocolVisitorInterface $visitor
      * @param int                          $priority
      */
-    public function add(HttpProtocolVisitorInterface $visitor, int $priority = 0)
+    public function add(HttpProtocolVisitorInterface $visitor, int $priority = 0): void
     {
         $this->visitors->insert($visitor, $priority);
     }

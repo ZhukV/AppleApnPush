@@ -30,10 +30,10 @@ class UriFactory implements UriFactoryInterface
      */
     public function create(DeviceToken $deviceToken, bool $sandbox): string
     {
+        $uri = 'https://api.push.apple.com/3/device/%s';
+
         if ($sandbox) {
             $uri = 'https://api.development.push.apple.com/3/device/%s';
-        } else {
-            $uri = 'https://api.push.apple.com/3/device/%s';
         }
 
         return sprintf($uri, $deviceToken);

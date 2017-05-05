@@ -33,14 +33,14 @@ class Http20BuilderTest extends TestCase
      */
     public function shouldSuccessBuild()
     {
-        $authenticator = self::createMock(AuthenticatorInterface::class);
+        $authenticator = $this->createMock(AuthenticatorInterface::class);
         $builder = new Http20Builder($authenticator);
 
-        $exceptionFactory = self::createMock(ExceptionFactoryInterface::class);
-        $httpSender = self::createMock(HttpSenderInterface::class);
-        $messageEncoder = self::createMock(PayloadEncoderInterface::class);
-        $uriFactory = self::createMock(UriFactoryInterface::class);
-        $visitor = self::createMock(HttpProtocolVisitorInterface::class);
+        $exceptionFactory = $this->createMock(ExceptionFactoryInterface::class);
+        $httpSender = $this->createMock(HttpSenderInterface::class);
+        $messageEncoder = $this->createMock(PayloadEncoderInterface::class);
+        $uriFactory = $this->createMock(UriFactoryInterface::class);
+        $visitor = $this->createMock(HttpProtocolVisitorInterface::class);
 
         $chainVisitor = new HttpProtocolChainVisitor();
         $chainVisitor->add(new AddExpirationHeaderVisitor(), 1);

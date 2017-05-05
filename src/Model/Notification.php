@@ -26,7 +26,7 @@ class Notification
     /**
      * @var ApnId
      */
-    private $id;
+    private $apnId;
 
     /**
      * @var Priority
@@ -42,20 +42,32 @@ class Notification
      * Constructor.
      *
      * @param Payload         $payload
-     * @param ApnId|null      $id
+     * @param ApnId|null      $apnId
      * @param Priority|null   $priority
      * @param Expiration|null $expiration
      */
     public function __construct(
         Payload $payload,
-        ApnId $id = null,
+        ApnId $apnId = null,
         Priority $priority = null,
         Expiration $expiration = null
     ) {
         $this->payload = $payload;
         $this->priority = $priority;
-        $this->id = $id;
+        $this->apnId = $apnId;
         $this->expiration = $expiration;
+    }
+
+    /**
+     * Create new notification with body only
+     *
+     * @param string $body
+     *
+     * @return Notification
+     */
+    public static function createWithBody(string $body): Notification
+    {
+        return new self(Payload::createWithBody($body));
     }
 
     /**
@@ -65,7 +77,7 @@ class Notification
      *
      * @return Notification
      */
-    public function withPayload(Payload $payload)
+    public function withPayload(Payload $payload): Notification
     {
         $cloned = clone $this;
 
@@ -79,7 +91,7 @@ class Notification
      *
      * @return Payload
      */
-    public function getPayload()
+    public function getPayload(): Payload
     {
         return $this->payload;
     }
@@ -91,11 +103,11 @@ class Notification
      *
      * @return Notification
      */
-    public function withId(ApnId $apnId = null): Notification
+    public function withApnId(ApnId $apnId = null): Notification
     {
         $cloned = clone $this;
 
-        $cloned->id = $apnId;
+        $cloned->apnId = $apnId;
 
         return $cloned;
     }
@@ -105,9 +117,9 @@ class Notification
      *
      * @return ApnId
      */
-    public function getId(): ?ApnId
+    public function getApnId(): ?ApnId
     {
-        return $this->id;
+        return $this->apnId;
     }
 
     /**

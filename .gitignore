@@ -7,4 +7,4 @@ composer.phar
 composer.lock
 
 # Other files
-/demo/config.php
+/demo/boot/config.php

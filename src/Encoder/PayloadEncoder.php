@@ -97,8 +97,8 @@ class PayloadEncoder implements PayloadEncoderInterface
             $data['title'] = $alert->getTitle();
         }
 
-        if ($alert->getLocalizedAction()->getKey()) {
-            $data['action-loc-key'] = $alert->getLocalizedAction()->getKey();
+        if ($alert->getActionLocalized()->getKey()) {
+            $data['action-loc-key'] = $alert->getActionLocalized()->getKey();
         }
 
         if ($alert->getLaunchImage()) {

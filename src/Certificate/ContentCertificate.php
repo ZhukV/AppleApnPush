@@ -149,7 +149,7 @@ class ContentCertificate implements CertificateInterface
      *
      * @param string $filePath
      */
-    private function removeTemporaryFile($filePath)
+    private function removeTemporaryFile($filePath): void
     {
         // Set custom error handler for suppress error
         set_error_handler(function () {

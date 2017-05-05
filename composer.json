@@ -18,7 +18,12 @@
     },
 
     "require-dev": {
-        "phpunit/phpunit": "^5.6.0"
+        "phpunit/phpunit": "^5.6.0",
+        "spomky-labs/jose": "^6.1.0"
+    },
+
+    "suggest": {
+        "spomky-labs/jose": "Allow using JSON Web Token for authenticating in Provider."
     },
 
     "autoload": {

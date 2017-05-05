@@ -12,7 +12,6 @@
 namespace Tests\Apple\ApnPush\Protocol\Http\Visitor;
 
 use Apple\ApnPush\Model\Alert;
-use Apple\ApnPush\Model\ApnId;
 use Apple\ApnPush\Model\Aps;
 use Apple\ApnPush\Model\Notification;
 use Apple\ApnPush\Model\Payload;

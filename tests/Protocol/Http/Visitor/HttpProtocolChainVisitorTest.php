@@ -12,7 +12,6 @@
 namespace Tests\Apple\ApnPush\Protocol\Http\Visitor;
 
 use Apple\ApnPush\Model\Notification;
-use Apple\ApnPush\Model\Payload;
 use Apple\ApnPush\Protocol\Http\Request;
 use Apple\ApnPush\Protocol\Http\Visitor\HttpProtocolChainVisitor;
 use Apple\ApnPush\Protocol\Http\Visitor\HttpProtocolVisitorInterface;
@@ -25,8 +24,8 @@ class HttpProtocolChainVisitorTest extends TestCase
      */
     public function shouldSuccessCallsWithPriority()
     {
-        $notification = self::createMock(Notification::class);
-        $request = self::createMock(Request::class);
+        $notification = $this->createMock(Notification::class);
+        $request = $this->createMock(Request::class);
 
         $visitor1 = $this->createVisitor();
         $visitor2 = $this->createVisitor();
@@ -83,8 +82,8 @@ class HttpProtocolChainVisitorTest extends TestCase
      */
     public function shouldNotCallNextCheckedIfPreviouslyCheckWithError()
     {
-        $notification = self::createMock(Notification::class);
-        $request = self::createMock(Request::class);
+        $notification = $this->createMock(Notification::class);
+        $request = $this->createMock(Request::class);
 
         $visitor1 = $this->createVisitor();
         $visitor2 = $this->createVisitor();

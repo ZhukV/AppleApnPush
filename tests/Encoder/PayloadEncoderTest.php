@@ -53,7 +53,7 @@ class PayloadEncoderTest extends TestCase
     public function shouldSuccessEncodeWithLocalizedBody()
     {
         $alert = new Alert();
-        $alert = $alert->withLocalizedBody(new Localized('some', ['key' => 'value']));
+        $alert = $alert->withBodyLocalized(new Localized('some', ['key' => 'value']));
 
         $payload = new Payload(new Aps($alert));
         $encoded = $this->encoder->encode($payload);
@@ -95,7 +95,7 @@ class PayloadEncoderTest extends TestCase
     public function shouldSuccessEncodeWithActionLocalizedKey()
     {
         $alert = new Alert();
-        $alert = $alert->withLocalizedAction(new Localized('some'));
+        $alert = $alert->withActionLocalized(new Localized('some'));
 
         $payload = new Payload(new Aps($alert));
         $encoded = $this->encoder->encode($payload);

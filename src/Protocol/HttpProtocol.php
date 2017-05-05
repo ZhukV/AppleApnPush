@@ -88,7 +88,7 @@ class HttpProtocol implements ProtocolInterface
     /**
      * {@inheritdoc}
      */
-    public function send(Receiver $receiver, Notification $notification, bool $sandbox)
+    public function send(Receiver $receiver, Notification $notification, bool $sandbox): void
     {
         try {
             $this->doSend($receiver, $notification, $sandbox);
@@ -108,7 +108,7 @@ class HttpProtocol implements ProtocolInterface
      *
      * @throws SendNotificationException
      */
-    private function doSend(Receiver $receiver, Notification $notification, bool $sandbox)
+    private function doSend(Receiver $receiver, Notification $notification, bool $sandbox): void
     {
         $payloadEncoded = $this->payloadEncoder->encode($notification->getPayload());
         $uri = $this->uriFactory->create($receiver->getToken(), $sandbox);

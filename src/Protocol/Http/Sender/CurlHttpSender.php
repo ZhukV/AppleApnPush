@@ -15,6 +15,7 @@ namespace Apple\ApnPush\Protocol\Http\Sender;
 
 use Apple\ApnPush\Protocol\Http\Request;
 use Apple\ApnPush\Protocol\Http\Response;
+use Apple\ApnPush\Protocol\Http\Sender\Exception\CurlException;
 
 /**
  * Send HTTP request via cURL
@@ -28,6 +29,8 @@ class CurlHttpSender implements HttpSenderInterface
 
     /**
      * {@inheritdoc}
+     *
+     * @throws CurlException
      */
     public function send(Request $request): Response
     {
@@ -35,15 +38,24 @@ class CurlHttpSender implements HttpSenderInterface
         $this->prepareCurlResourceByRequest($request);
 
         $content = curl_exec($this->resource);
+
+        if ($content === false) {
+            throw new CurlException(sprintf(
+                'cURL Error [%d]: %s',
+                (int) curl_errno($this->resource),
+                (string) curl_error($this->resource)
+            ));
+        }
+
         $statusCode = (int) curl_getinfo($this->resource, CURLINFO_HTTP_CODE);
 
-        return new Response($statusCode, $content);
+        return new Response($statusCode, (string) $content);
     }
 
     /**
      * {@inheritdoc}
      */
-    public function close()
+    public function close(): void
     {
         curl_close($this->resource);
         $this->resource = null;
@@ -52,7 +64,7 @@ class CurlHttpSender implements HttpSenderInterface
     /**
      * Initialize cURL resource
      */
-    private function initializeCurlResource()
+    private function initializeCurlResource(): void
     {
         if (!$this->resource) {
             $this->resource = curl_init();
@@ -68,7 +80,7 @@ class CurlHttpSender implements HttpSenderInterface
      *
      * @param Request $request
      */
-    private function prepareCurlResourceByRequest(Request $request)
+    private function prepareCurlResourceByRequest(Request $request): void
     {
         curl_setopt($this->resource, CURLOPT_URL, $request->getUrl());
         curl_setopt($this->resource, CURLOPT_POSTFIELDS, $request->getContent());

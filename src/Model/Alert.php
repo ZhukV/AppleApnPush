@@ -21,7 +21,7 @@ class Alert
     /**
      * @var string
      */
-    private $title = '';
+    private $title;
 
     /**
      * @var Localized
@@ -31,7 +31,7 @@ class Alert
     /**
      * @var string
      */
-    private $body = '';
+    private $body;
 
     /**
      * @var Localized
@@ -141,7 +141,7 @@ class Alert
      *
      * @return Alert
      */
-    public function withLocalizedBody(Localized $localized): Alert
+    public function withBodyLocalized(Localized $localized): Alert
     {
         $cloned = clone $this;
 
@@ -178,7 +178,7 @@ class Alert
      *
      * @return Alert
      */
-    public function withLocalizedAction(Localized $localized): Alert
+    public function withActionLocalized(Localized $localized): Alert
     {
         $cloned = clone $this;
 
@@ -192,7 +192,7 @@ class Alert
      *
      * @return Localized
      */
-    public function getLocalizedAction(): Localized
+    public function getActionLocalized(): Localized
     {
         return $this->actionLocalized;
     }

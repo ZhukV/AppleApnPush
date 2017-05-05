@@ -26,7 +26,7 @@ class AddApnIdHeaderVisitor implements HttpProtocolVisitorInterface
      */
     public function visit(Notification $notification, Request $request): Request
     {
-        $apnId = $notification->getId();
+        $apnId = $notification->getApnId();
 
         if ($apnId) {
             $request = $request->withHeader('apns-id', $apnId->getValue());

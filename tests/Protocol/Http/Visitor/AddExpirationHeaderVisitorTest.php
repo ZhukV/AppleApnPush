@@ -12,12 +12,10 @@
 namespace Tests\Apple\ApnPush\Protocol\Http\Visitor;
 
 use Apple\ApnPush\Model\Alert;
-use Apple\ApnPush\Model\ApnId;
 use Apple\ApnPush\Model\Aps;
 use Apple\ApnPush\Model\Expiration;
 use Apple\ApnPush\Model\Notification;
 use Apple\ApnPush\Model\Payload;
-use Apple\ApnPush\Model\Priority;
 use Apple\ApnPush\Protocol\Http\Request;
 use Apple\ApnPush\Protocol\Http\Visitor\AddExpirationHeaderVisitor;
 use PHPUnit\Framework\TestCase;

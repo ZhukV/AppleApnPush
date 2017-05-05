@@ -30,5 +30,5 @@ interface ProtocolInterface
      *
      * @throws \Apple\ApnPush\Exception\SendNotification\SendNotificationException
      */
-    public function send(Receiver $receiver, Notification $notification, bool $sandbox);
+    public function send(Receiver $receiver, Notification $notification, bool $sandbox): void;
 }

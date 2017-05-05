@@ -1,7 +1,7 @@
 build:
     environment:
         php:
-            version: 7.0.7
+            version: 7.1
 
 checks:
     php: true
@@ -9,3 +9,4 @@ checks:
 filter:
     excluded_paths:
         - tests/*
+        - demo/*

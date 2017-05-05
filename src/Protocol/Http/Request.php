@@ -26,7 +26,7 @@ class Request
     /**
      * @var array
      */
-    private $headers = [];
+    private $headers;
 
     /**
      * @var string
@@ -143,7 +143,7 @@ class Request
      *
      * @return string
      */
-    public function getCertificate()
+    public function getCertificate(): string
     {
         return $this->certificate;
     }
@@ -169,7 +169,7 @@ class Request
      *
      * @return string
      */
-    public function getCertificatePassPhrase()
+    public function getCertificatePassPhrase(): string
     {
         return $this->certificatePassPhrase;
     }

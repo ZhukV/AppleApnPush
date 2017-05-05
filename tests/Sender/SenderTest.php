@@ -38,7 +38,7 @@ class SenderTest extends TestCase
      */
     protected function setUp()
     {
-        $this->protocol = self::createMock(ProtocolInterface::class);
+        $this->protocol = $this->createMock(ProtocolInterface::class);
         $this->sender = new Sender($this->protocol);
     }
 

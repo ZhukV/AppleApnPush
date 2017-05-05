@@ -18,6 +18,17 @@ class PriorityTest extends TestCase
 {
     /**
      * @test
+     *
+     * @expectedException \InvalidArgumentException
+     * @expectedExceptionMessage Invalid priority "123". Can be 5 or 10.
+     */
+    public function shouldFailCreate()
+    {
+        new Priority(123);
+    }
+
+    /**
+     * @test
      */
     public function shouldSuccessCreateImmediately()
     {

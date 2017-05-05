@@ -1,0 +1,14 @@
+<?php
+
+/* Constants for use authentication via certificate */
+define ('CERTIFICATE_PATH', '/path/to/you/certificate.pem');
+define ('CERTIFICATE_PASS_PHRASE', '');
+
+/* Constants for use authentication via JsonWebToken */
+define ('JWT_PRIVATE_KEY_PATH', '/path/to/you/certificate.p8');
+define ('JWT_KEY', 'Please enter you JWT key');
+define ('JWT_TEAM_ID', 'Please enter you Team ID');
+
+/* Constants for send notifications (DEMO) */
+define ('DEVICE_TOKEN', 'Please enter the token of device');
+define ('APNS_TOPIC', 'Please enter the name identifier of topic (You bundle identifier of application)');

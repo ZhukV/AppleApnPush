@@ -33,7 +33,7 @@ class CertificateAuthenticatorTest extends TestCase
      */
     protected function setUp()
     {
-        $this->certificate = self::createMock(CertificateInterface::class);
+        $this->certificate = $this->createMock(CertificateInterface::class);
         $this->authenticator = new CertificateAuthenticator($this->certificate);
     }
 

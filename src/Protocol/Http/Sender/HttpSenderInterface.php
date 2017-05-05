@@ -33,5 +33,5 @@ interface HttpSenderInterface
     /**
      * Close connection
      */
-    public function close();
+    public function close(): void;
 }

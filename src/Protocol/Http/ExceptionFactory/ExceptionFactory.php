@@ -92,7 +92,7 @@ class ExceptionFactory implements ExceptionFactoryInterface
      *
      * @return SendNotificationException
      */
-    private function createByReason(string $reason, array $json)
+    private function createByReason(string $reason, array $json): SendNotificationException
     {
         $reason = strtolower($reason);
 
