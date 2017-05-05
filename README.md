@@ -68,6 +68,6 @@ Issues and feature requests are tracked in the [Github issue tracker](https://gi
 Contributors:
 -------------
 
-Thanks to [everyone participating] (https://github.com/ZhukV/AppleApnPush/graphs/contributors) in the development of this AppleApnPush library!
+Thanks to [everyone participating](https://github.com/ZhukV/AppleApnPush/graphs/contributors) in the development of this AppleApnPush library!
 
-* Ryan Martinsen [popthestack] (https://github.com/popthestack)
+* Ryan Martinsen [popthestack](https://github.com/popthestack)
