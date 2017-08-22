@@ -51,7 +51,7 @@ class AddExpirationHeaderVisitorTest extends TestCase
         $headers = $visitedRequest->getHeaders();
 
         self::assertEquals([
-            'apns-expiration' => $storeTo->format('U')
+            'apns-expiration' => $storeTo->format('U'),
         ], $headers);
     }
 
@@ -69,7 +69,7 @@ class AddExpirationHeaderVisitorTest extends TestCase
         $headers = $visitedRequest->getHeaders();
 
         self::assertEquals([
-            'apns-expiration' => 0
+            'apns-expiration' => 0,
         ], $headers);
     }
 

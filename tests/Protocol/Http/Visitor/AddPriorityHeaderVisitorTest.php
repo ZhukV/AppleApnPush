@@ -49,7 +49,7 @@ class AddPriorityHeaderVisitorTest extends TestCase
         $headers = $visitedRequest->getHeaders();
 
         self::assertEquals([
-            'apns-priority' => 10
+            'apns-priority' => 10,
         ], $headers);
     }
 

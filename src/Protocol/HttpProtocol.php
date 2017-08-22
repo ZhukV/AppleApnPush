@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 /*
  * This file is part of the AppleApnPush package
@@ -117,8 +117,8 @@ class HttpProtocol implements ProtocolInterface
 
         $headers = [
             'content-type' => 'application/json',
-            'accept' => 'application/json',
-            'apns-topic' => $receiver->getTopic(),
+            'accept'       => 'application/json',
+            'apns-topic'   => $receiver->getTopic(),
         ];
 
         $request = $request->withHeaders($headers);

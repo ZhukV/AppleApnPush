@@ -146,7 +146,7 @@ class ExceptionFactoryTest extends TestCase
             ['MissingProviderToken', new MissingProviderTokenException()],
             ['BadPath', new BadPathException()],
             ['MethodNotAllowed', new MethodNotAllowedException()],
-            ['Unregistered', new UnregisteredException($lastUse), ['timestamp' => (int)$lastUse->format('U')]],
+            ['Unregistered', new UnregisteredException($lastUse), ['timestamp' => (int) $lastUse->format('U')]],
             ['PayloadTooLarge', new PayloadTooLargeException()],
             ['TooManyProviderTokenUpdates', new TooManyProviderTokenUpdatesException()],
             ['TooManyRequests', new TooManyRequestsException()],

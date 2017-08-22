@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 /*
  * This file is part of the AppleApnPush package
@@ -130,6 +130,7 @@ class ContentCertificate implements CertificateInterface
 
         if ($errorCode || $errorMessage) {
             restore_error_handler();
+
             // Error create file
             throw new \RuntimeException(sprintf(
                 'Can not create temporary certificate file "%s". Error: %s [%d].',
