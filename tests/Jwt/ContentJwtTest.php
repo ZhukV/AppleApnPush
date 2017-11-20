@@ -31,7 +31,7 @@ class ContentJwtTest extends TestCase
         self::assertFileExists($path);
         self::assertEquals('jwt certificate content', file_get_contents($path));
 
-        unset ($jwt);
+        unset($jwt);
 
         self::assertFileNotExists($path);
     }
