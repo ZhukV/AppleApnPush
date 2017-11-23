@@ -51,6 +51,8 @@ The source of the documentation is stored in the `docs` folder in this package:
 
 [Read the Documentation](docs/index.md)
 
+[Develop and testing via Docker](docs/docker.md)
+
 License
 -------
 

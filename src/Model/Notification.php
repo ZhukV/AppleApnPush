@@ -39,23 +39,31 @@ class Notification
     private $expiration;
 
     /**
+     * @var CollapseId
+     */
+    private $collapseId;
+
+    /**
      * Constructor.
      *
      * @param Payload         $payload
      * @param ApnId|null      $apnId
      * @param Priority|null   $priority
      * @param Expiration|null $expiration
+     * @param CollapseId|null $collapseId
      */
     public function __construct(
         Payload $payload,
         ApnId $apnId = null,
         Priority $priority = null,
-        Expiration $expiration = null
+        Expiration $expiration = null,
+        CollapseId $collapseId = null
     ) {
         $this->payload = $payload;
         $this->priority = $priority;
         $this->apnId = $apnId;
         $this->expiration = $expiration;
+        $this->collapseId = $collapseId;
     }
 
     /**
@@ -172,5 +180,31 @@ class Notification
     public function getExpiration(): ?Expiration
     {
         return $this->expiration;
+    }
+
+    /**
+     * Set the collapse identifier
+     *
+     * @param CollapseId|null $collapseId
+     *
+     * @return Notification
+     */
+    public function withCollapseId(CollapseId $collapseId = null): Notification
+    {
+        $cloned = clone $this;
+
+        $cloned->collapseId = $collapseId;
+
+        return $cloned;
+    }
+
+    /**
+     * Get the collapse identifier
+     *
+     * @return CollapseId|null
+     */
+    public function getCollapseId(): ?CollapseId
+    {
+        return $this->collapseId;
     }
 }
