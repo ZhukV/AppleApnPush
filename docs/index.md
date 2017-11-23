@@ -29,6 +29,8 @@ $builder->addDefaultVisitors();
 $sender = $builder->build();
 ```
 
+> **Attention:** visitors are required for adding the headers to HTTP request (apns-id, apns-collapse-id, etc...).
+
 We support the JSON Web Token authentication, and if you want use JWT, please create `JwtAuthenticator`:
 
 > **Attention:** For use JWT, the package **spomky-labs/jose** must be installed.
@@ -89,7 +91,7 @@ In many issues you must create the notification with custom sound or custom budg
 
 The root of notification slit to next objects:
 
-* Notification - the root object of notification. Store payload, priority, expiration, apns-id.
+* Notification - the root object of notification. Store payload, priority, expiration, apns-id, collapse-id.
 * Payload - the payload of notification. Store aps data and custom data.
 * Aps - the aps of notification. Store alert, badge, sound, category, thread, content-available.
 * Alert - the alert of notification. Store title, body, launch image and localized data.
@@ -106,6 +108,7 @@ use Apple\ApnPush\Model\Notification;
 use Apple\ApnPush\Model\Expiration;
 use Apple\ApnPush\Model\Priority;
 use Apple\ApnPush\Model\ApnId;
+use Apple\ApnPush\Model\CollapseId;
 
 $alert = (new Alert())
     ->withBody('Hello ;)')
@@ -125,7 +128,8 @@ $payload = (new Payload($aps))
 $notification = (new Notification($payload))
     ->withExpiration(new Expiration(new \DateTime('+1 day')))
     ->withPriority(Priority::immediately())
-    ->withApnId(new ApnId('550e8400-e29b-41d4-a716-446655440000'));
+    ->withApnId(new ApnId('550e8400-e29b-41d4-a716-446655440000'))
+    ->withCollapseId(new CollapseId('some-foo-bar'));
 
 $sender->send($receiver, $notification);
 ```

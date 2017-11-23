@@ -17,6 +17,7 @@ use Apple\ApnPush\Protocol\Http\ExceptionFactory\ExceptionFactoryInterface;
 use Apple\ApnPush\Protocol\Http\Sender\HttpSenderInterface;
 use Apple\ApnPush\Protocol\Http\UriFactory\UriFactoryInterface;
 use Apple\ApnPush\Protocol\Http\Visitor\AddApnIdHeaderVisitor;
+use Apple\ApnPush\Protocol\Http\Visitor\AddCollapseIdHeaderVisitor;
 use Apple\ApnPush\Protocol\Http\Visitor\AddExpirationHeaderVisitor;
 use Apple\ApnPush\Protocol\Http\Visitor\AddPriorityHeaderVisitor;
 use Apple\ApnPush\Protocol\Http\Visitor\HttpProtocolChainVisitor;
@@ -46,7 +47,8 @@ class Http20BuilderTest extends TestCase
         $chainVisitor->add(new AddExpirationHeaderVisitor(), 1);
         $chainVisitor->add(new AddPriorityHeaderVisitor(), 2);
         $chainVisitor->add(new AddApnIdHeaderVisitor(), 3);
-        $chainVisitor->add($visitor, 4);
+        $chainVisitor->add(new AddCollapseIdHeaderVisitor(), 4);
+        $chainVisitor->add($visitor, 5);
 
         $builder
             ->setAuthenticator($authenticator)

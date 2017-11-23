@@ -14,9 +14,9 @@ declare(strict_types = 1);
 namespace Apple\ApnPush\Model;
 
 /**
- * UUID identifier for APN
+ * The value object for store the apns-collapse-id
  */
-class ApnId
+class CollapseId
 {
     /**
      * @var string
@@ -32,18 +32,15 @@ class ApnId
      */
     public function __construct(string $value)
     {
-        if (!preg_match('/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/', $value)) {
-            throw new \InvalidArgumentException(sprintf(
-                'Invalid UUID identifier "%s".',
-                $value
-            ));
+        if (strlen($value) > 64) {
+            throw new \InvalidArgumentException('The apns-collapse-id cannot be larger than 64 bytes.');
         }
 
         $this->value = $value;
     }
 
     /**
-     * Get value
+     * Get the value of collapse id
      *
      * @return string
      */

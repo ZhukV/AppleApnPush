@@ -14,6 +14,7 @@ namespace Tests\Apple\ApnPush\Model;
 use Apple\ApnPush\Model\Alert;
 use Apple\ApnPush\Model\ApnId;
 use Apple\ApnPush\Model\Aps;
+use Apple\ApnPush\Model\CollapseId;
 use Apple\ApnPush\Model\Expiration;
 use Apple\ApnPush\Model\Notification;
 use Apple\ApnPush\Model\Payload;
@@ -86,11 +87,25 @@ class NotificationTest extends TestCase
      */
     public function shouldSuccessChangeExpiration()
     {
-        $notification = new Notification($this->createPayload());
-        $notificationWithChangedExpiration = $notification->withExpiration(new Expiration(new \DateTime()));
+        $now = new \DateTime();
 
-        self::assertEquals(new Expiration(new \DateTime()), $notificationWithChangedExpiration->getExpiration(), '', 2);
+        $notification = new Notification($this->createPayload());
+        $notificationWithChangedExpiration = $notification->withExpiration(new Expiration($now));
+
+        self::assertEquals(new Expiration($now), $notificationWithChangedExpiration->getExpiration(), '', 2);
         self::assertNotEquals(spl_object_hash($notification), spl_object_hash($notificationWithChangedExpiration));
+    }
+
+    /**
+     * @test
+     */
+    public function shouldSuccessChangeCollapseId()
+    {
+        $notification = new Notification($this->createPayload());
+        $notificationWithChangedCollapseId = $notification->withCollapseId(new CollapseId('some'));
+
+        self::assertEquals(new CollapseId('some'), $notificationWithChangedCollapseId->getCollapseId());
+        self::assertNotEquals(spl_object_hash($notification), spl_object_hash($notificationWithChangedCollapseId));
     }
 
     /**
