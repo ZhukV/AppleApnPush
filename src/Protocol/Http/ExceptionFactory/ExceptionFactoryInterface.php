@@ -14,6 +14,7 @@ declare(strict_types = 1);
 namespace Apple\ApnPush\Protocol\Http\ExceptionFactory;
 
 use Apple\ApnPush\Exception\SendNotification\SendNotificationException;
+use Apple\ApnPush\Protocol\Http\Request;
 use Apple\ApnPush\Protocol\Http\Response;
 
 /**
@@ -26,7 +27,8 @@ interface ExceptionFactoryInterface
      *
      * @param Response $response
      *
+     * @param Request $request
      * @return SendNotificationException
      */
-    public function create(Response $response): SendNotificationException;
+    public function create(Response $response, Request $request): SendNotificationException;
 }
