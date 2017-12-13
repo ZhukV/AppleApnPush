@@ -14,8 +14,8 @@ declare(strict_types = 1);
 namespace Apple\ApnPush\Protocol\Http\Sender\Exception;
 
 /**
- * Throw this exception if cURL return error and cannot send the request
+ * Throw this exception if the Http Sender (cURL as an example) return error and cannot send the request
  */
-class CurlException extends \Exception
+class HttpSenderException extends \Exception
 {
 }

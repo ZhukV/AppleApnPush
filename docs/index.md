@@ -46,6 +46,41 @@ $authenticator = new JwtAuthenticator($jwt);
 
 ```
 
+### Access to connection
+
+In many cases, you should close the connection after sending the push notification. As an example: you send the 
+notifications on background worker.
+
+You can close connections from protocol. But, you should previously create the protocol from builder (or manually) and
+manually create the sender.
+
+```php
+<?php
+
+use Apple\ApnPush\Certificate\Certificate;
+use Apple\ApnPush\Protocol\Http\Authenticator\CertificateAuthenticator;
+use Apple\ApnPush\Sender\Builder\Http20Builder;
+use Apple\ApnPush\Sender\Sender;
+
+// Create certificate and authenticator
+$certificate = new Certificate('/path/to/you/certificate.pem', 'pass phrase');
+$authenticator = new CertificateAuthenticator($certificate);
+
+// Build sender
+$builder = new Http20Builder($authenticator);
+$builder->addDefaultVisitors();
+
+$protocol = $builder->buildProtocol();
+$sender = new Sender($protocol);
+
+// some actions/send push notifications
+
+$protocol->closeConnection();
+
+// some actions
+```
+
+
 Sending notifications
 ---------------------
 
@@ -79,9 +114,7 @@ try {
 } catch (SendNotificationException $e) {
     // Fail send notification.    
 }
-```
-
-> **Note:** After fail we close connection and recreate in next notifications.
+``` 
 
 Creating custom notification
 ----------------------------

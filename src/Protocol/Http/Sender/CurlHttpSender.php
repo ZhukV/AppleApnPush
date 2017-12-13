@@ -15,7 +15,7 @@ namespace Apple\ApnPush\Protocol\Http\Sender;
 
 use Apple\ApnPush\Protocol\Http\Request;
 use Apple\ApnPush\Protocol\Http\Response;
-use Apple\ApnPush\Protocol\Http\Sender\Exception\CurlException;
+use Apple\ApnPush\Protocol\Http\Sender\Exception\HttpSenderException;
 
 /**
  * Send HTTP request via cURL
@@ -30,7 +30,7 @@ class CurlHttpSender implements HttpSenderInterface
     /**
      * {@inheritdoc}
      *
-     * @throws CurlException
+     * @throws HttpSenderException
      */
     public function send(Request $request): Response
     {
@@ -40,7 +40,7 @@ class CurlHttpSender implements HttpSenderInterface
         $content = curl_exec($this->resource);
 
         if ($content === false) {
-            throw new CurlException(sprintf(
+            throw new HttpSenderException(sprintf(
                 'cURL Error [%d]: %s',
                 (int) curl_errno($this->resource),
                 (string) curl_error($this->resource)

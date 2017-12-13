@@ -29,6 +29,7 @@ use Apple\ApnPush\Protocol\Http\Visitor\AddPriorityHeaderVisitor;
 use Apple\ApnPush\Protocol\Http\Visitor\HttpProtocolChainVisitor;
 use Apple\ApnPush\Protocol\Http\Visitor\HttpProtocolVisitorInterface;
 use Apple\ApnPush\Protocol\HttpProtocol;
+use Apple\ApnPush\Protocol\ProtocolInterface;
 use Apple\ApnPush\Sender\Sender;
 use Apple\ApnPush\Sender\SenderInterface;
 
@@ -185,11 +186,11 @@ class Http20Builder implements BuilderInterface
     /**
      * {@inheritdoc}
      */
-    public function build(): SenderInterface
+    public function buildProtocol(): ProtocolInterface
     {
         $chainVisitor = $this->createChainVisitor();
 
-        $protocol = new HttpProtocol(
+        return new HttpProtocol(
             $this->authenticator,
             $this->httpSender,
             $this->payloadEncoder,
@@ -197,6 +198,14 @@ class Http20Builder implements BuilderInterface
             $chainVisitor,
             $this->exceptionFactory
         );
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function build(): SenderInterface
+    {
+        $protocol = $this->buildProtocol();
 
         return new Sender($protocol);
     }

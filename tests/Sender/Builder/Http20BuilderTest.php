@@ -32,11 +32,45 @@ class Http20BuilderTest extends TestCase
     /**
      * @test
      */
-    public function shouldSuccessBuild()
+    public function shouldSuccessBuild(): void
     {
         $authenticator = $this->createMock(AuthenticatorInterface::class);
         $builder = new Http20Builder($authenticator);
 
+        $expectedProtocol = $this->prepareBuilderAndCreateProtocol($builder, $authenticator);
+
+        $sender = $builder->build();
+
+        $expectedSender = new Sender($expectedProtocol);
+
+        self::assertInstanceOf(Sender::class, $sender);
+        self::assertEquals($expectedSender, $sender);
+    }
+
+    /**
+     * @test
+     */
+    public function shouldSuccessBuildProtocol(): void
+    {
+        $authenticator = $this->createMock(AuthenticatorInterface::class);
+        $builder = new Http20Builder($authenticator);
+
+        $expectedProtocol = $this->prepareBuilderAndCreateProtocol($builder, $authenticator);
+        $protocol = $builder->buildProtocol();
+
+        self::assertEquals($expectedProtocol, $protocol);
+    }
+
+    /**
+     * Prepare the builder and create the protocol
+     *
+     * @param Http20Builder          $builder
+     * @param AuthenticatorInterface $authenticator
+     *
+     * @return HttpProtocol
+     */
+    private function prepareBuilderAndCreateProtocol(Http20Builder $builder, AuthenticatorInterface $authenticator): HttpProtocol
+    {
         $exceptionFactory = $this->createMock(ExceptionFactoryInterface::class);
         $httpSender = $this->createMock(HttpSenderInterface::class);
         $messageEncoder = $this->createMock(PayloadEncoderInterface::class);
@@ -59,9 +93,7 @@ class Http20BuilderTest extends TestCase
             ->addDefaultVisitors()
             ->addVisitor($visitor);
 
-        $sender = $builder->build();
-
-        $expectedProtocol = new HttpProtocol(
+        return new HttpProtocol(
             $authenticator,
             $httpSender,
             $messageEncoder,
@@ -69,10 +101,5 @@ class Http20BuilderTest extends TestCase
             $chainVisitor,
             $exceptionFactory
         );
-
-        $expectedSender = new Sender($expectedProtocol);
-
-        self::assertInstanceOf(Sender::class, $sender);
-        self::assertEquals($expectedSender, $sender);
     }
 }
