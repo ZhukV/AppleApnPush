@@ -182,7 +182,7 @@ class HttpProtocolTest extends TestCase
 
         $this->exceptionFactory->expects(self::once())
             ->method('create')
-            ->with(new Response(404, '{}'))
+            ->with(new Response(404, '{}'), self::isInstanceOf(Request::class))
             ->willReturn($this->createMock(SendNotificationException::class));
 
         $this->protocol->send($receiver, $notification, false);

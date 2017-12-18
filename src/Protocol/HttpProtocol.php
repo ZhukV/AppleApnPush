@@ -141,7 +141,7 @@ class HttpProtocol implements ProtocolInterface
         $response = $this->httpSender->send($request);
 
         if ($response->getStatusCode() !== 200) {
-            throw $this->exceptionFactory->create($response);
+            throw $this->exceptionFactory->create($response, $request);
         }
     }
 }

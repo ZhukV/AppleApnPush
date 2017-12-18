@@ -41,6 +41,7 @@ use Apple\ApnPush\Exception\SendNotification\TopicDisallowedException;
 use Apple\ApnPush\Exception\SendNotification\UndefinedErrorException;
 use Apple\ApnPush\Exception\SendNotification\UnregisteredException;
 use Apple\ApnPush\Protocol\Http\ExceptionFactory\ExceptionFactory;
+use Apple\ApnPush\Protocol\Http\Request;
 use Apple\ApnPush\Protocol\Http\Response;
 use PHPUnit\Framework\TestCase;
 
@@ -68,7 +69,8 @@ class ExceptionFactoryTest extends TestCase
     public function shouldFailIfContentNotFound()
     {
         $response = new Response(400, '');
-        throw $this->exceptionFactory->create($response);
+        $request = $this->createMock(Request::class);
+        throw $this->exceptionFactory->create($response, $request);
     }
 
     /**
@@ -79,7 +81,8 @@ class ExceptionFactoryTest extends TestCase
     public function shouldFailIfInvalidJson()
     {
         $response = new Response(400, '{"some}');
-        throw $this->exceptionFactory->create($response);
+        $request = $this->createMock(Request::class);
+        throw $this->exceptionFactory->create($response, $request);
     }
 
     /**
@@ -91,7 +94,8 @@ class ExceptionFactoryTest extends TestCase
     public function shouldFailIfMissingReason()
     {
         $response = new Response(400, '{"key":"value"}');
-        throw $this->exceptionFactory->create($response);
+        $request = $this->createMock(Request::class);
+        throw $this->exceptionFactory->create($response, $request);
     }
 
     /**
@@ -105,14 +109,17 @@ class ExceptionFactoryTest extends TestCase
      */
     public function shouldSuccessCreate($reason, \Exception $expectedException, array $extra = [])
     {
+        $request = array_pop($extra);
+
         $json = array_merge([
             'reason' => $reason,
         ], $extra);
 
         $response = new Response(200, json_encode($json));
-        $exception = $this->exceptionFactory->create($response);
+        $exception = $this->exceptionFactory->create($response, $request);
 
-        self::assertEquals($expectedException, $exception);
+        self::assertEquals(get_class($expectedException), get_class($exception));
+        self::assertInstanceOf(Request::class, $exception->getRequest());
     }
 
     /**
@@ -123,37 +130,38 @@ class ExceptionFactoryTest extends TestCase
     public function provideReasons()
     {
         $lastUse = \DateTime::createFromFormat('!Y/m/d', '2017/01/01');
+        $request = $this->createMock(Request::class);
 
         return [
-            ['BadCollapseId', new BadCollapseIdException()],
-            ['BadDeviceToken', new BadDeviceTokenException()],
-            ['BadExpirationDate', new BadExpirationDateException()],
-            ['BadMessageId', new BadMessageIdException()],
-            ['BadPriority', new BadPriorityException()],
-            ['BadTopic', new BadTopicException()],
-            ['DeviceTokenNotForTopic', new DeviceTokenNotForTopicException()],
-            ['DuplicateHeaders', new DuplicateHeadersException()],
-            ['IdleTimeout', new IdleTimeoutException()],
-            ['MissingDeviceToken', new MissingDeviceTokenException()],
-            ['MissingTopic', new MissingTopicException()],
-            ['PayloadEmpty', new PayloadEmptyException()],
-            ['TopicDisallowed', new TopicDisallowedException()],
-            ['BadCertificate', new BadCertificateException()],
-            ['BadCertificateEnvironment', new BadCertificateEnvironmentException()],
-            ['ExpiredProviderToken', new ExpiredProviderTokenException()],
-            ['Forbidden', new ForbiddenException()],
-            ['InvalidProviderToken', new InvalidProviderTokenException()],
-            ['MissingProviderToken', new MissingProviderTokenException()],
-            ['BadPath', new BadPathException()],
-            ['MethodNotAllowed', new MethodNotAllowedException()],
-            ['Unregistered', new UnregisteredException($lastUse), ['timestamp' => (int) $lastUse->format('U')]],
-            ['PayloadTooLarge', new PayloadTooLargeException()],
-            ['TooManyProviderTokenUpdates', new TooManyProviderTokenUpdatesException()],
-            ['TooManyRequests', new TooManyRequestsException()],
-            ['InternalServerError', new InternalServerErrorException()],
-            ['ServiceUnavailable', new ServiceUnavailableException()],
-            ['Shutdown', new ShutdownException()],
-            ['some', new UndefinedErrorException()],
+            ['BadCollapseId', new BadCollapseIdException(), [$request]],
+            ['BadDeviceToken', new BadDeviceTokenException(), [$request]],
+            ['BadExpirationDate', new BadExpirationDateException(), [$request]],
+            ['BadMessageId', new BadMessageIdException(), [$request]],
+            ['BadPriority', new BadPriorityException(), [$request]],
+            ['BadTopic', new BadTopicException(), [$request]],
+            ['DeviceTokenNotForTopic', new DeviceTokenNotForTopicException(), [$request]],
+            ['DuplicateHeaders', new DuplicateHeadersException(), [$request]],
+            ['IdleTimeout', new IdleTimeoutException(), [$request]],
+            ['MissingDeviceToken', new MissingDeviceTokenException(), [$request]],
+            ['MissingTopic', new MissingTopicException(), [$request]],
+            ['PayloadEmpty', new PayloadEmptyException(), [$request]],
+            ['TopicDisallowed', new TopicDisallowedException(), [$request]],
+            ['BadCertificate', new BadCertificateException(), [$request]],
+            ['BadCertificateEnvironment', new BadCertificateEnvironmentException(), [$request]],
+            ['ExpiredProviderToken', new ExpiredProviderTokenException(), [$request]],
+            ['Forbidden', new ForbiddenException(), [$request]],
+            ['InvalidProviderToken', new InvalidProviderTokenException(), [$request]],
+            ['MissingProviderToken', new MissingProviderTokenException(), [$request]],
+            ['BadPath', new BadPathException(), [$request]],
+            ['MethodNotAllowed', new MethodNotAllowedException(), [$request]],
+            ['Unregistered', new UnregisteredException($lastUse), ['timestamp' => (int) $lastUse->format('U'), $request]],
+            ['PayloadTooLarge', new PayloadTooLargeException(), [$request]],
+            ['TooManyProviderTokenUpdates', new TooManyProviderTokenUpdatesException(), [$request]],
+            ['TooManyRequests', new TooManyRequestsException(), [$request]],
+            ['InternalServerError', new InternalServerErrorException(), [$request]],
+            ['ServiceUnavailable', new ServiceUnavailableException(), [$request]],
+            ['Shutdown', new ShutdownException(), [$request]],
+            ['some', new UndefinedErrorException(), [$request]],
         ];
     }
 }

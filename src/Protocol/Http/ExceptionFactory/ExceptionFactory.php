@@ -46,6 +46,7 @@ use Apple\ApnPush\Exception\SendNotification\TooManyRequestsException;
 use Apple\ApnPush\Exception\SendNotification\TopicDisallowedException;
 use Apple\ApnPush\Exception\SendNotification\UndefinedErrorException;
 use Apple\ApnPush\Exception\SendNotification\UnregisteredException;
+use Apple\ApnPush\Protocol\Http\Request;
 use Apple\ApnPush\Protocol\Http\Response;
 
 /**
@@ -57,136 +58,139 @@ class ExceptionFactory implements ExceptionFactoryInterface
     /**
      * {@inheritdoc}
      */
-    public function create(Response $response): SendNotificationException
+    public function create(Response $response, Request $request): SendNotificationException
     {
         $content = $response->getContent();
 
         if (!$content) {
-            return new MissingContentInResponseException();
+            return (new MissingContentInResponseException())->setRequest($request);
         }
 
         $json = json_decode($content, true);
 
         if (null === $json) {
-            return new InvalidResponseException(sprintf(
+            return (new InvalidResponseException(sprintf(
                 'Can not parse JSON in response. Error: %d - %s',
                 json_last_error(),
                 json_last_error_msg()
-            ));
+            )))->setRequest($request);
         }
 
         if (!array_key_exists('reason', $json)) {
-            return new MissingErrorReasonInResponseException();
+            return (new MissingErrorReasonInResponseException())->setRequest($request);
         }
 
         $reason = $json['reason'];
 
-        return $this->createByReason($reason, $json);
+        return $this->createByReason($reason, $json, $request);
     }
 
     /**
      * Create exception by reason
      *
      * @param string $reason
-     * @param array  $json
+     * @param array $json
      *
+     * @param Request $request
      * @return SendNotificationException
      */
-    private function createByReason(string $reason, array $json): SendNotificationException
+    private function createByReason(string $reason, array $json, Request $request): SendNotificationException
     {
         $reason = strtolower($reason);
 
         switch ($reason) {
             case 'badcollapseid':
-                return new BadCollapseIdException();
-
+                $exception = new BadCollapseIdException();
+                break;
             case 'baddevicetoken':
-                return new BadDeviceTokenException();
-
+                $exception = new BadDeviceTokenException();
+                break;
             case 'badexpirationdate':
-                return new BadExpirationDateException();
-
+                $exception = (new BadExpirationDateException());
+                break;
             case 'badmessageid':
-                return new BadMessageIdException();
-
+                $exception = new BadMessageIdException();
+                break;
             case 'badpriority':
-                return new BadPriorityException();
-
+                $exception = new BadPriorityException();
+                break;
             case 'badtopic':
-                return new BadTopicException();
-
+                $exception = new BadTopicException();
+                break;
             case 'devicetokennotfortopic':
-                return new DeviceTokenNotForTopicException();
-
+                $exception = new DeviceTokenNotForTopicException();
+                break;
             case 'duplicateheaders':
-                return new DuplicateHeadersException();
-
+                $exception = new DuplicateHeadersException();
+                break;
             case 'idletimeout':
-                return new IdleTimeoutException();
-
+                $exception = new IdleTimeoutException();
+                break;
             case 'missingdevicetoken':
-                return new MissingDeviceTokenException();
-
+                $exception = new MissingDeviceTokenException();
+                break;
             case 'missingtopic':
-                return new MissingTopicException();
-
+                $exception = new MissingTopicException();
+                break;
             case 'payloadempty':
-                return new PayloadEmptyException();
-
+                $exception = new PayloadEmptyException();
+                break;
             case 'topicdisallowed':
-                return new TopicDisallowedException();
-
+                $exception = new TopicDisallowedException();
+                break;
             case 'badcertificate':
-                return new BadCertificateException();
-
+                $exception = new BadCertificateException();
+                break;
             case 'badcertificateenvironment':
-                return new BadCertificateEnvironmentException();
-
+                $exception = new BadCertificateEnvironmentException();
+                break;
             case 'expiredprovidertoken':
-                return new ExpiredProviderTokenException();
-
+                $exception = new ExpiredProviderTokenException();
+                break;
             case 'forbidden':
-                return new ForbiddenException();
-
+                $exception = new ForbiddenException();
+                break;
             case 'invalidprovidertoken':
-                return new InvalidProviderTokenException();
-
+                $exception = new InvalidProviderTokenException();
+                break;
             case 'missingprovidertoken':
-                return new MissingProviderTokenException();
-
+                $exception = new MissingProviderTokenException();
+                break;
             case 'badpath':
-                return new BadPathException();
-
+                $exception = new BadPathException();
+                break;
             case 'methodnotallowed':
-                return new MethodNotAllowedException();
-
+                $exception = new MethodNotAllowedException();
+                break;
             case 'unregistered':
                 $timestamp = array_key_exists('timestamp', $json) ? $json['timestamp'] : 0;
                 $lastConfirmed = new \DateTime('now', new \DateTimeZone('UTC'));
                 $lastConfirmed->setTimestamp($timestamp);
 
-                return new UnregisteredException($lastConfirmed);
-
+                $exception = new UnregisteredException($lastConfirmed);
+                break;
             case 'payloadtoolarge':
-                return new PayloadTooLargeException();
-
+                $exception = new PayloadTooLargeException();
+                break;
             case 'toomanyprovidertokenupdates':
-                return new TooManyProviderTokenUpdatesException();
-
+                $exception = new TooManyProviderTokenUpdatesException();
+                break;
             case 'toomanyrequests':
-                return new TooManyRequestsException();
-
+                $exception = new TooManyRequestsException();
+                break;
             case 'internalservererror':
-                return new InternalServerErrorException();
-
+                $exception = new InternalServerErrorException();
+                break;
             case 'serviceunavailable':
-                return new ServiceUnavailableException();
-
+                $exception = new ServiceUnavailableException();
+                break;
             case 'shutdown':
-                return new ShutdownException();
-
+                $exception = new ShutdownException();
+                break;
             default:
-                return new UndefinedErrorException();
+                $exception = new UndefinedErrorException();
         }
+
+        return $exception->setRequest($request);
     }
 }
