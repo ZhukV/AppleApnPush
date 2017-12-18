@@ -20,6 +20,7 @@ use Apple\ApnPush\Model\Receiver;
 use Apple\ApnPush\Protocol\Http\Authenticator\AuthenticatorInterface;
 use Apple\ApnPush\Protocol\Http\ExceptionFactory\ExceptionFactoryInterface;
 use Apple\ApnPush\Protocol\Http\Request;
+use Apple\ApnPush\Protocol\Http\Sender\Exception\HttpSenderException;
 use Apple\ApnPush\Protocol\Http\Sender\HttpSenderInterface;
 use Apple\ApnPush\Protocol\Http\UriFactory\UriFactoryInterface;
 use Apple\ApnPush\Protocol\Http\Visitor\HttpProtocolVisitorInterface;
@@ -87,16 +88,26 @@ class HttpProtocol implements ProtocolInterface
 
     /**
      * {@inheritdoc}
+     *
+     * @throws HttpSenderException
      */
     public function send(Receiver $receiver, Notification $notification, bool $sandbox): void
     {
         try {
             $this->doSend($receiver, $notification, $sandbox);
-        } catch (SendNotificationException $e) {
+        } catch (HttpSenderException $e) {
             $this->httpSender->close();
 
             throw $e;
         }
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function closeConnection(): void
+    {
+        $this->httpSender->close();
     }
 
     /**
@@ -107,6 +118,7 @@ class HttpProtocol implements ProtocolInterface
      * @param bool         $sandbox
      *
      * @throws SendNotificationException
+     * @throws HttpSenderException
      */
     private function doSend(Receiver $receiver, Notification $notification, bool $sandbox): void
     {

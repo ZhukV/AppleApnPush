@@ -23,6 +23,7 @@ use Apple\ApnPush\Protocol\Http\Authenticator\AuthenticatorInterface;
 use Apple\ApnPush\Protocol\Http\ExceptionFactory\ExceptionFactoryInterface;
 use Apple\ApnPush\Protocol\Http\Request;
 use Apple\ApnPush\Protocol\Http\Response;
+use Apple\ApnPush\Protocol\Http\Sender\Exception\HttpSenderException;
 use Apple\ApnPush\Protocol\Http\Sender\HttpSenderInterface;
 use Apple\ApnPush\Protocol\Http\UriFactory\UriFactoryInterface;
 use Apple\ApnPush\Protocol\Http\Visitor\HttpProtocolVisitorInterface;
@@ -69,7 +70,7 @@ class HttpProtocolTest extends TestCase
     /**
      * {@inheritdoc}
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->authenticator = $this->createMock(AuthenticatorInterface::class);
         $this->httpSender = $this->createMock(HttpSenderInterface::class);
@@ -91,7 +92,18 @@ class HttpProtocolTest extends TestCase
     /**
      * @test
      */
-    public function shouldSuccessSend()
+    public function shouldSuccessCloseConnection(): void
+    {
+        $this->httpSender->expects(self::once())
+            ->method('close');
+
+        $this->protocol->closeConnection();
+    }
+
+    /**
+     * @test
+     */
+    public function shouldSuccessSend(): void
     {
         $deviceToken = new DeviceToken(str_repeat('af', 32));
         $receiver = new Receiver($deviceToken, 'com.test');
@@ -132,7 +144,7 @@ class HttpProtocolTest extends TestCase
      *
      * @expectedException \Apple\ApnPush\Exception\SendNotification\SendNotificationException
      */
-    public function shouldFailSend()
+    public function shouldFailSendWithoutCloseConnection(): void
     {
         $deviceToken = new DeviceToken(str_repeat('af', 32));
         $receiver = new Receiver($deviceToken, 'com.test');
@@ -165,13 +177,61 @@ class HttpProtocolTest extends TestCase
             ->with(self::isInstanceOf(Request::class))
             ->willReturn(new Response(404, '{}'));
 
-        $this->httpSender->expects(self::once())
+        $this->httpSender->expects(self::never())
             ->method('close');
 
         $this->exceptionFactory->expects(self::once())
             ->method('create')
             ->with(new Response(404, '{}'))
             ->willReturn($this->createMock(SendNotificationException::class));
+
+        $this->protocol->send($receiver, $notification, false);
+    }
+
+    /**
+     * @test
+     *
+     * @expectedException \Apple\ApnPush\Protocol\Http\Sender\Exception\HttpSenderException
+     * @expectedExceptionMessage some
+     */
+    public function shouldFailSendWithCloseConnection(): void
+    {
+        $deviceToken = new DeviceToken(str_repeat('af', 32));
+        $receiver = new Receiver($deviceToken, 'com.test');
+        $payload = new Payload(new Aps(new Alert()));
+        $notification = new Notification($payload);
+
+        $this->payloadEncoder->expects(self::once())
+            ->method('encode')
+            ->with($payload)
+            ->willReturn('{"aps":{}}');
+
+        $this->uriFactory->expects(self::once())
+            ->method('create')
+            ->with($deviceToken, false)
+            ->willReturn('https://some.com/'.$deviceToken);
+
+        $this->authenticator->expects(self::once())
+            ->method('authenticate')
+            ->with(self::isInstanceOf(Request::class))
+            ->willReturnCallback(function (Request $innerRequest) {
+                return $innerRequest;
+            });
+
+        $this->visitor->expects(self::once())
+            ->method('visit')
+            ->with($notification, self::isInstanceOf(Request::class));
+
+        $this->httpSender->expects(self::once())
+            ->method('send')
+            ->with(self::isInstanceOf(Request::class))
+            ->willThrowException(new HttpSenderException('some'));
+
+        $this->httpSender->expects(self::once())
+            ->method('close');
+
+        $this->exceptionFactory->expects(self::never())
+            ->method('create');
 
         $this->protocol->send($receiver, $notification, false);
     }
