@@ -176,6 +176,20 @@ class PayloadEncoderTest extends TestCase
     /**
      * @test
      */
+    public function shouldSuccessEncodeWithMutableContent()
+    {
+        $aps = new Aps(new Alert());
+        $aps = $aps->withMutableContent(true);
+
+        $payload = new Payload($aps);
+        $encoded = $this->encoder->encode($payload);
+
+        self::assertEquals('{"aps":{"alert":{"body":""},"mutable-content":1}}', $encoded);
+    }
+
+    /**
+     * @test
+     */
     public function shouldSuccessEncodeWithThreadId()
     {
         $aps = new Aps(new Alert());

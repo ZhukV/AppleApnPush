@@ -65,6 +65,10 @@ class PayloadEncoder implements PayloadEncoderInterface
             $data['content-available'] = 1;
         }
 
+        if ($aps->isMutableContent()) {
+            $data['mutable-content'] = 1;
+        }
+
         if ($aps->getThreadId()) {
             $data['thread-id'] = $aps->getThreadId();
         }
