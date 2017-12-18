@@ -93,6 +93,18 @@ class ApsTest extends TestCase
     /**
      * @test
      */
+    public function shouldSuccessChangeMutableContent()
+    {
+        $aps = new Aps(new Alert());
+        $apsWithChangedMutableContent = $aps->withMutableContent(true);
+
+        self::assertTrue($apsWithChangedMutableContent->isMutableContent());
+        self::assertNotEquals(spl_object_hash($aps), spl_object_hash($apsWithChangedMutableContent));
+    }
+
+    /**
+     * @test
+     */
     public function shouldSuccessChangeThread()
     {
         $aps = new Aps(new Alert());

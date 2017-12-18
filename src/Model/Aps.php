@@ -39,6 +39,11 @@ class Aps
     private $contentAvailable = false;
 
     /**
+     * @var bool
+    */
+    private $mutableContent = false;
+
+    /**
      * @var string
      */
     private $category = '';
@@ -186,6 +191,32 @@ class Aps
     public function isContentAvailable(): bool
     {
         return $this->contentAvailable;
+    }
+
+    /**
+     * Set mutable content option
+     *
+     * @param bool $mutableContent
+     *
+     * @return Aps
+     */
+    public function withMutableContent(bool $mutableContent): Aps
+    {
+        $cloned = clone $this;
+
+        $cloned->mutableContent = $mutableContent;
+
+        return $cloned;
+    }
+
+    /**
+     * Get mutable content option
+     *
+     * @return bool
+     */
+    public function isMutableContent(): bool
+    {
+        return $this->mutableContent;
     }
 
     /**
