@@ -92,7 +92,7 @@ class Payload
      */
     public function withCustomData(string $name, $value): Payload
     {
-        $this->validateCustomDataValue($value);
+        $this->guardValue($value);
 
         $cloned = clone $this;
 
@@ -123,12 +123,10 @@ class Payload
                 $this->guardValue($value);
                 $this->guardKey($key);
             }
-            $this->validateCustomDataValue($value);
-            $this->validateCustomDataKey($key);
         }
     }
 
-    private function validateCustomDataValue($value)
+    private function guardValue($value)
     {
         if ($value && !is_array($value) && !is_scalar($value) && !$value instanceof \JsonSerializable) {
             throw new \InvalidArgumentException(sprintf(
@@ -138,7 +136,7 @@ class Payload
         }
     }
 
-    private function validateCustomDataKey($key)
+    private function guardKey($key)
     {
         if (! is_string($key)) {
             throw new \InvalidArgumentException(sprintf(
