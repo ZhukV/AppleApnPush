@@ -118,11 +118,9 @@ class Payload
      */
     private function guardCustomData(array $data)
     {
-        if (false === empty($data)) {
-            foreach ($data as $key => $value) {
-                $this->validateCustomDataValue($value);
-                $this->validateCustomDataKey($key);
-            }
+        foreach ($data as $key => $value) {
+            $this->validateCustomDataValue($value);
+            $this->validateCustomDataKey($key);
         }
     }
 
