@@ -14,7 +14,6 @@ declare(strict_types = 1);
 namespace Apple\ApnPush\Protocol\Http\Sender;
 
 use Apple\ApnPush\Protocol\Http\Request;
-use Apple\ApnPush\Protocol\Http\Response;
 use Apple\ApnPush\Protocol\Http\Sender\Exception\HttpSenderException;
 
 /**
@@ -25,16 +24,17 @@ interface HttpSenderInterface
     /**
      * Send HTTP request
      *
-     * @param Request $request
-     *
-     * @return Response
+     * @return void
      *
      * @throws HttpSenderException
      */
-    public function send(Request $request): Response;
+    public function send(): void;
 
     /**
-     * Close connection
+     * @param Request  $request
+     *
+     * @param callable $callback
+     *
      */
-    public function close(): void;
+    public function addRequest(Request $request, callable $callback);
 }

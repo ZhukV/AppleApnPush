@@ -20,6 +20,7 @@ use Apple\ApnPush\Model\Receiver;
 use Apple\ApnPush\Protocol\Http\Authenticator\AuthenticatorInterface;
 use Apple\ApnPush\Protocol\Http\ExceptionFactory\ExceptionFactoryInterface;
 use Apple\ApnPush\Protocol\Http\Request;
+use Apple\ApnPush\Protocol\Http\Response;
 use Apple\ApnPush\Protocol\Http\Sender\Exception\HttpSenderException;
 use Apple\ApnPush\Protocol\Http\Sender\HttpSenderInterface;
 use Apple\ApnPush\Protocol\Http\UriFactory\UriFactoryInterface;
@@ -91,23 +92,9 @@ class HttpProtocol implements ProtocolInterface
      *
      * @throws HttpSenderException
      */
-    public function send(Receiver $receiver, Notification $notification, bool $sandbox): void
+    public function send(): void
     {
-        try {
-            $this->doSend($receiver, $notification, $sandbox);
-        } catch (HttpSenderException $e) {
-            $this->httpSender->close();
-
-            throw $e;
-        }
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function closeConnection(): void
-    {
-        $this->httpSender->close();
+        $this->httpSender->send();
     }
 
     /**
@@ -118,9 +105,8 @@ class HttpProtocol implements ProtocolInterface
      * @param bool         $sandbox
      *
      * @throws SendNotificationException
-     * @throws HttpSenderException
      */
-    private function doSend(Receiver $receiver, Notification $notification, bool $sandbox): void
+    public function prepare(Receiver $receiver, Notification $notification, bool $sandbox)
     {
         $payloadEncoded = $this->payloadEncoder->encode($notification->getPayload());
         $uri = $this->uriFactory->create($receiver->getToken(), $sandbox);
@@ -138,10 +124,10 @@ class HttpProtocol implements ProtocolInterface
 
         $request = $this->visitor->visit($notification, $request);
 
-        $response = $this->httpSender->send($request);
-
-        if ($response->getStatusCode() !== 200) {
-            throw $this->exceptionFactory->create($response);
-        }
+        return $this->httpSender->addRequest($request, function (Response $response) {
+            if ($response->getStatusCode() !== 200) {
+                throw $this->exceptionFactory->create($response);
+            }
+        });
     }
 }

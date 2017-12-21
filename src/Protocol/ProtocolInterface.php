@@ -29,12 +29,9 @@ interface ProtocolInterface
      * @param Notification $notification
      * @param bool         $sandbox
      *
-     * @throws SendNotificationException
+     * @return void
      */
-    public function send(Receiver $receiver, Notification $notification, bool $sandbox): void;
+    public function prepare(Receiver $receiver, Notification $notification, bool $sandbox);
 
-    /**
-     * Close the connection
-     */
-    public function closeConnection(): void;
+    public function send(): void;
 }

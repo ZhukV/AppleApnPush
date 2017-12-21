@@ -19,6 +19,11 @@ namespace Apple\ApnPush\Protocol\Http;
 class Response
 {
     /**
+     * @var float
+     */
+    private $time;
+
+    /**
      * @var int
      */
     private $statusCode;
@@ -33,11 +38,13 @@ class Response
      *
      * @param int    $statusCode
      * @param string $content
+     * @param float  $requestTime
      */
-    public function __construct(int $statusCode, string $content)
+    public function __construct(int $statusCode, string $content, float $requestTime)
     {
         $this->statusCode = $statusCode;
         $this->content = $content;
+        $this->time = $requestTime;
     }
 
     /**
@@ -48,6 +55,16 @@ class Response
     public function getStatusCode(): int
     {
         return $this->statusCode;
+    }
+
+    /**
+     * Get request time
+     *
+     * @return float
+     */
+    public function getTime(): float
+    {
+        return $this->time;
     }
 
     /**
