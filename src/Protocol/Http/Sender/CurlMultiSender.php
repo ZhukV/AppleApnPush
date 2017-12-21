@@ -173,9 +173,9 @@ class CurlMultiSender implements HttpSenderInterface
      *
      * @param array $request
      *
-     * @return array|mixed
+     * @return array
      */
-    private function buildOptions(array $request)
+    private function buildOptions(array $request): array
     {
         $url = $request['url'];
         $postData = $request['post_data'];
@@ -208,8 +208,10 @@ class CurlMultiSender implements HttpSenderInterface
      * @param $requestNumber
      * @param $multiHandler
      * @param $requestsMap
+     *
+     * @return void
      */
-    private function initRequest($requestNumber, $multiHandler, &$requestsMap)
+    private function initRequest($requestNumber, $multiHandler, &$requestsMap): void
     {
         $curlHandler = curl_init();
 
@@ -241,7 +243,7 @@ class CurlMultiSender implements HttpSenderInterface
      *
      * @return void
      */
-    private function processSingleRequest($completed, $multiHandle, array &$requestsMap)
+    private function processSingleRequest($completed, $multiHandle, array &$requestsMap): void
     {
         $curlHandle = $completed['handle'];
         $curlHandleHash = (int)$curlHandle;
@@ -280,8 +282,10 @@ class CurlMultiSender implements HttpSenderInterface
      * Add a timer on the request.
      *
      * @param array $request
+     *
+     * @return void
      */
-    private function addTimer(array &$request)
+    private function addTimer(array &$request): void
     {
         $request['timer'] = microtime(true); //start time
         $request['time'] = 0; //default if not overridden by time later
@@ -294,7 +298,7 @@ class CurlMultiSender implements HttpSenderInterface
      *
      * @return float
      */
-    private function stopTimer(array &$request)
+    private function stopTimer(array &$request): float
     {
         $elapsed = $request['timer'] - microtime(true);
         $request['time'] = $elapsed;
@@ -367,9 +371,11 @@ class CurlMultiSender implements HttpSenderInterface
     /**
      * Save cpu cycles
      * prevent continuous checking
+     *
+     * @return void
      */
-    private function saveCycles()
+    private function saveCycles(): void
     {
-        return usleep(15);
+        usleep(15);
     }
 }
