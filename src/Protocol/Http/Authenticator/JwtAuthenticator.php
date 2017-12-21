@@ -31,6 +31,21 @@ class JwtAuthenticator implements AuthenticatorInterface
     private $jwt;
 
     /**
+     * @var string
+     */
+    private $jws = '';
+
+    /**
+     * @var integer
+     */
+    private $jwsLifetime = 3600;
+
+    /**
+     * @var integer
+     */
+    private $jwsCreatedAt = 0;
+
+    /**
      * Constructor.
      *
      * @param JwtInterface $jwt
@@ -41,13 +56,36 @@ class JwtAuthenticator implements AuthenticatorInterface
     }
 
     /**
+     * Get jws lifetime
+     *
+     * @return integer
+    */
+    public function getJwsLifetime() : int
+    {
+        return $this->jwsLifetime;
+    }
+
+    /**
+     * Set jws lifetime
+     *
+     * @param integer $jwsLifetime
+     */
+    public function setJwsLifetime(int  $jwsLifetime)
+    {
+        $this->jwsLifetime = abs($jwsLifetime);//ignore sign
+    }
+
+    /**
      * {@inheritdoc}
      */
     public function authenticate(Request $request): Request
     {
-        $jws = $this->createJwsContent();
+        if (empty($this->jws) || $this->jwsCreatedAt < time() - $this->jwsLifetime) {
+            $this->jws = $this->createJwsContent();
+            $this->jwsCreatedAt = time();
+        }
 
-        $request = $request->withHeader('authorization', sprintf('bearer %s', $jws));
+        $request = $request->withHeader('authorization', sprintf('bearer %s', $this->jws));
 
         return $request;
     }
