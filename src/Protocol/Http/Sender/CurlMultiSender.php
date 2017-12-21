@@ -60,9 +60,9 @@ class CurlMultiSender implements HttpSenderInterface
      *
      * @param int $maxRequests
      *
-     * @return CurlMultiSender
+     * @return HttpSenderInterface
      */
-    public function maxRequests(int $maxRequests)
+    public function maxRequests(int $maxRequests): HttpSenderInterface
     {
         $this->maxConcurrentRequests = $maxRequests;
 
@@ -74,9 +74,9 @@ class CurlMultiSender implements HttpSenderInterface
      *
      * @param int $timeout
      *
-     * @return CurlMultiSender
+     * @return HttpSenderInterface
      */
-    public function timeout(int $timeout)
+    public function timeout(int $timeout): HttpSenderInterface
     {
         $this->timeout = $timeout;
 

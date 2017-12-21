@@ -37,4 +37,22 @@ interface HttpSenderInterface
      *
      */
     public function addRequest(Request $request, callable $callback);
+
+    /**
+     * Set max concurrent requests.
+     *
+     * @param int $maxRequests
+     *
+     * @return HttpSenderInterface
+     */
+    public function maxRequests(int $maxRequests): HttpSenderInterface;
+
+    /**
+     * Set the global requests timeout.
+     *
+     * @param int $timeout
+     *
+     * @return HttpSenderInterface
+     */
+    public function timeout(int $timeout): HttpSenderInterface;
 }

@@ -187,13 +187,13 @@ class Http20Builder implements BuilderInterface
     /**
      * {@inheritdoc}
      */
-    public function buildProtocol(): ProtocolInterface
+    public function buildProtocol($maxRequests = 20, $timeout = 5000): ProtocolInterface
     {
         $chainVisitor = $this->createChainVisitor();
 
         return new HttpProtocol(
             $this->authenticator,
-            $this->httpSender,
+            $this->httpSender->timeout($timeout)->maxRequests($maxRequests),
             $this->payloadEncoder,
             $this->uriFactory,
             $chainVisitor,
