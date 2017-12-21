@@ -26,11 +26,6 @@ class JwtAuthenticatorTest extends TestCase
     private $jwt;
 
     /**
-     * @var JwtAuthenticator |\PHPUnit_Framework_MockObject_MockObject
-     */
-    private $authenticator;
-
-    /**
      * @var string
     */
     private $tmpFileName;
@@ -41,7 +36,6 @@ class JwtAuthenticatorTest extends TestCase
     protected function setUp()
     {
         $this->jwt = $this->createMock(JwtInterface::class);
-        $this->authenticator = new JwtAuthenticator($this->jwt);
         $this->tmpFileName = tempnam(sys_get_temp_dir(), 'apn_push_test_jwt');
     }
 
@@ -60,8 +54,8 @@ class JwtAuthenticatorTest extends TestCase
      */
     public function shouldChangeJwsLifetime()
     {
-        $lifeTime = 1000;
-        $this->authenticator->setJwsLifetime($lifeTime);
-        self::assertEquals($lifeTime, $this->authenticator->getJwsLifetime());
+        $lifeTime = new \DateInterval('P30M');
+        $authenticator = new JwtAuthenticator($this->jwt, $lifeTime);
+        self::assertEquals($lifeTime->format('%s'), $authenticator->getJwsLifetime()->format('%s'));
     }
 }

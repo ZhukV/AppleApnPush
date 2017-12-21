@@ -36,43 +36,41 @@ class JwtAuthenticator implements AuthenticatorInterface
     private $jws = '';
 
     /**
-     * @var integer
+     * @var \DateInterval
      */
-    private $jwsLifetime = 3600;
+    private $jwsLifetime = null;
 
     /**
-     * @var integer
+     * @var \DateTime
      */
-    private $jwsCreatedAt = 0;
+    private $jwsValidTo = null;
 
     /**
      * Constructor.
      *
-     * @param JwtInterface $jwt
+     * @param JwtInterface  $jwt
+     * @param \DateInterval $jwsLifetime
      */
-    public function __construct(JwtInterface $jwt)
+    public function __construct(JwtInterface $jwt, \DateInterval $jwsLifetime = null)
     {
         $this->jwt = $jwt;
+
+        $this->jwsLifetime = is_null($jwsLifetime) ? new \DateInterval('P1H') : $jwsLifetime;
+        if ($jwsLifetime->invert) {
+            throw new \InvalidArgumentException('JWS lifetime must not be inverted');
+        }
+
+        $this->jwsLifetime = $jwsLifetime;
     }
 
     /**
      * Get jws lifetime
      *
-     * @return integer
+     * @return \DateInterval
     */
-    public function getJwsLifetime() : int
+    public function getJwsLifetime() : \DateInterval
     {
         return $this->jwsLifetime;
-    }
-
-    /**
-     * Set jws lifetime
-     *
-     * @param integer $jwsLifetime
-     */
-    public function setJwsLifetime(int  $jwsLifetime)
-    {
-        $this->jwsLifetime = abs($jwsLifetime);//ignore sign
     }
 
     /**
@@ -80,9 +78,10 @@ class JwtAuthenticator implements AuthenticatorInterface
      */
     public function authenticate(Request $request): Request
     {
-        if (empty($this->jws) || $this->jwsCreatedAt < time() - $this->jwsLifetime) {
+        $now = new \DateTime();
+        if ($this->jws === '' || $this->jwsValidTo < $now) {
             $this->jws = $this->createJwsContent();
-            $this->jwsCreatedAt = time();
+            $this->jwsValidTo = ($now)->add($this->jwsLifetime);
         }
 
         $request = $request->withHeader('authorization', sprintf('bearer %s', $this->jws));
