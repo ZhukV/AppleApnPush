@@ -50,11 +50,13 @@ class JwtAuthenticator implements AuthenticatorInterface
      *
      * @param JwtInterface  $jwt
      * @param \DateInterval $jwsLifetime
+     *
      * @throws \InvalidArgumentException
      */
     public function __construct(JwtInterface $jwt, \DateInterval $jwsLifetime = null)
     {
         $this->jwt = $jwt;
+
         if ($jwsLifetime && $jwsLifetime->invert) {
             throw new \InvalidArgumentException('JWS lifetime must not be inverted');
         }
@@ -67,8 +69,9 @@ class JwtAuthenticator implements AuthenticatorInterface
      */
     public function authenticate(Request $request): Request
     {
-        $now = new \DateTime();
-        if (!$this->jws || !$this->jwsLifetime || $this->jwsValidTo < $now) {
+        $now = new \DateTimeImmutable();
+
+        if (!$this->jws || $this->jwsValidTo < $now) {
             $this->jws = $this->createJwsContent();
             $this->jwsValidTo = $this->jwsLifetime ? ($now)->add($this->jwsLifetime) : $this->jwsValidTo;
         }
