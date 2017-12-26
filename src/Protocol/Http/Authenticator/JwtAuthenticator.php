@@ -31,13 +31,37 @@ class JwtAuthenticator implements AuthenticatorInterface
     private $jwt;
 
     /**
+     * @var string
+     */
+    private $jws;
+
+    /**
+     * @var \DateInterval
+     */
+    private $jwsLifetime;
+
+    /**
+     * @var \DateTime
+     */
+    private $jwsValidTo;
+
+    /**
      * Constructor.
      *
-     * @param JwtInterface $jwt
+     * @param JwtInterface  $jwt
+     * @param \DateInterval $jwsLifetime
+     *
+     * @throws \InvalidArgumentException
      */
-    public function __construct(JwtInterface $jwt)
+    public function __construct(JwtInterface $jwt, \DateInterval $jwsLifetime = null)
     {
         $this->jwt = $jwt;
+
+        if ($jwsLifetime && $jwsLifetime->invert) {
+            throw new \InvalidArgumentException('JWS lifetime must not be inverted');
+        }
+
+        $this->jwsLifetime = $jwsLifetime;
     }
 
     /**
@@ -45,9 +69,14 @@ class JwtAuthenticator implements AuthenticatorInterface
      */
     public function authenticate(Request $request): Request
     {
-        $jws = $this->createJwsContent();
+        $now = new \DateTimeImmutable();
 
-        $request = $request->withHeader('authorization', sprintf('bearer %s', $jws));
+        if (!$this->jws || $this->jwsValidTo < $now) {
+            $this->jws = $this->createJwsContent();
+            $this->jwsValidTo = $this->jwsLifetime ? ($now)->add($this->jwsLifetime) : $this->jwsValidTo;
+        }
+
+        $request = $request->withHeader('authorization', sprintf('bearer %s', $this->jws));
 
         return $request;
     }
