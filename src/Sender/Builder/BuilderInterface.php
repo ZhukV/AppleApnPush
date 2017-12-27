@@ -24,9 +24,12 @@ interface BuilderInterface
     /**
      * Build the protocol for send the notification to devices
      *
+     * @param int $maxRequests
+     * @param int $timeout
+     *
      * @return ProtocolInterface
      */
-    public function buildProtocol(): ProtocolInterface;
+    public function buildProtocol($maxRequests = 20, $timeout = 5000): ProtocolInterface;
 
     /**
      * Build sender for send notification to device via Apn Push service

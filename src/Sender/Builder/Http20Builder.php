@@ -19,6 +19,7 @@ use Apple\ApnPush\Protocol\Http\Authenticator\AuthenticatorInterface;
 use Apple\ApnPush\Protocol\Http\ExceptionFactory\ExceptionFactory;
 use Apple\ApnPush\Protocol\Http\ExceptionFactory\ExceptionFactoryInterface;
 use Apple\ApnPush\Protocol\Http\Sender\CurlHttpSender;
+use Apple\ApnPush\Protocol\Http\Sender\CurlMultiSender;
 use Apple\ApnPush\Protocol\Http\Sender\HttpSenderInterface;
 use Apple\ApnPush\Protocol\Http\UriFactory\UriFactory;
 use Apple\ApnPush\Protocol\Http\UriFactory\UriFactoryInterface;
@@ -79,7 +80,7 @@ class Http20Builder implements BuilderInterface
         $this->visitors = new \SplPriorityQueue();
         $this->uriFactory = new UriFactory();
         $this->payloadEncoder = new PayloadEncoder();
-        $this->httpSender = new CurlHttpSender();
+        $this->httpSender = new CurlMultiSender();
         $this->exceptionFactory = new ExceptionFactory();
     }
 
@@ -186,13 +187,13 @@ class Http20Builder implements BuilderInterface
     /**
      * {@inheritdoc}
      */
-    public function buildProtocol(): ProtocolInterface
+    public function buildProtocol($maxRequests = 20, $timeout = 5000): ProtocolInterface
     {
         $chainVisitor = $this->createChainVisitor();
 
         return new HttpProtocol(
             $this->authenticator,
-            $this->httpSender,
+            $this->httpSender->timeout($timeout)->maxRequests($maxRequests),
             $this->payloadEncoder,
             $this->uriFactory,
             $chainVisitor,
