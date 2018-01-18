@@ -53,7 +53,7 @@ class PayloadEncoder implements PayloadEncoderInterface
             $data['sound'] = $aps->getSound();
         }
 
-        if ($aps->getBadge()) {
+        if ($aps->getBadge() !== null) {
             $data['badge'] = $aps->getBadge();
         }
 

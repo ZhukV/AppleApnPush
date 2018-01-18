@@ -24,9 +24,9 @@ class Aps
     private $alert;
 
     /**
-     * @var int
+     * @var int|null
      */
-    private $badge = 0;
+    private $badge = null;
 
     /**
      * @var string
@@ -160,9 +160,9 @@ class Aps
     /**
      * Get badge
      *
-     * @return int
+     * @return int|null
      */
-    public function getBadge(): int
+    public function getBadge(): ?int
     {
         return $this->badge;
     }
