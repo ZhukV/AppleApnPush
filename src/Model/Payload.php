@@ -36,6 +36,8 @@ class Payload
      */
     public function __construct(Aps $apsData, array $customData = [])
     {
+        $this->guardCustomData($customData);
+
         $this->aps = $apsData;
         $this->customData = $customData;
     }
@@ -90,12 +92,7 @@ class Payload
      */
     public function withCustomData(string $name, $value): Payload
     {
-        if ($value && !is_array($value) && !is_scalar($value) && !$value instanceof \JsonSerializable) {
-            throw new \InvalidArgumentException(sprintf(
-                'The custom data value should be a scalar or \JsonSerializable instance, but "%s" given.',
-                is_object($value) ? get_class($value) : gettype($value)
-            ));
-        }
+        $this->validateCustomDataValue($value);
 
         $cloned = clone $this;
 
@@ -112,5 +109,38 @@ class Payload
     public function getCustomData(): array
     {
         return $this->customData;
+    }
+
+    /**
+     * Guard the custom data upon instantiation.
+     *
+     * @param array $data
+     */
+    private function guardCustomData(array $data)
+    {
+        foreach ($data as $key => $value) {
+            $this->validateCustomDataValue($value);
+            $this->validateCustomDataKey($key);
+        }
+    }
+
+    private function validateCustomDataValue($value)
+    {
+        if ($value && !is_array($value) && !is_scalar($value) && !$value instanceof \JsonSerializable) {
+            throw new \InvalidArgumentException(sprintf(
+                'The custom data value should be a scalar or \JsonSerializable instance, but "%s" given.',
+                is_object($value) ? get_class($value) : gettype($value)
+            ));
+        }
+    }
+
+    private function validateCustomDataKey($key)
+    {
+        if (! is_string($key)) {
+            throw new \InvalidArgumentException(sprintf(
+                'The custom data key should be a string, but "%s" given.',
+                gettype($key)
+            ));
+        }
     }
 }

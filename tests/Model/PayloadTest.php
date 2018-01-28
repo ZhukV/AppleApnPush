@@ -69,6 +69,28 @@ class PayloadTest extends TestCase
      * @expectedException \InvalidArgumentException
      * @expectedExceptionMessage The custom data value should be a scalar or \JsonSerializable instance, but "stdClass" given.
      */
+    public function shouldThrowExceptionIfUsingWrongCustomDataValueOnConstruction()
+    {
+        new Payload(new Aps(new Alert()), ['some-key' => new \stdClass()]);
+    }
+
+    /**
+     * @test
+     *
+     * @expectedException \InvalidArgumentException
+     * @expectedExceptionMessage The custom data key should be a string, but "integer" given.
+     */
+    public function shouldThrowExceptionIfUsingWrongCustomDataKeyOnConstruction()
+    {
+        new Payload(new Aps(new Alert()), [0 => 'test']);
+    }
+
+    /**
+     * @test
+     *
+     * @expectedException \InvalidArgumentException
+     * @expectedExceptionMessage The custom data value should be a scalar or \JsonSerializable instance, but "stdClass" given.
+     */
     public function shouldThrowExceptionIfTrySetInvalidCustomData()
     {
         $payload = new Payload(new Aps(new Alert()));
