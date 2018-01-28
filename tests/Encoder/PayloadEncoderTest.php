@@ -148,6 +148,20 @@ class PayloadEncoderTest extends TestCase
     /**
      * @test
      */
+    public function shouldSuccessEncodeWithBadgeAsZero()
+    {
+        $aps = new Aps(new Alert());
+        $aps = $aps->withBadge(0);
+
+        $payload = new Payload($aps);
+        $encoded = $this->encoder->encode($payload);
+
+        self::assertEquals('{"aps":{"alert":{"body":""},"badge":0}}', $encoded);
+    }
+
+    /**
+     * @test
+     */
     public function shouldSuccessEncodeWithSound()
     {
         $aps = new Aps(new Alert());
