@@ -72,4 +72,10 @@ Contributors:
 
 Thanks to [everyone participating](https://github.com/ZhukV/AppleApnPush/graphs/contributors) in the development of this AppleApnPush library!
 
-* Ryan Martinsen [popthestack](https://github.com/popthestack)
+> **Note:** if you want to be a contributor to this library, we can send the OpenSource license of PhpStorm for development this library.
+For this, please contact me via email zhuk2205`[dot]`gmail.com
+
+Thanks
+------
+
+Very thank for [JetBrains](https://www.jetbrains.com/) for providing the OpenSource license for development this library with [PhpStorm](https://www.jetbrains.com/phpstorm/).

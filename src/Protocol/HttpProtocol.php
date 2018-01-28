@@ -70,14 +70,8 @@ class HttpProtocol implements ProtocolInterface
      * @param HttpProtocolVisitorInterface $visitor
      * @param ExceptionFactoryInterface    $exceptionFactory
      */
-    public function __construct(
-        AuthenticatorInterface $authenticator,
-        HttpSenderInterface $httpSender,
-        PayloadEncoderInterface $payloadEncoder,
-        UriFactoryInterface $uriFactory,
-        HttpProtocolVisitorInterface $visitor,
-        ExceptionFactoryInterface $exceptionFactory
-    ) {
+    public function __construct(AuthenticatorInterface $authenticator, HttpSenderInterface $httpSender, PayloadEncoderInterface $payloadEncoder, UriFactoryInterface $uriFactory, HttpProtocolVisitorInterface $visitor, ExceptionFactoryInterface $exceptionFactory)
+    {
         $this->authenticator = $authenticator;
         $this->httpSender = $httpSender;
         $this->payloadEncoder = $payloadEncoder;

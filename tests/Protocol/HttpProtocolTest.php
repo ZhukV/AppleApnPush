@@ -120,12 +120,14 @@ class HttpProtocolTest extends TestCase
             ->with($deviceToken, false)
             ->willReturn('https://some.com/'.$deviceToken);
 
+        // @codingStandardsIgnoreStart
         $this->authenticator->expects(self::once())
             ->method('authenticate')
             ->with(self::isInstanceOf(Request::class))
             ->willReturnCallback(function (Request $innerRequest) {
                 return $innerRequest;
             });
+        // @codingStandardsIgnoreEnd
 
         $this->visitor->expects(self::once())
             ->method('visit')
@@ -161,12 +163,14 @@ class HttpProtocolTest extends TestCase
             ->with($deviceToken, false)
             ->willReturn('https://some.com/'.$deviceToken);
 
+        // @codingStandardsIgnoreStart
         $this->authenticator->expects(self::once())
             ->method('authenticate')
             ->with(self::isInstanceOf(Request::class))
             ->willReturnCallback(function (Request $innerRequest) {
                 return $innerRequest;
             });
+        // @codingStandardsIgnoreEnd
 
         $this->visitor->expects(self::once())
             ->method('visit')
@@ -211,12 +215,14 @@ class HttpProtocolTest extends TestCase
             ->with($deviceToken, false)
             ->willReturn('https://some.com/'.$deviceToken);
 
+        // @codingStandardsIgnoreStart
         $this->authenticator->expects(self::once())
             ->method('authenticate')
             ->with(self::isInstanceOf(Request::class))
             ->willReturnCallback(function (Request $innerRequest) {
                 return $innerRequest;
             });
+        // @codingStandardsIgnoreEnd
 
         $this->visitor->expects(self::once())
             ->method('visit')

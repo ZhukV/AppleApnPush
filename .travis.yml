@@ -10,6 +10,6 @@ before_script:
 
 script:
     - ./bin/phpmetrics src
-    - ./bin/phpcs --standard=vendor/escapestudios/symfony2-coding-standard/Symfony2/ src/
+    - ./bin/phpcs --standard=vendor/escapestudios/symfony2-coding-standard/Symfony/ src/
     - ./bin/phpcs --standard=tests/phpcs-ruleset.xml tests/
     - ./bin/phpunit

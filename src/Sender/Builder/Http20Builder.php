@@ -222,7 +222,7 @@ class Http20Builder implements BuilderInterface
         $priority = 0;
 
         foreach ($visitors as $visitor) {
-            $chainVisitors->add($visitor, $priority++);
+            $chainVisitors->add($visitor, ++$priority);
         }
 
         return $chainVisitors;

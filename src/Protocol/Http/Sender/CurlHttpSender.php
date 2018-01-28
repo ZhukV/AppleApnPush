@@ -39,7 +39,7 @@ class CurlHttpSender implements HttpSenderInterface
 
         $content = curl_exec($this->resource);
 
-        if ($content === false) {
+        if (false === $content) {
             throw new HttpSenderException(sprintf(
                 'cURL Error [%d]: %s',
                 (int) curl_errno($this->resource),

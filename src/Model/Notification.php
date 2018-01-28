@@ -52,13 +52,8 @@ class Notification
      * @param Expiration|null $expiration
      * @param CollapseId|null $collapseId
      */
-    public function __construct(
-        Payload $payload,
-        ApnId $apnId = null,
-        Priority $priority = null,
-        Expiration $expiration = null,
-        CollapseId $collapseId = null
-    ) {
+    public function __construct(Payload $payload, ApnId $apnId = null, Priority $priority = null, Expiration $expiration = null, CollapseId $collapseId = null)
+    {
         $this->payload = $payload;
         $this->priority = $priority;
         $this->apnId = $apnId;

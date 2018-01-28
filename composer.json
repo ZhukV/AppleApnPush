@@ -21,7 +21,7 @@
         "phpunit/phpunit": "^5.6.0",
         "spomky-labs/jose": "^6.1.0",
         "phpmetrics/phpmetrics": "^2.0",
-        "escapestudios/symfony2-coding-standard": "~2.0"
+        "escapestudios/symfony2-coding-standard": "~3.0.0"
     },
 
     "suggest": {
