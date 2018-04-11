@@ -13,9 +13,11 @@ declare(strict_types=1);
 
 namespace Apple\ApnPush\Jwt\SignatureGenerator;
 
-use Jose\Component\Core\JWK;
-use Jose\Component\KeyManagement\JWKFactory;
-use Jose\Component\Signature\JWS;
+use Jose\Component\Core\JWK as WebTokenComponentJwk;
+use Jose\Component\KeyManagement\JWKFactory as WebTokenComponentJWKFactory;
+use Jose\Component\Signature\JWS as WebTokenComponentJws;
+use Jose\Factory\JWKFactory;
+use Jose\Factory\JWSFactory;
 
 /**
  * The factory for try to resolve the JWT signature generator.
@@ -69,6 +71,7 @@ class SignatureGeneratorFactory
         }
 
         self::addResolver([__CLASS__, 'tryResolveByWebTokenJwtSystem']);
+        self::addResolver([__CLASS__, 'tryResolveBySpomkyLabsJoseSystem']);
     }
 
     /**
@@ -79,9 +82,9 @@ class SignatureGeneratorFactory
     private static function tryResolveByWebTokenJwtSystem(): ?WebTokenJwtSignatureGenerator
     {
         $requiredClasses = [
-            JWS::class,
-            JWK::class,
-            JWKFactory::class,
+            WebTokenComponentJws::class,
+            WebTokenComponentJwk::class,
+            WebTokenComponentJWKFactory::class,
         ];
 
         foreach ($requiredClasses as $requiredClass) {
@@ -91,5 +94,26 @@ class SignatureGeneratorFactory
         }
 
         return new WebTokenJwtSignatureGenerator();
+    }
+
+    /**
+     * Try to resolve SpomkyLabsJoseSignatureGenerator
+     *
+     * @return SpomkyLabsJoseSignatureGenerator|null
+     */
+    private static function tryResolveBySpomkyLabsJoseSystem(): ?SpomkyLabsJoseSignatureGenerator
+    {
+        $requiredClasses = [
+            JWKFactory::class,
+            JWSFactory::class,
+        ];
+
+        foreach ($requiredClasses as $requiredClass) {
+            if (!class_exists($requiredClass)) {
+                return null;
+            }
+        }
+
+        return new SpomkyLabsJoseSignatureGenerator();
     }
 }

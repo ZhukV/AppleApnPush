@@ -27,7 +27,8 @@
 
     "suggest": {
         "web-token/jwt-key-mgmt": "Allow using JSON Web Token for authenticating in Provider.",
-        "web-token/jwt-signature": "Allow using JSON Web Token for authenticating in Provider."
+        "web-token/jwt-signature": "Allow using JSON Web Token for authenticating in Provider.",
+        "spomky-labs/jose": "Allow using JSON Web Token for authenticating in Provider (do not work with PHP 7.2). "
     },
 
     "autoload": {

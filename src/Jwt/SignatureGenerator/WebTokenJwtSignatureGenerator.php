@@ -64,7 +64,7 @@ class WebTokenJwtSignatureGenerator implements SignatureGeneratorInterface
     public function generate(JwtInterface $jwt): string
     {
         $jwk = JWKFactory::createFromKeyFile($jwt->getPath(), '', [
-            'kid' => $jwt->getKey()
+            'kid' => $jwt->getKey(),
         ]);
 
         $claims = [
