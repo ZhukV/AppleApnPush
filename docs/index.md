@@ -33,7 +33,7 @@ $sender = $builder->build();
 
 We support the JSON Web Token authentication, and if you want use JWT, please create `JwtAuthenticator`:
 
-> **Attention:** For use JWT, the package **spomky-labs/jose** must be installed.
+> **Attention:** For use JWT, please install required packages for success generate signature from JSON Web Token.
 
 ```php
 <?php
