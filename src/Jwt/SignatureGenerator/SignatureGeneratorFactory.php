@@ -70,6 +70,8 @@ class SignatureGeneratorFactory
             return;
         }
 
+        $added = true;
+
         self::addResolver([__CLASS__, 'tryResolveByWebTokenJwtSystem']);
         self::addResolver([__CLASS__, 'tryResolveBySpomkyLabsJoseSystem']);
     }
