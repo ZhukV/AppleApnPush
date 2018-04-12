@@ -2,12 +2,55 @@
 
 ### Features
 
-* Add `JwtSignatureGenerator` for available use any libraries for generating the signature from JWT token.
-* Support next libraries:
+* Add `JwtSignatureGenerator` for available use any libraries for generating the signature from JWT token. Support next libraries:
     * [spomky-labs/jose](https://github.com/Spomky-Labs/jose)
     * [web-token/jwt-*](https://www.gitbook.com/book/web-token/jwt-framework)
+* Mark as **deprecated** method `Apple\ApnPush\Sender\Builder\Http20Builder::addDefaultVisitors`. This method executed from 
+the `constructor` of builder. In next minor version, we remove this method.  
 
 ### Impact
 
 Make changes without impact, all code has a BC. If previously you use `SpomkyLabs`, the factory has been successfully 
-creating require the generator.
+creating require generator.
+
+## v3.0.5
+
+* Fix code for Code Style
+
+## v3.0.4
+
+### Features
+
+* Add lifetime for `JwtAuthenticator`.
+
+## v3.0.3
+
+### Feature
+
+* Add able for getting the protocol from the builder `Apple\ApnPush\Sender\Builder\BuilderInterface::buildProtocol`.
+* Add able to close the connection manually `Apple\ApnPush\Protoco\ProtocolInterface::closeConnection`.
+
+### Impact
+
+* The exception `Apple\ApnPush\Protocol\Http\Sender\Exception\CurlException` has been renamed to `Apple\ApnPush\Protocol\Http\Sender\Exception\HttpSenderException`
+
+## v3.0.2
+
+### Feature
+
+* Add `apns-collapse-id` to notification.
+
+## v3.0.1
+
+* Fix code for Code Style
+
+## v3.0.0 (New version of library)
+
+### Feature
+
+* Implement a new version of the library for use HTTP/2 Protocol and work with the strict mode in PHP (>= 7.1)
+
+### Impact to v2.*
+
+* Does not support for migration from `v2.*`.
+* Does not support the binary protocol.
