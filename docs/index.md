@@ -24,7 +24,6 @@ $authenticator = new CertificateAuthenticator($certificate);
 
 // Build sender
 $builder = new Http20Builder($authenticator);
-$builder->addDefaultVisitors();
 
 $sender = $builder->build();
 ```
@@ -68,7 +67,6 @@ $authenticator = new CertificateAuthenticator($certificate);
 
 // Build sender
 $builder = new Http20Builder($authenticator);
-$builder->addDefaultVisitors();
 
 $protocol = $builder->buildProtocol();
 $sender = new Sender($protocol);

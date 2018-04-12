@@ -69,6 +69,11 @@ class Http20Builder implements BuilderInterface
     private $exceptionFactory;
 
     /**
+     * @var bool
+     */
+    private $addedDefaultVisitors;
+
+    /**
      * Constructor.
      *
      * @param AuthenticatorInterface $authenticator
@@ -81,6 +86,8 @@ class Http20Builder implements BuilderInterface
         $this->payloadEncoder = new PayloadEncoder();
         $this->httpSender = new CurlHttpSender();
         $this->exceptionFactory = new ExceptionFactory();
+
+        $this->addDefaultVisitors();
     }
 
     /**
@@ -116,9 +123,19 @@ class Http20Builder implements BuilderInterface
      * Add default visitors
      *
      * @return Http20Builder
+     *
+     * @deprecated This method is deprecated and will be a move to private scope.
+     *             Please do not use this method in your code.
+     *             This method will be called from the constructor of this builder.
      */
     public function addDefaultVisitors(): Http20Builder
     {
+        if ($this->addedDefaultVisitors) {
+            return $this;
+        }
+
+        $this->addedDefaultVisitors = true;
+
         $this->addVisitor(new AddExpirationHeaderVisitor());
         $this->addVisitor(new AddPriorityHeaderVisitor());
         $this->addVisitor(new AddApnIdHeaderVisitor());

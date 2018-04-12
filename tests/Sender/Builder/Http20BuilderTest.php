@@ -90,7 +90,6 @@ class Http20BuilderTest extends TestCase
             ->setHttpSender($httpSender)
             ->setPayloadEncoder($messageEncoder)
             ->setUriFactory($uriFactory)
-            ->addDefaultVisitors()
             ->addVisitor($visitor);
 
         return new HttpProtocol(
