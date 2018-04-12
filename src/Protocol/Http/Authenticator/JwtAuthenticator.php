@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 /*
  * This file is part of the AppleApnPush package
@@ -14,21 +14,24 @@ declare(strict_types = 1);
 namespace Apple\ApnPush\Protocol\Http\Authenticator;
 
 use Apple\ApnPush\Jwt\JwtInterface;
+use Apple\ApnPush\Jwt\SignatureGenerator\SignatureGeneratorFactory;
+use Apple\ApnPush\Jwt\SignatureGenerator\SignatureGeneratorInterface;
 use Apple\ApnPush\Protocol\Http\Request;
-use Jose\Factory\JWKFactory;
-use Jose\Factory\JWSFactory;
 
 /**
  * Authenticate request via Json Web Token
  */
 class JwtAuthenticator implements AuthenticatorInterface
 {
-    private const ALGORITHM = 'ES256';
-
     /**
      * @var JwtInterface
      */
     private $jwt;
+
+    /**
+     * @var SignatureGeneratorInterface
+     */
+    private $signatureGenerator;
 
     /**
      * @var string
@@ -48,12 +51,14 @@ class JwtAuthenticator implements AuthenticatorInterface
     /**
      * Constructor.
      *
-     * @param JwtInterface  $jwt
-     * @param \DateInterval $jwsLifetime
+     * @param JwtInterface                $jwt
+     * @param \DateInterval               $jwsLifetime
+     * @param SignatureGeneratorInterface $signatureGenerator
      *
      * @throws \InvalidArgumentException
+     * @throws \LogicException
      */
-    public function __construct(JwtInterface $jwt, \DateInterval $jwsLifetime = null)
+    public function __construct(JwtInterface $jwt, \DateInterval $jwsLifetime = null, SignatureGeneratorInterface $signatureGenerator = null)
     {
         $this->jwt = $jwt;
 
@@ -62,6 +67,8 @@ class JwtAuthenticator implements AuthenticatorInterface
         }
 
         $this->jwsLifetime = $jwsLifetime;
+
+        $this->signatureGenerator = $signatureGenerator ?: SignatureGeneratorFactory::resolve();
     }
 
     /**
@@ -72,42 +79,12 @@ class JwtAuthenticator implements AuthenticatorInterface
         $now = new \DateTimeImmutable();
 
         if (!$this->jws || $this->jwsValidTo < $now) {
-            $this->jws = $this->createJwsContent();
+            $this->jws = $this->signatureGenerator->generate($this->jwt);
             $this->jwsValidTo = $this->jwsLifetime ? ($now)->add($this->jwsLifetime) : $this->jwsValidTo;
         }
 
         $request = $request->withHeader('authorization', sprintf('bearer %s', $this->jws));
 
         return $request;
-    }
-
-    /**
-     * Create the content of JWS by Json Web Token
-     *
-     * @return string
-     */
-    private function createJwsContent(): string
-    {
-        $jwk = JWKFactory::createFromKeyFile($this->jwt->getPath(), '', [
-            'kid' => $this->jwt->getKey(),
-            'alg' => self::ALGORITHM,
-            'use' => 'sig',
-        ]);
-
-        $payload = [
-            'iss' => $this->jwt->getTeamId(),
-            'iat' => time(),
-        ];
-
-        $header = [
-            'alg' => self::ALGORITHM,
-            'kid' => $jwk->get('kid'),
-        ];
-
-        return JWSFactory::createJWSToCompactJSON(
-            $payload,
-            $jwk,
-            $header
-        );
     }
 }
