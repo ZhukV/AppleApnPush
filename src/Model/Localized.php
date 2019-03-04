@@ -16,7 +16,7 @@ namespace Apple\ApnPush\Model;
 /**
  * Value object for store localized information
  */
-class Localized
+class Localized implements LocalizedInterface
 {
     /**
      * @var string
@@ -41,6 +41,22 @@ class Localized
     }
 
     /**
+     * Set the key
+     *
+     * @param string $key
+     *
+     * @return Localized
+     */
+    public function withKey(string $key) : Localized
+    {
+        $cloned = clone $this;
+
+        $cloned->key = $key;
+
+        return $cloned;
+    }
+
+    /**
      * Get localized key
      *
      * @return string
@@ -48,6 +64,22 @@ class Localized
     public function getKey(): string
     {
         return $this->key;
+    }
+
+    /**
+     * Set the args
+     *
+     * @param array $args
+     *
+     * @return Localized
+     */
+    public function withArgs(array $args) : Localized
+    {
+        $cloned = clone $this;
+
+        $cloned->args = $args;
+
+        return $cloned;
     }
 
     /**

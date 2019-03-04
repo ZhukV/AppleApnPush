@@ -16,7 +16,7 @@ namespace Apple\ApnPush\Model;
 /**
  * Device token model
  */
-class DeviceToken
+class DeviceToken implements DeviceTokenInterface
 {
     /**
      * @var string
@@ -26,20 +26,35 @@ class DeviceToken
     /**
      * Constructor.
      *
-     * @param string $token
+     * @param string $value
      *
      * @throws \InvalidArgumentException
      */
-    public function __construct(string $token)
+    public function __construct(string $value)
     {
-        if (!preg_match('/^[0-9a-fA-F]{64}$/', $token)) {
-            throw new \InvalidArgumentException(sprintf(
-                'Invalid device token "%s".',
-                $token
-            ));
-        }
+        $this->validateValue($value);
 
-        $this->value = $token;
+        $this->value = $value;
+    }
+
+    /**
+     * Set the value
+     *
+     * @param string $value
+     *
+     * @return DeviceToken
+     *
+     * @throws \InvalidArgumentException
+     */
+    public function withValue(string $value) : DeviceToken
+    {
+        $this->validateValue($value);
+
+        $cloned = clone $this;
+
+        $cloned->value = $value;
+
+        return $cloned;
     }
 
     /**
@@ -58,5 +73,22 @@ class DeviceToken
     public function __toString()
     {
         return $this->value;
+    }
+
+    /**
+     * Determines if value is valid, throws exception if not
+     *
+     * @param string $value
+     *
+     * @throws \InvalidArgumentException
+     */
+    private function validateValue(string $value) : void
+    {
+        if (!preg_match('/^[0-9a-fA-F]{64}$/', $value)) {
+            throw new \InvalidArgumentException(sprintf(
+                'Invalid device token "%s".',
+                $value
+            ));
+        }
     }
 }

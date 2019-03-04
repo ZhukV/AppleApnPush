@@ -36,4 +36,27 @@ class CollapseIdTest extends TestCase
     {
         new CollapseId(str_repeat('a', 65));
     }
+
+    /**
+     * @test
+     */
+    public function shouldSuccessChangeValue()
+    {
+        $collapseId = new CollapseId("some");
+        $collapseIdWithChangedValue = $collapseId->withValue('another');
+
+        self::assertEquals('another', $collapseIdWithChangedValue->getValue());
+    }
+
+    /**
+     * @test
+     *
+     * @expectedException \InvalidArgumentException
+     * @expectedExceptionMessage The apns-collapse-id cannot be larger than 64 bytes.
+     */
+    public function shouldThrowExceptionIfChangedValueIsInvalid()
+    {
+        $collapseId = new CollapseId("some");
+        $collapseId->withValue(str_repeat('a', 65));
+    }
 }

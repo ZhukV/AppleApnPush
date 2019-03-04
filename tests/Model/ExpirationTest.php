@@ -39,4 +39,17 @@ class ExpirationTest extends TestCase
 
         self::assertEquals($now->format('U'), $value);
     }
+
+    /**
+     * @test
+     */
+    public function shouldSuccessChangeStoreTo()
+    {
+        $now = new \DateTime();
+
+        $expiration = new Expiration();
+        $expirationChangedValue = $expiration->withStoreTo($now);
+
+        self::assertEquals($now->format('U'), $expirationChangedValue->getValue());
+    }
 }

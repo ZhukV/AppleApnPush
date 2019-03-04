@@ -46,4 +46,27 @@ class PriorityTest extends TestCase
 
         self::assertEquals(5, $priority->getValue());
     }
+
+    /**
+     * @test
+     */
+    public function shouldSuccessChangeValue()
+    {
+        $priority = new Priority(5);
+        $priorityChangedValue = $priority->withValue(10);
+
+        self::assertEquals(10, $priorityChangedValue->getValue());
+    }
+
+    /**
+     * @test
+     *
+     * @expectedException \InvalidArgumentException
+     * @expectedExceptionMessage Invalid priority "45". Can be 5 or 10.
+     */
+    public function shouldThrowExceptionIfChangedValueIsInvalid()
+    {
+        $priority = new Priority(5);
+        $priority->withValue(45);
+    }
 }

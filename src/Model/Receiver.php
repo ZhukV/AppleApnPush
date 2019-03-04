@@ -17,7 +17,7 @@ namespace Apple\ApnPush\Model;
  * The receiver model.
  * Store device token and topic (application).
  */
-class Receiver
+class Receiver implements ReceiverInterface
 {
     /**
      * @var DeviceToken
@@ -42,6 +42,22 @@ class Receiver
     }
 
     /**
+     * Set the token
+     *
+     * @param DeviceToken $token
+     *
+     * @return Receiver
+     */
+    public function withToken(DeviceToken $token): Receiver
+    {
+        $cloned = clone $this;
+
+        $cloned->token = $token;
+
+        return $cloned;
+    }
+
+    /**
      * Get token
      *
      * @return DeviceToken
@@ -49,6 +65,22 @@ class Receiver
     public function getToken(): DeviceToken
     {
         return $this->token;
+    }
+
+    /**
+     * Set the topic
+     *
+     * @param String $topic
+     *
+     * @return Receiver
+     */
+    public function withTopic(string $topic): Receiver
+    {
+        $cloned = clone $this;
+
+        $cloned->topic = $topic;
+
+        return $cloned;
     }
 
     /**

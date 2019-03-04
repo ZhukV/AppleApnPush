@@ -36,4 +36,27 @@ class ApnIdTest extends TestCase
 
         self::assertEquals('6c109fec-9123-11e6-ae22-56b6b6499611', $id->getValue());
     }
+
+    /**
+     * @test
+     */
+    public function shouldSuccessChangeTitle()
+    {
+        $id = new ApnId('df109fec-9123-11e6-ae22-56b6b6499655');
+        $idWithChangedValue = $id->withValue('6c109fec-9123-11e6-ae22-56b6b6499611');
+
+        self::assertEquals('6c109fec-9123-11e6-ae22-56b6b6499611', $idWithChangedValue->getValue());
+    }
+
+    /**
+     * @test
+     *
+     * @expectedException \InvalidArgumentException
+     * @expectedExceptionMessage Invalid UUID identifier "asd".
+     */
+    public function shouldThrowsExceptionIfUpdateValueIsInvalid()
+    {
+        $id = new ApnId('asd');
+        $id->withValue('asd');
+    }
 }

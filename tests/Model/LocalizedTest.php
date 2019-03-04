@@ -26,4 +26,27 @@ class LocalizedTest extends TestCase
         self::assertEquals('some', $localized->getKey());
         self::assertEquals(['key' => 'value'], $localized->getArgs());
     }
+
+    /**
+     * @test
+     */
+    public function shouldSuccessChangeKey()
+    {
+        $localized = new Localized('some', ['key' => 'value']);
+        $localizedChangedKey = $localized->withKey('newSome');
+
+        self::assertEquals('newSome', $localizedChangedKey->getKey());
+    }
+
+    /**
+     * @test
+     */
+    public function shouldSuccessChangeArgs()
+    {
+        $localized = new Localized('some', ['key' => 'value']);
+        $localizedChangedKey = $localized->withArgs(['newKey' => 'newValue']);
+
+        self::assertEquals(['newKey' => 'newValue'], $localizedChangedKey->getArgs());
+        self::assertEquals('some', $localizedChangedKey->getKey());
+    }
 }

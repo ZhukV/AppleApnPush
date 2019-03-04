@@ -16,7 +16,7 @@ namespace Apple\ApnPush\Model;
 /**
  * Payload model
  */
-class Payload
+class Payload implements PayloadInterface
 {
     /**
      * @var Aps

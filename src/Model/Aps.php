@@ -16,7 +16,7 @@ namespace Apple\ApnPush\Model;
 /**
  * Default APS data
  */
-class Aps
+class Aps implements ApsInterface
 {
     /**
      * @var Alert

@@ -16,7 +16,7 @@ namespace Apple\ApnPush\Model;
 /**
  * Value object for alert object
  */
-class Alert
+class Alert implements AlertInterface
 {
     /**
      * @var string

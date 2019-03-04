@@ -16,7 +16,7 @@ namespace Apple\ApnPush\Model;
 /**
  * Send this notification to device.
  */
-class Notification
+class Notification implements NotificationInterface
 {
     /**
      * @var Payload

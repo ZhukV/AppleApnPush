@@ -16,7 +16,7 @@ namespace Apple\ApnPush\Model;
 /**
  * Expiration of notification
  */
-class Expiration
+class Expiration implements ExpirationInterface
 {
     /**
      * @var \DateTime
@@ -34,6 +34,24 @@ class Expiration
             $this->storeTo = clone $availableTo;
             $this->storeTo->setTimezone(new \DateTimeZone('UTC'));
         }
+    }
+
+    /**
+     * Set the availableTo
+     *
+     * @param \DateTime $availableTo
+     *
+     * @return Expiration
+     */
+    public function withStoreTo(\DateTime $availableTo) : Expiration
+    {
+        $cloned = clone $this;
+
+        $cloned->storeTo = clone $availableTo;
+
+        $cloned->storeTo->setTimezone(new \DateTimeZone('UTC'));
+
+        return $cloned;
     }
 
     /**

@@ -16,7 +16,7 @@ namespace Apple\ApnPush\Model;
 /**
  * The value object for store the apns-collapse-id
  */
-class CollapseId
+class CollapseId implements CollapseIdInterface
 {
     /**
      * @var string
@@ -32,11 +32,29 @@ class CollapseId
      */
     public function __construct(string $value)
     {
-        if (strlen($value) > 64) {
-            throw new \InvalidArgumentException('The apns-collapse-id cannot be larger than 64 bytes.');
-        }
+        $this->validateValue($value);
 
         $this->value = $value;
+    }
+
+    /**
+     * Set the value
+     *
+     * @param string $value
+     *
+     * @return CollapseId
+     *
+     * @throws \InvalidArgumentException
+     */
+    public function withValue(string $value) : CollapseId
+    {
+        $this->validateValue($value);
+
+        $cloned = clone $this;
+
+        $cloned->value = $value;
+
+        return $cloned;
     }
 
     /**
@@ -47,5 +65,19 @@ class CollapseId
     public function getValue(): string
     {
         return $this->value;
+    }
+
+    /**
+     * Determines if value is valid, throws exception if not
+     *
+     * @param string $value
+     *
+     * @throws \InvalidArgumentException
+     */
+    private function validateValue(string $value) : void
+    {
+        if (strlen($value) > 64) {
+            throw new \InvalidArgumentException('The apns-collapse-id cannot be larger than 64 bytes.');
+        }
     }
 }

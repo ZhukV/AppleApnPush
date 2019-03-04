@@ -37,4 +37,27 @@ class DeviceTokenTest extends TestCase
         self::assertEquals('4e064d251c73cca4096b82b3fbe9abd05d239f96b91a09edb61c92322bf959ca', $token->getValue());
         self::assertEquals('4e064d251c73cca4096b82b3fbe9abd05d239f96b91a09edb61c92322bf959ca', (string) $token);
     }
+
+    /**
+     * @test
+     */
+    public function shouldSuccessChangeValue()
+    {
+        $token = new DeviceToken('4e064d251c73cca4096b82b3fbe9abd05d239f96b91a09edb61c92322bf959ca');
+        $tokenChangedValue = $token->withValue('55064d251c73cca4096b82b3fbe9abd05d239f96b91a09edb61c92322bf959dd');
+
+        self::assertEquals('55064d251c73cca4096b82b3fbe9abd05d239f96b91a09edb61c92322bf959dd', $tokenChangedValue->getValue());
+    }
+
+    /**
+     * @test
+     *
+     * @expectedException \InvalidArgumentException
+     * @expectedExceptionMessage Invalid device token "some"
+     */
+    public function shouldThrowExceptionIfChangedValueIsInvalid()
+    {
+        $token = new DeviceToken('4e064d251c73cca4096b82b3fbe9abd05d239f96b91a09edb61c92322bf959ca');
+        $token->withValue('some');
+    }
 }

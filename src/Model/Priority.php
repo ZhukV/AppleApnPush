@@ -16,7 +16,7 @@ namespace Apple\ApnPush\Model;
 /**
  * Message priority
  */
-class Priority
+class Priority implements PriorityInterface
 {
     /**
      * @var int
@@ -26,20 +26,15 @@ class Priority
     /**
      * Constructor.
      *
-     * @param int $priority
+     * @param int $value
      *
      * @throws \InvalidArgumentException
      */
-    public function __construct(int $priority)
+    public function __construct(int $value)
     {
-        if (!in_array($priority, [5, 10], true)) {
-            throw new \InvalidArgumentException(sprintf(
-                'Invalid priority "%d". Can be 5 or 10.',
-                $priority
-            ));
-        }
+        $this->validateValue($value);
 
-        $this->value = $priority;
+        $this->value = $value;
     }
 
     /**
@@ -63,6 +58,26 @@ class Priority
     }
 
     /**
+     * Set the value
+     *
+     * @param int $value
+     *
+     * @return Priority
+     *
+     * @throws \InvalidArgumentException
+     */
+    public function withValue(int $value) : Priority
+    {
+        $this->validateValue($value);
+
+        $cloned = clone $this;
+
+        $cloned->value = $value;
+
+        return $cloned;
+    }
+
+    /**
      * Get value
      *
      * @return int
@@ -70,5 +85,22 @@ class Priority
     public function getValue(): int
     {
         return $this->value;
+    }
+
+    /**
+     * Determines if value is valid, throws exception if not
+     *
+     * @param int $value
+     *
+     * @throws \InvalidArgumentException
+     */
+    private function validateValue(int $value) : void
+    {
+        if (!in_array($value, [5, 10], true)) {
+            throw new \InvalidArgumentException(sprintf(
+                'Invalid priority "%d". Can be 5 or 10.',
+                $value
+            ));
+        }
     }
 }
