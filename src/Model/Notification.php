@@ -44,21 +44,24 @@ class Notification
     private $collapseId;
 
     /**
-     * Constructor.
-     *
-     * @param Payload         $payload
-     * @param ApnId|null      $apnId
-     * @param Priority|null   $priority
-     * @param Expiration|null $expiration
-     * @param CollapseId|null $collapseId
+     * @var PushType
      */
-    public function __construct(Payload $payload, ApnId $apnId = null, Priority $priority = null, Expiration $expiration = null, CollapseId $collapseId = null)
-    {
+    private $pushType;
+    
+    public function __construct(
+        Payload $payload,
+        ?ApnId $apnId = null,
+        ?Priority $priority = null,
+        ?Expiration $expiration = null,
+        ?CollapseId $collapseId = null,
+        ?PushType $pushType = null
+    ) {
         $this->payload = $payload;
         $this->priority = $priority;
         $this->apnId = $apnId;
         $this->expiration = $expiration;
         $this->collapseId = $collapseId;
+        $this->pushType = $pushType;
     }
 
     /**
@@ -201,5 +204,19 @@ class Notification
     public function getCollapseId(): ?CollapseId
     {
         return $this->collapseId;
+    }
+    
+    public function withPushType(PushType $pushType): Notification
+    {
+        $cloned = clone $this;
+    
+        $cloned->pushType = $pushType;
+    
+        return $cloned;
+    }
+    
+    public function getPushType(): ?PushType
+    {
+        return $this->pushType;
     }
 }

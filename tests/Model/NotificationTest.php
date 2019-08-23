@@ -19,6 +19,7 @@ use Apple\ApnPush\Model\Expiration;
 use Apple\ApnPush\Model\Notification;
 use Apple\ApnPush\Model\Payload;
 use Apple\ApnPush\Model\Priority;
+use Apple\ApnPush\Model\PushType;
 use PHPUnit\Framework\TestCase;
 
 class NotificationTest extends TestCase
@@ -106,6 +107,18 @@ class NotificationTest extends TestCase
 
         self::assertEquals(new CollapseId('some'), $notificationWithChangedCollapseId->getCollapseId());
         self::assertNotEquals(spl_object_hash($notification), spl_object_hash($notificationWithChangedCollapseId));
+    }
+    
+    /**
+     * @test
+     */
+    public function shouldSuccessChangePushType()
+    {
+        $notification = new Notification($this->createPayload());
+        $notificationWithChangedPushType = $notification->withPushType(PushType::alert());
+        
+        self::assertEquals(PushType::alert(), $notificationWithChangedPushType->getPushType());
+        self::assertNotEquals(spl_object_hash($notification), spl_object_hash($notificationWithChangedPushType));
     }
 
     /**
