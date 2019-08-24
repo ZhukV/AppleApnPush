@@ -108,7 +108,7 @@ class NotificationTest extends TestCase
         self::assertEquals(new CollapseId('some'), $notificationWithChangedCollapseId->getCollapseId());
         self::assertNotEquals(spl_object_hash($notification), spl_object_hash($notificationWithChangedCollapseId));
     }
-    
+
     /**
      * @test
      */
@@ -116,7 +116,7 @@ class NotificationTest extends TestCase
     {
         $notification = new Notification($this->createPayload());
         $notificationWithChangedPushType = $notification->withPushType(PushType::alert());
-        
+
         self::assertEquals(PushType::alert(), $notificationWithChangedPushType->getPushType());
         self::assertNotEquals(spl_object_hash($notification), spl_object_hash($notificationWithChangedPushType));
     }

@@ -2,6 +2,15 @@
 
 declare(strict_types = 1);
 
+/*
+ * This file is part of the AppleApnPush package
+ *
+ * (c) Vitaliy Zhuk <zhuk2205@gmail.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code
+ */
+
 namespace Apple\ApnPush\Model;
 
 /**
@@ -12,26 +21,40 @@ final class PushType
 {
     const TYPE_ALERT      = 'alert';
     const TYPE_BACKGROUND = 'background';
-    
+
     private $value;
 
+    /**
+     * Create alert push-type
+     *
+     * @return PushType
+     */
     public static function alert(): PushType
     {
         return new self(self::TYPE_ALERT);
     }
 
+    /**
+     * Create background push-type
+     *
+     * @return PushType
+     */
     public static function background(): PushType
     {
         return new self(self::TYPE_BACKGROUND);
     }
-    
+
+    /**
+     * @return string
+     */
     public function __toString(): string
     {
         return $this->value;
     }
-    
+
     /**
      * @param string $type
+     *
      * @throws \InvalidArgumentException
      */
     private function __construct(string $type)
@@ -46,7 +69,7 @@ final class PushType
                 )
             );
         }
-        
+
         $this->value = $type;
     }
 }
