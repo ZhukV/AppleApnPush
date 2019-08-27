@@ -20,6 +20,7 @@ use Apple\ApnPush\Protocol\Http\Visitor\AddApnIdHeaderVisitor;
 use Apple\ApnPush\Protocol\Http\Visitor\AddCollapseIdHeaderVisitor;
 use Apple\ApnPush\Protocol\Http\Visitor\AddExpirationHeaderVisitor;
 use Apple\ApnPush\Protocol\Http\Visitor\AddPriorityHeaderVisitor;
+use Apple\ApnPush\Protocol\Http\Visitor\AddPushTypeHeaderVisitor;
 use Apple\ApnPush\Protocol\Http\Visitor\HttpProtocolChainVisitor;
 use Apple\ApnPush\Protocol\Http\Visitor\HttpProtocolVisitorInterface;
 use Apple\ApnPush\Protocol\HttpProtocol;
@@ -77,12 +78,14 @@ class Http20BuilderTest extends TestCase
         $uriFactory = $this->createMock(UriFactoryInterface::class);
         $visitor = $this->createMock(HttpProtocolVisitorInterface::class);
 
+        $priority = 0;
         $chainVisitor = new HttpProtocolChainVisitor();
-        $chainVisitor->add(new AddExpirationHeaderVisitor(), 1);
-        $chainVisitor->add(new AddPriorityHeaderVisitor(), 2);
-        $chainVisitor->add(new AddApnIdHeaderVisitor(), 3);
-        $chainVisitor->add(new AddCollapseIdHeaderVisitor(), 4);
-        $chainVisitor->add($visitor, 5);
+        $chainVisitor->add(new AddExpirationHeaderVisitor(), ++$priority);
+        $chainVisitor->add(new AddPriorityHeaderVisitor(), ++$priority);
+        $chainVisitor->add(new AddApnIdHeaderVisitor(), ++$priority);
+        $chainVisitor->add(new AddCollapseIdHeaderVisitor(), ++$priority);
+        $chainVisitor->add(new AddPushTypeHeaderVisitor(), ++$priority);
+        $chainVisitor->add($visitor, ++$priority);
 
         $builder
             ->setAuthenticator($authenticator)

@@ -26,6 +26,7 @@ use Apple\ApnPush\Protocol\Http\Visitor\AddApnIdHeaderVisitor;
 use Apple\ApnPush\Protocol\Http\Visitor\AddCollapseIdHeaderVisitor;
 use Apple\ApnPush\Protocol\Http\Visitor\AddExpirationHeaderVisitor;
 use Apple\ApnPush\Protocol\Http\Visitor\AddPriorityHeaderVisitor;
+use Apple\ApnPush\Protocol\Http\Visitor\AddPushTypeHeaderVisitor;
 use Apple\ApnPush\Protocol\Http\Visitor\HttpProtocolChainVisitor;
 use Apple\ApnPush\Protocol\Http\Visitor\HttpProtocolVisitorInterface;
 use Apple\ApnPush\Protocol\HttpProtocol;
@@ -140,6 +141,7 @@ class Http20Builder implements BuilderInterface
         $this->addVisitor(new AddPriorityHeaderVisitor());
         $this->addVisitor(new AddApnIdHeaderVisitor());
         $this->addVisitor(new AddCollapseIdHeaderVisitor());
+        $this->addVisitor(new AddPushTypeHeaderVisitor());
 
         return $this;
     }
