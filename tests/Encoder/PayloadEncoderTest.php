@@ -178,13 +178,13 @@ class PayloadEncoderTest extends TestCase
      */
     public function shouldSuccessEncodeWithContentAvailable()
     {
-        $aps = new Aps(new Alert());
+        $aps = new Aps();
         $aps = $aps->withContentAvailable(true);
 
         $payload = new Payload($aps);
         $encoded = $this->encoder->encode($payload);
 
-        self::assertEquals('{"aps":{"alert":{"body":""},"content-available":1}}', $encoded);
+        self::assertEquals('{"aps":{"content-available":1}}', $encoded);
     }
 
     /**
