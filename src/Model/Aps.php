@@ -84,7 +84,7 @@ class Aps
      *
      * @return Alert
      */
-    public function getAlert(): Alert
+    public function getAlert(): ?Alert
     {
         return $this->alert;
     }
