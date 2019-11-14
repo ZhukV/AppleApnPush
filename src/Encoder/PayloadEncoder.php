@@ -45,9 +45,11 @@ class PayloadEncoder implements PayloadEncoderInterface
      */
     private function convertApsToArray(Aps $aps): array
     {
-        $data = [
-            'alert' => $this->convertAlertToArray($aps->getAlert()),
-        ];
+        $data = [];
+
+        if ($aps->getAlert()) {
+            $data['alert'] = $this->convertAlertToArray($aps->getAlert());
+        }
 
         if ($aps->getSound()) {
             $data['sound'] = $aps->getSound();

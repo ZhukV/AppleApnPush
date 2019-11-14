@@ -58,7 +58,7 @@ class Aps
      *
      * @param Alert $alert
      */
-    public function __construct(Alert $alert)
+    public function __construct(?Alert $alert = null)
     {
         $this->alert = $alert;
     }
@@ -84,7 +84,7 @@ class Aps
      *
      * @return Alert
      */
-    public function getAlert(): Alert
+    public function getAlert(): ?Alert
     {
         return $this->alert;
     }
