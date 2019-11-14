@@ -11,6 +11,7 @@
 
 namespace Tests\Apple\ApnPush\Jwt;
 
+use Apple\ApnPush\Exception\CertificateFileNotFoundException;
 use Apple\ApnPush\Jwt\Jwt;
 use PHPUnit\Framework\TestCase;
 
@@ -24,18 +25,18 @@ class JwtTest extends TestCase
     /**
      * {@inheritdoc}
      */
-    protected function setUp()
+    protected function setUp(): void
     {
-        $this->tmpFileName = tempnam(sys_get_temp_dir(), 'apn_push_test_jwt');
+        $this->tmpFileName = \tempnam(\sys_get_temp_dir(), 'apn_push_test_jwt');
     }
 
     /**
      * {@inheritdoc}
      */
-    protected function tearDown()
+    protected function tearDown(): void
     {
-        if (file_exists($this->tmpFileName)) {
-            unlink($this->tmpFileName);
+        if (\file_exists($this->tmpFileName)) {
+            \unlink($this->tmpFileName);
         }
     }
 
@@ -44,7 +45,7 @@ class JwtTest extends TestCase
      */
     public function shouldSuccessCreate()
     {
-        file_put_contents($this->tmpFileName, 'File for test Json Web Token (Apple/ApnPush)');
+        \file_put_contents($this->tmpFileName, 'File for test Json Web Token (Apple/ApnPush)');
 
         $token = new Jwt('team id', 'key', $this->tmpFileName);
 
@@ -55,11 +56,11 @@ class JwtTest extends TestCase
 
     /**
      * @test
-     *
-     * @expectedException \Apple\ApnPush\Exception\CertificateFileNotFoundException
      */
     public function shouldFailCreateIfFileNotFound()
     {
+        $this->expectException(CertificateFileNotFoundException::class);
+
         new Jwt('team id', 'key', $this->tmpFileName.'.failed');
     }
 }

@@ -56,9 +56,9 @@ class Aps
     /**
      * Constructor.
      *
-     * @param Alert $alert
+     * @param Alert|null $alert
      */
-    public function __construct(?Alert $alert = null)
+    public function __construct(Alert $alert = null)
     {
         $this->alert = $alert;
     }

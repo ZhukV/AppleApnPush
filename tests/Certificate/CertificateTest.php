@@ -12,18 +12,19 @@
 namespace Tests\Apple\ApnPush\Certificate;
 
 use Apple\ApnPush\Certificate\Certificate;
+use Apple\ApnPush\Exception\CertificateFileNotFoundException;
 use PHPUnit\Framework\TestCase;
 
 class CertificateTest extends TestCase
 {
     /**
      * @test
-     *
-     * @expectedException \Apple\ApnPush\Exception\CertificateFileNotFoundException
-     * @expectedExceptionMessage The certificate file "/path/to/missing/certificate.pem" was not found.
      */
     public function shouldFailIfCertificateNotFound()
     {
+        $this->expectException(CertificateFileNotFoundException::class);
+        $this->expectExceptionMessage('The certificate file "/path/to/missing/certificate.pem" was not found.');
+
         new Certificate('/path/to/missing/certificate.pem', '');
     }
 
@@ -32,8 +33,8 @@ class CertificateTest extends TestCase
      */
     public function shouldSuccessCreate()
     {
-        $tmpDir = sys_get_temp_dir();
-        $file = $tmpDir.'/'.md5(uniqid(random_int(0, 9999), true)).'.pem';
+        $tmpDir = \sys_get_temp_dir();
+        $file = $tmpDir.'/'.\md5(\uniqid(\random_int(0, 9999), true)).'.pem';
         touch($file);
 
         $certificate = new Certificate($file, 'pass-phrase');

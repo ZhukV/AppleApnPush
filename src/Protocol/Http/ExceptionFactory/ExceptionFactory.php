@@ -65,17 +65,17 @@ class ExceptionFactory implements ExceptionFactoryInterface
             return new MissingContentInResponseException();
         }
 
-        $json = json_decode($content, true);
+        $json = \json_decode($content, true);
 
         if (null === $json) {
-            return new InvalidResponseException(sprintf(
+            return new InvalidResponseException(\sprintf(
                 'Can not parse JSON in response. Error: %d - %s',
-                json_last_error(),
-                json_last_error_msg()
+                \json_last_error(),
+                \json_last_error_msg()
             ));
         }
 
-        if (!array_key_exists('reason', $json)) {
+        if (!\array_key_exists('reason', $json)) {
             return new MissingErrorReasonInResponseException();
         }
 
@@ -94,7 +94,7 @@ class ExceptionFactory implements ExceptionFactoryInterface
      */
     private function createByReason(string $reason, array $json): SendNotificationException
     {
-        $reason = strtolower($reason);
+        $reason = \strtolower($reason);
 
         switch ($reason) {
             case 'badcollapseid':
@@ -161,7 +161,7 @@ class ExceptionFactory implements ExceptionFactoryInterface
                 return new MethodNotAllowedException();
 
             case 'unregistered':
-                $timestamp = array_key_exists('timestamp', $json) ? $json['timestamp'] : 0;
+                $timestamp = \array_key_exists('timestamp', $json) ? $json['timestamp'] : 0;
                 $lastConfirmed = new \DateTime('now', new \DateTimeZone('UTC'));
                 $lastConfirmed->setTimestamp($timestamp);
 

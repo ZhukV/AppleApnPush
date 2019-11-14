@@ -15,6 +15,7 @@ use Apple\ApnPush\Model\Notification;
 use Apple\ApnPush\Protocol\Http\Request;
 use Apple\ApnPush\Protocol\Http\Visitor\HttpProtocolChainVisitor;
 use Apple\ApnPush\Protocol\Http\Visitor\HttpProtocolVisitorInterface;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
 class HttpProtocolChainVisitorTest extends TestCase
@@ -77,11 +78,11 @@ class HttpProtocolChainVisitorTest extends TestCase
 
     /**
      * @test
-     *
-     * @expectedException \InvalidArgumentException
      */
     public function shouldNotCallNextCheckedIfPreviouslyCheckWithError()
     {
+        $this->expectException(\InvalidArgumentException::class);
+
         $notification = $this->createMock(Notification::class);
         $request = $this->createMock(Request::class);
 
@@ -111,13 +112,13 @@ class HttpProtocolChainVisitorTest extends TestCase
     /**
      * Create visitor mock
      *
-     * @return HttpProtocolVisitorInterface|\PHPUnit_Framework_MockObject_MockObject
+     * @return HttpProtocolVisitorInterface|MockObject
      */
     private function createVisitor()
     {
         $className = sprintf(
             'HttpProtocolVisitorInterface_%s',
-            md5(uniqid(random_int(0, 9999), true))
+            \md5(\uniqid(\random_int(0, 9999), true))
         );
 
         $visitor = $this->getMockBuilder(HttpProtocolVisitorInterface::class)

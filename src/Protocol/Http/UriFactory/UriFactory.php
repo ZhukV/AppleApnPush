@@ -36,6 +36,6 @@ class UriFactory implements UriFactoryInterface
             $uri = 'https://api.development.push.apple.com/3/device/%s';
         }
 
-        return sprintf($uri, $deviceToken);
+        return \sprintf($uri, $deviceToken);
     }
 }

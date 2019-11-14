@@ -28,7 +28,7 @@ class PayloadEncoderTest extends TestCase
     /**
      * {@inheritdoc}
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->encoder = new PayloadEncoder();
     }

@@ -31,9 +31,9 @@ class PayloadEncoder implements PayloadEncoderInterface
             'aps' => $this->convertApsToArray($payload->getAps()),
         ];
 
-        $data = array_merge($payload->getCustomData(), $data);
+        $data = \array_merge($payload->getCustomData(), $data);
 
-        return json_encode($data);
+        return \json_encode($data);
     }
 
     /**

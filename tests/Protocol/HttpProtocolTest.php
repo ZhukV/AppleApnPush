@@ -28,37 +28,38 @@ use Apple\ApnPush\Protocol\Http\Sender\HttpSenderInterface;
 use Apple\ApnPush\Protocol\Http\UriFactory\UriFactoryInterface;
 use Apple\ApnPush\Protocol\Http\Visitor\HttpProtocolVisitorInterface;
 use Apple\ApnPush\Protocol\HttpProtocol;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
 class HttpProtocolTest extends TestCase
 {
     /**
-     * @var AuthenticatorInterface|\PHPUnit_Framework_MockObject_MockObject
+     * @var AuthenticatorInterface|MockObject
      */
     private $authenticator;
 
     /**
-     * @var HttpSenderInterface|\PHPUnit_Framework_MockObject_MockObject
+     * @var HttpSenderInterface|MockObject
      */
     private $httpSender;
 
     /**
-     * @var PayloadEncoderInterface|\PHPUnit_Framework_MockObject_MockObject
+     * @var PayloadEncoderInterface|MockObject
      */
     private $payloadEncoder;
 
     /**
-     * @var UriFactoryInterface|\PHPUnit_Framework_MockObject_MockObject
+     * @var UriFactoryInterface|MockObject
      */
     private $uriFactory;
 
     /**
-     * @var HttpProtocolVisitorInterface|\PHPUnit_Framework_MockObject_MockObject
+     * @var HttpProtocolVisitorInterface|MockObject
      */
     private $visitor;
 
     /**
-     * @var ExceptionFactoryInterface|\PHPUnit_Framework_MockObject_MockObject
+     * @var ExceptionFactoryInterface|MockObject
      */
     private $exceptionFactory;
 
@@ -143,11 +144,11 @@ class HttpProtocolTest extends TestCase
 
     /**
      * @test
-     *
-     * @expectedException \Apple\ApnPush\Exception\SendNotification\SendNotificationException
      */
     public function shouldFailSendWithoutCloseConnection(): void
     {
+        $this->expectException(SendNotificationException::class);
+
         $deviceToken = new DeviceToken(str_repeat('af', 32));
         $receiver = new Receiver($deviceToken, 'com.test');
         $payload = new Payload(new Aps(new Alert()));
@@ -194,12 +195,12 @@ class HttpProtocolTest extends TestCase
 
     /**
      * @test
-     *
-     * @expectedException \Apple\ApnPush\Protocol\Http\Sender\Exception\HttpSenderException
-     * @expectedExceptionMessage some
      */
     public function shouldFailSendWithCloseConnection(): void
     {
+        $this->expectException(HttpSenderException::class);
+        $this->expectExceptionMessage('some');
+
         $deviceToken = new DeviceToken(str_repeat('af', 32));
         $receiver = new Receiver($deviceToken, 'com.test');
         $payload = new Payload(new Aps(new Alert()));
