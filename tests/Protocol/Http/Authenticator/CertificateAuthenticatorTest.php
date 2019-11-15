@@ -14,24 +14,25 @@ namespace Tests\Apple\ApnPush\Protocol\Http\Authenticator;
 use Apple\ApnPush\Certificate\CertificateInterface;
 use Apple\ApnPush\Protocol\Http\Authenticator\CertificateAuthenticator;
 use Apple\ApnPush\Protocol\Http\Request;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
 class CertificateAuthenticatorTest extends TestCase
 {
     /**
-     * @var CertificateInterface|\PHPUnit_Framework_MockObject_MockObject
+     * @var CertificateInterface|MockObject
      */
     private $certificate;
 
     /**
-     * @var CertificateAuthenticator|\PHPUnit_Framework_MockObject_MockObject
+     * @var CertificateAuthenticator|MockObject
      */
     private $authenticator;
 
     /**
      * {@inheritdoc}
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->certificate = $this->createMock(CertificateInterface::class);
         $this->authenticator = new CertificateAuthenticator($this->certificate);

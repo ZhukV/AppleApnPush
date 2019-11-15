@@ -15,17 +15,18 @@ use Apple\ApnPush\Jwt\JwtInterface;
 use Apple\ApnPush\Jwt\SignatureGenerator\SignatureGeneratorInterface;
 use Apple\ApnPush\Protocol\Http\Authenticator\JwtAuthenticator;
 use Apple\ApnPush\Protocol\Http\Request;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
 class JwtAuthenticatorTest extends TestCase
 {
     /**
-     * @var SignatureGeneratorInterface|\PHPUnit_Framework_MockObject_MockObject
+     * @var SignatureGeneratorInterface|MockObject
      */
     private $signatureGenerator;
 
     /**
-     * @var JwtInterface|\PHPUnit_Framework_MockObject_MockObject
+     * @var JwtInterface|MockObject
      */
     private $jwt;
 

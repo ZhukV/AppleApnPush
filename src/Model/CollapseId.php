@@ -32,7 +32,7 @@ class CollapseId
      */
     public function __construct(string $value)
     {
-        if (strlen($value) > 64) {
+        if (\strlen($value) > 64) {
             throw new \InvalidArgumentException('The apns-collapse-id cannot be larger than 64 bytes.');
         }
 

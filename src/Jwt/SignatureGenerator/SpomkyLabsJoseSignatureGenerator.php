@@ -35,7 +35,7 @@ class SpomkyLabsJoseSignatureGenerator implements SignatureGeneratorInterface
 
         $payload = [
             'iss' => $jwt->getTeamId(),
-            'iat' => time(),
+            'iat' => \time(),
         ];
 
         $header = [

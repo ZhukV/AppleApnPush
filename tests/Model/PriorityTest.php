@@ -18,12 +18,12 @@ class PriorityTest extends TestCase
 {
     /**
      * @test
-     *
-     * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessage Invalid priority "123". Can be 5 or 10.
      */
     public function shouldFailCreate()
     {
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage('Invalid priority "123". Can be 5 or 10.');
+
         new Priority(123);
     }
 

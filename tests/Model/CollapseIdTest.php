@@ -28,12 +28,12 @@ class CollapseIdTest extends TestCase
 
     /**
      * @test
-     *
-     * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessage The apns-collapse-id cannot be larger than 64 bytes.
      */
     public function shouldThrowExceptionIfValueIsInvalid()
     {
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage('The apns-collapse-id cannot be larger than 64 bytes.');
+
         new CollapseId(str_repeat('a', 65));
     }
 }

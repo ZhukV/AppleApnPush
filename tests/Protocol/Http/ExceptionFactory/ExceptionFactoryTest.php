@@ -27,8 +27,11 @@ use Apple\ApnPush\Exception\SendNotification\ForbiddenException;
 use Apple\ApnPush\Exception\SendNotification\IdleTimeoutException;
 use Apple\ApnPush\Exception\SendNotification\InternalServerErrorException;
 use Apple\ApnPush\Exception\SendNotification\InvalidProviderTokenException;
+use Apple\ApnPush\Exception\SendNotification\InvalidResponseException;
 use Apple\ApnPush\Exception\SendNotification\MethodNotAllowedException;
+use Apple\ApnPush\Exception\SendNotification\MissingContentInResponseException;
 use Apple\ApnPush\Exception\SendNotification\MissingDeviceTokenException;
+use Apple\ApnPush\Exception\SendNotification\MissingErrorReasonInResponseException;
 use Apple\ApnPush\Exception\SendNotification\MissingProviderTokenException;
 use Apple\ApnPush\Exception\SendNotification\MissingTopicException;
 use Apple\ApnPush\Exception\SendNotification\PayloadEmptyException;
@@ -54,43 +57,46 @@ class ExceptionFactoryTest extends TestCase
     /**
      * {@inheritdoc}
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->exceptionFactory = new ExceptionFactory();
     }
 
     /**
      * @test
-     *
-     * @expectedException \Apple\ApnPush\Exception\SendNotification\MissingContentInResponseException
-     * @expectedExceptionMessage Missing content in response.
      */
     public function shouldFailIfContentNotFound()
     {
+        $this->expectException(MissingContentInResponseException::class);
+        $this->expectExceptionMessage('Missing content in response.');
+
         $response = new Response(400, '');
+
         throw $this->exceptionFactory->create($response);
     }
 
     /**
      * @test
-     *
-     * @expectedException \Apple\ApnPush\Exception\SendNotification\InvalidResponseException
      */
     public function shouldFailIfInvalidJson()
     {
+        $this->expectException(InvalidResponseException::class);
+
         $response = new Response(400, '{"some}');
+
         throw $this->exceptionFactory->create($response);
     }
 
     /**
      * @test
-     *
-     * @expectedException \Apple\ApnPush\Exception\SendNotification\MissingErrorReasonInResponseException
-     * @expectedExceptionMessage Missing error reason in response.
      */
     public function shouldFailIfMissingReason()
     {
+        $this->expectException(MissingErrorReasonInResponseException::class);
+        $this->expectExceptionMessage('Missing error reason in response.');
+
         $response = new Response(400, '{"key":"value"}');
+
         throw $this->exceptionFactory->create($response);
     }
 

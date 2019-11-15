@@ -32,7 +32,7 @@ class DeviceToken
      */
     public function __construct(string $token)
     {
-        if (!preg_match('/^[0-9a-fA-F]{64}$/', $token)) {
+        if (!\preg_match('/^[0-9a-fA-F]{64}$/', $token)) {
             throw new \InvalidArgumentException(sprintf(
                 'Invalid device token "%s".',
                 $token

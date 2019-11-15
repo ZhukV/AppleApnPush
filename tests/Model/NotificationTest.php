@@ -93,7 +93,7 @@ class NotificationTest extends TestCase
         $notification = new Notification($this->createPayload());
         $notificationWithChangedExpiration = $notification->withExpiration(new Expiration($now));
 
-        self::assertEquals(new Expiration($now), $notificationWithChangedExpiration->getExpiration(), '', 2);
+        self::assertEqualsWithDelta(new Expiration($now), $notificationWithChangedExpiration->getExpiration(), 2);
         self::assertNotEquals(spl_object_hash($notification), spl_object_hash($notificationWithChangedExpiration));
     }
 

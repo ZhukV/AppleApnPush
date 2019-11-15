@@ -18,12 +18,12 @@ class ApnIdTest extends TestCase
 {
     /**
      * @test
-     *
-     * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessage Invalid UUID identifier "asd".
      */
     public function shouldThrowsExceptionIfIdIsInvalid()
     {
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage('Invalid UUID identifier "asd".');
+
         new ApnId('asd');
     }
 

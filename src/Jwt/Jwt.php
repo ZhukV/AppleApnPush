@@ -46,8 +46,8 @@ class Jwt implements JwtInterface
      */
     public function __construct(string $teamId, string $key, string $path)
     {
-        if (!file_exists($path) || !is_file($path)) {
-            throw new CertificateFileNotFoundException(sprintf(
+        if (!\file_exists($path) || !\is_file($path)) {
+            throw new CertificateFileNotFoundException(\sprintf(
                 'The certificate file "%s" was not found.',
                 $path
             ));

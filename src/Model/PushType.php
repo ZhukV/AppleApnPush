@@ -59,15 +59,13 @@ final class PushType
      */
     private function __construct(string $type)
     {
-        if (!in_array($type, [self::TYPE_ALERT, self::TYPE_BACKGROUND], true)) {
-            throw new \InvalidArgumentException(
-                sprintf(
-                    'Invalid priority "%d". Can be "%s" or "%s".',
-                    $type,
-                    self::TYPE_BACKGROUND,
-                    self::TYPE_ALERT
-                )
-            );
+        if (!\in_array($type, [self::TYPE_ALERT, self::TYPE_BACKGROUND], true)) {
+            throw new \InvalidArgumentException(\sprintf(
+                'Invalid priority "%d". Can be "%s" or "%s".',
+                $type,
+                self::TYPE_BACKGROUND,
+                self::TYPE_ALERT
+            ));
         }
 
         $this->value = $type;

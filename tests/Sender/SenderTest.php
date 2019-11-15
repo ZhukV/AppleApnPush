@@ -19,12 +19,13 @@ use Apple\ApnPush\Model\Payload;
 use Apple\ApnPush\Model\Receiver;
 use Apple\ApnPush\Protocol\ProtocolInterface;
 use Apple\ApnPush\Sender\Sender;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
 class SenderTest extends TestCase
 {
     /**
-     * @var ProtocolInterface|\PHPUnit_Framework_MockObject_MockObject
+     * @var ProtocolInterface|MockObject
      */
     private $protocol;
 
@@ -36,7 +37,7 @@ class SenderTest extends TestCase
     /**
      * {@inheritdoc}
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->protocol = $this->createMock(ProtocolInterface::class);
         $this->sender = new Sender($this->protocol);
