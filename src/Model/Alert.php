@@ -74,7 +74,6 @@ class Alert
     {
         $cloned = clone $this;
 
-        $cloned->titleLocalized = new Localized('');
         $cloned->title = $title;
 
         return $cloned;
@@ -91,7 +90,6 @@ class Alert
     {
         $cloned = clone $this;
 
-        $cloned->title = '';
         $cloned->titleLocalized = $localized;
 
         return $cloned;
@@ -128,7 +126,6 @@ class Alert
     {
         $cloned = clone $this;
 
-        $cloned->bodyLocalized = new Localized('');
         $cloned->body = $body;
 
         return $cloned;
@@ -145,7 +142,6 @@ class Alert
     {
         $cloned = clone $this;
 
-        $cloned->body = '';
         $cloned->bodyLocalized = $localized;
 
         return $cloned;
