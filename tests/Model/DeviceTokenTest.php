@@ -18,12 +18,12 @@ class DeviceTokenTest extends TestCase
 {
     /**
      * @test
-     *
-     * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessage Invalid device token "some".
      */
     public function shouldThrowsExceptionIfTokenIsInvalid()
     {
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage('Invalid device token "some".');
+
         new DeviceToken('some');
     }
 

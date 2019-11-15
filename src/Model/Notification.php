@@ -58,7 +58,7 @@ class Notification
      * @param CollapseId|null $collapseId
      * @param PushType|null   $pushType
      */
-    public function __construct(Payload $payload, ?ApnId $apnId = null, ?Priority $priority = null, ?Expiration $expiration = null, ?CollapseId $collapseId = null, ?PushType $pushType = null)
+    public function __construct(Payload $payload, ApnId $apnId = null, Priority $priority = null, Expiration $expiration = null, CollapseId $collapseId = null, PushType $pushType = null)
     {
         $this->payload = $payload;
         $this->priority = $priority;

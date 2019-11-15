@@ -37,7 +37,7 @@ class CurlHttpSender implements HttpSenderInterface
         $this->initializeCurlResource();
         $this->prepareCurlResourceByRequest($request);
 
-        $content = curl_exec($this->resource);
+        $content = \curl_exec($this->resource);
 
         if (false === $content) {
             throw new HttpSenderException(sprintf(
@@ -47,7 +47,7 @@ class CurlHttpSender implements HttpSenderInterface
             ));
         }
 
-        $statusCode = (int) curl_getinfo($this->resource, CURLINFO_HTTP_CODE);
+        $statusCode = (int) \curl_getinfo($this->resource, CURLINFO_HTTP_CODE);
 
         return new Response($statusCode, (string) $content);
     }
@@ -57,7 +57,7 @@ class CurlHttpSender implements HttpSenderInterface
      */
     public function close(): void
     {
-        curl_close($this->resource);
+        \curl_close($this->resource);
         $this->resource = null;
     }
 
@@ -67,11 +67,11 @@ class CurlHttpSender implements HttpSenderInterface
     private function initializeCurlResource(): void
     {
         if (!$this->resource) {
-            $this->resource = curl_init();
+            $this->resource = \curl_init();
 
-            curl_setopt($this->resource, CURLOPT_RETURNTRANSFER, 1);
-            curl_setopt($this->resource, CURLOPT_POST, 1);
-            curl_setopt($this->resource, CURLOPT_HTTP_VERSION, 3);
+            \curl_setopt($this->resource, CURLOPT_RETURNTRANSFER, 1);
+            \curl_setopt($this->resource, CURLOPT_POST, 1);
+            \curl_setopt($this->resource, CURLOPT_HTTP_VERSION, 3);
         }
     }
 
@@ -82,20 +82,20 @@ class CurlHttpSender implements HttpSenderInterface
      */
     private function prepareCurlResourceByRequest(Request $request): void
     {
-        curl_setopt($this->resource, CURLOPT_URL, $request->getUrl());
-        curl_setopt($this->resource, CURLOPT_POSTFIELDS, $request->getContent());
+        \curl_setopt($this->resource, CURLOPT_URL, $request->getUrl());
+        \curl_setopt($this->resource, CURLOPT_POSTFIELDS, $request->getContent());
 
         if ($request->getCertificate()) {
-            curl_setopt($this->resource, CURLOPT_SSLCERT, $request->getCertificate());
-            curl_setopt($this->resource, CURLOPT_SSLCERTPASSWD, $request->getCertificatePassPhrase());
+            \curl_setopt($this->resource, CURLOPT_SSLCERT, $request->getCertificate());
+            \curl_setopt($this->resource, CURLOPT_SSLCERTPASSWD, $request->getCertificatePassPhrase());
         }
 
         $inlineHeaders = [];
 
         foreach ($request->getHeaders() as $name => $value) {
-            $inlineHeaders[] = sprintf('%s: %s', $name, $value);
+            $inlineHeaders[] = \sprintf('%s: %s', $name, $value);
         }
 
-        curl_setopt($this->resource, CURLOPT_HTTPHEADER, $inlineHeaders);
+        \curl_setopt($this->resource, CURLOPT_HTTPHEADER, $inlineHeaders);
     }
 }

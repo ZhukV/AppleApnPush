@@ -32,8 +32,8 @@ class ApnId
      */
     public function __construct(string $value)
     {
-        if (!preg_match('/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/', $value)) {
-            throw new \InvalidArgumentException(sprintf(
+        if (!\preg_match('/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/', $value)) {
+            throw new \InvalidArgumentException(\sprintf(
                 'Invalid UUID identifier "%s".',
                 $value
             ));

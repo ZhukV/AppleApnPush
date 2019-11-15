@@ -100,22 +100,23 @@ class ContentCertificate implements CertificateInterface
     {
         $tmpDir = $this->tmpDir;
 
-        $tmpFileName = md5(uniqid((string) mt_rand(), true)).'.pem';
+        $tmpFileName = \md5(\uniqid((string) \mt_rand(), true)).'.pem';
 
         $tmpFilePath = $tmpDir.'/'.$tmpFileName;
 
         $errorCode = $errorMessage = null;
 
-        set_error_handler(function ($errCode, $errMessage) use (&$errorCode, &$errorMessage) {
+        \set_error_handler(function ($errCode, $errMessage) use (&$errorCode, &$errorMessage) {
             $errorCode = $errCode;
             $errorMessage = $errMessage;
         });
 
-        if (!file_exists($tmpDir)) {
-            mkdir($tmpDir, 0600, true);
+        if (!\file_exists($tmpDir)) {
+            \mkdir($tmpDir, 0600, true);
 
             if ($errorCode || $errorMessage) {
-                restore_error_handler();
+                \restore_error_handler();
+
                 // Error create directory
                 throw new \RuntimeException(sprintf(
                     'Can not create temporary directory "%s". Error: %s [%d].',
@@ -126,10 +127,10 @@ class ContentCertificate implements CertificateInterface
             }
         }
 
-        touch($tmpFilePath);
+        \touch($tmpFilePath);
 
         if ($errorCode || $errorMessage) {
-            restore_error_handler();
+            \restore_error_handler();
 
             // Error create file
             throw new \RuntimeException(sprintf(
@@ -140,7 +141,7 @@ class ContentCertificate implements CertificateInterface
             ));
         }
 
-        restore_error_handler();
+        \restore_error_handler();
 
         return $tmpFilePath;
     }
@@ -153,11 +154,11 @@ class ContentCertificate implements CertificateInterface
     private function removeTemporaryFile($filePath): void
     {
         // Set custom error handler for suppress error
-        set_error_handler(function () {
+        \set_error_handler(function () {
         });
 
-        unlink($filePath);
+        \unlink($filePath);
 
-        restore_error_handler();
+        \restore_error_handler();
     }
 }

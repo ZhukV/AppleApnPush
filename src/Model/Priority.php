@@ -32,8 +32,8 @@ class Priority
      */
     public function __construct(int $priority)
     {
-        if (!in_array($priority, [5, 10], true)) {
-            throw new \InvalidArgumentException(sprintf(
+        if (!\in_array($priority, [5, 10], true)) {
+            throw new \InvalidArgumentException(\sprintf(
                 'Invalid priority "%d". Can be 5 or 10.',
                 $priority
             ));

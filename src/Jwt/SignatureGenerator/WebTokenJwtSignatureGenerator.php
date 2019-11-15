@@ -69,7 +69,7 @@ class WebTokenJwtSignatureGenerator implements SignatureGeneratorInterface
 
         $claims = [
             'iss' => $jwt->getTeamId(),
-            'iat' => time(),
+            'iat' => \time(),
         ];
 
         $header = [

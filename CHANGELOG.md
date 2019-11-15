@@ -1,3 +1,14 @@
+## v3.0.7
+
+### Features
+
+* Add possible for make a aps without alert for send a [background notification](https://developer.apple.com/documentation/usernotifications/setting_up_a_remote_notification_server/pushing_background_updates_to_your_app).
+* Update phpunit package version to `8.*`.
+
+### Impact
+
+Make changes without impact.
+
 ## v3.0.6
 
 ### Features

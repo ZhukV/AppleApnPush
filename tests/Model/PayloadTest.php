@@ -65,12 +65,12 @@ class PayloadTest extends TestCase
 
     /**
      * @test
-     *
-     * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessage The custom data value should be a scalar or \JsonSerializable instance, but "stdClass" given.
      */
     public function shouldThrowExceptionIfTrySetInvalidCustomData()
     {
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage('The custom data value should be a scalar or \JsonSerializable instance, but "stdClass" given.');
+
         $payload = new Payload(new Aps(new Alert()));
         $payload->withCustomData('some', new \stdClass());
     }

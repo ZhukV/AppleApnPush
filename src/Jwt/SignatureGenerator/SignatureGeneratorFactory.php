@@ -36,7 +36,7 @@ class SignatureGeneratorFactory
      */
     public static function addResolver(callable $resolver): void
     {
-        array_unshift(self::$resolvers, $resolver);
+        \array_unshift(self::$resolvers, $resolver);
     }
 
     /**
@@ -90,7 +90,7 @@ class SignatureGeneratorFactory
         ];
 
         foreach ($requiredClasses as $requiredClass) {
-            if (!class_exists($requiredClass)) {
+            if (!\class_exists($requiredClass)) {
                 return null;
             }
         }
@@ -111,7 +111,7 @@ class SignatureGeneratorFactory
         ];
 
         foreach ($requiredClasses as $requiredClass) {
-            if (!class_exists($requiredClass)) {
+            if (!\class_exists($requiredClass)) {
                 return null;
             }
         }

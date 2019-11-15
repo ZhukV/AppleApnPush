@@ -99,7 +99,7 @@ class ContentJwt implements JwtInterface
         }
 
         $this->certificateFilePath = $this->createTemporaryFile();
-        file_put_contents($this->certificateFilePath, $this->content);
+        \file_put_contents($this->certificateFilePath, $this->content);
 
         return $this->certificateFilePath;
     }
@@ -115,22 +115,23 @@ class ContentJwt implements JwtInterface
     {
         $tmpDir = $this->tmpDir;
 
-        $tmpFileName = md5(uniqid((string) mt_rand(), true)).'.p8';
+        $tmpFileName = \md5(\uniqid((string) \mt_rand(), true)).'.p8';
 
         $tmpFilePath = $tmpDir.'/'.$tmpFileName;
 
         $errorCode = $errorMessage = null;
 
-        set_error_handler(function ($errCode, $errMessage) use (&$errorCode, &$errorMessage) {
+        \set_error_handler(function ($errCode, $errMessage) use (&$errorCode, &$errorMessage) {
             $errorCode = $errCode;
             $errorMessage = $errMessage;
         });
 
-        if (!file_exists($tmpDir)) {
-            mkdir($tmpDir, 0600, true);
+        if (!\file_exists($tmpDir)) {
+            \mkdir($tmpDir, 0600, true);
 
             if ($errorCode || $errorMessage) {
-                restore_error_handler();
+                \restore_error_handler();
+
                 // Error create directory
                 throw new \RuntimeException(sprintf(
                     'Can not create temporary directory "%s". Error: %s [%d].',
@@ -141,10 +142,10 @@ class ContentJwt implements JwtInterface
             }
         }
 
-        touch($tmpFilePath);
+        \touch($tmpFilePath);
 
         if ($errorCode || $errorMessage) {
-            restore_error_handler();
+            \restore_error_handler();
 
             // Error create file
             throw new \RuntimeException(sprintf(
@@ -155,7 +156,7 @@ class ContentJwt implements JwtInterface
             ));
         }
 
-        restore_error_handler();
+        \restore_error_handler();
 
         return $tmpFilePath;
     }
@@ -168,11 +169,11 @@ class ContentJwt implements JwtInterface
     private function removeTemporaryFile($filePath): void
     {
         // Set custom error handler for suppress error
-        set_error_handler(function () {
+        \set_error_handler(function () {
         });
 
-        unlink($filePath);
+        \unlink($filePath);
 
-        restore_error_handler();
+        \restore_error_handler();
     }
 }
