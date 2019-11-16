@@ -93,7 +93,7 @@ class PayloadEncoder implements PayloadEncoderInterface
             $data['loc-key'] = $alert->getBodyLocalized()->getKey();
             $data['loc-args'] = $alert->getBodyLocalized()->getArgs();
         }
-        
+
         if ($alert->getBody() || !$alert->getBodyLocalized()->getKey()) {
             $data['body'] = $alert->getBody();
         }
@@ -102,7 +102,7 @@ class PayloadEncoder implements PayloadEncoderInterface
             $data['title-loc-key'] = $alert->getTitleLocalized()->getKey();
             $data['title-loc-args'] = $alert->getTitleLocalized()->getArgs();
         }
-        
+
         if ($alert->getTitle()) {
             $data['title'] = $alert->getTitle();
         }
