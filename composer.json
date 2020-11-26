@@ -38,5 +38,12 @@
 
     "config": {
         "bin-dir": "bin"
+    },
+
+    "extra": {
+        "thanks": {
+            "name": "apple/apn-push",
+            "url": "https://github.com/ZhukV/AppleApnPush"
+        }
     }
 }
