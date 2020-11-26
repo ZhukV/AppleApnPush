@@ -13,6 +13,7 @@ namespace Tests\Apple\ApnPush\Model;
 
 use Apple\ApnPush\Model\Alert;
 use Apple\ApnPush\Model\Aps;
+use Apple\ApnPush\Model\Sound;
 use PHPUnit\Framework\TestCase;
 
 class ApsTest extends TestCase
@@ -20,7 +21,7 @@ class ApsTest extends TestCase
     /**
      * @test
      */
-    public function shouldSuccessCreate()
+    public function shouldSuccessCreate(): void
     {
         $aps = new Aps(new Alert());
 
@@ -33,55 +34,67 @@ class ApsTest extends TestCase
     /**
      * @test
      */
-    public function shouldSuccessChangeAlert()
+    public function shouldSuccessChangeAlert(): void
     {
         $aps = new Aps(new Alert());
         $apsWithChangedAlert = $aps->withAlert(new Alert('some'));
 
         self::assertEquals(new Alert('some'), $apsWithChangedAlert->getAlert());
-        self::assertNotEquals(spl_object_hash($aps), spl_object_hash($apsWithChangedAlert));
+        self::assertNotEquals(\spl_object_hash($aps), \spl_object_hash($apsWithChangedAlert));
     }
 
     /**
      * @test
      */
-    public function shouldSuccessChangeCategory()
+    public function shouldSuccessChangeCategory(): void
     {
         $aps = new Aps(new Alert());
         $apsWithChangedCategory = $aps->withCategory('some');
 
         self::assertEquals('some', $apsWithChangedCategory->getCategory());
-        self::assertNotEquals(spl_object_hash($aps), spl_object_hash($apsWithChangedCategory));
+        self::assertNotEquals(\spl_object_hash($aps), \spl_object_hash($apsWithChangedCategory));
     }
 
     /**
      * @test
      */
-    public function shouldSuccessChangeSound()
+    public function shouldSuccessChangeSoundIfSoundString(): void
     {
         $aps = new Aps(new Alert());
         $apsWithChangedSound = $aps->withSound('some');
 
         self::assertEquals('some', $apsWithChangedSound->getSound());
-        self::assertNotEquals(spl_object_hash($aps), spl_object_hash($apsWithChangedSound));
+        self::assertNotEquals(\spl_object_hash($aps), \spl_object_hash($apsWithChangedSound));
     }
 
     /**
      * @test
      */
-    public function shouldSuccessChangeBadge()
+    public function shouldSuccessChangeSoundIfSoundObject(): void
+    {
+        $aps = new Aps(new Alert());
+        $apsWithChangedSound = $aps->withSound(new Sound('foo', 0.5, true));
+
+        self::assertEquals(new Sound('foo', 0.5, true), $apsWithChangedSound->getSound());
+        self::assertNotEquals(\spl_object_hash($aps), \spl_object_hash($apsWithChangedSound));
+    }
+
+    /**
+     * @test
+     */
+    public function shouldSuccessChangeBadge(): void
     {
         $aps = new Aps(new Alert());
         $apsWithChangedBadge = $aps->withBadge(123);
 
         self::assertEquals(123, $apsWithChangedBadge->getBadge());
-        self::assertNotEquals(spl_object_hash($aps), spl_object_hash($apsWithChangedBadge));
+        self::assertNotEquals(\spl_object_hash($aps), \spl_object_hash($apsWithChangedBadge));
     }
 
     /**
      * @test
      */
-    public function shouldSuccessChangeContentAvailable()
+    public function shouldSuccessChangeContentAvailable(): void
     {
         $aps = new Aps(new Alert());
         $apsWithChangedContentAvailable = $aps->withContentAvailable(true);
@@ -93,7 +106,7 @@ class ApsTest extends TestCase
     /**
      * @test
      */
-    public function shouldSuccessChangeMutableContent()
+    public function shouldSuccessChangeMutableContent(): void
     {
         $aps = new Aps(new Alert());
         $apsWithChangedMutableContent = $aps->withMutableContent(true);
@@ -105,12 +118,12 @@ class ApsTest extends TestCase
     /**
      * @test
      */
-    public function shouldSuccessChangeThread()
+    public function shouldSuccessChangeThread(): void
     {
         $aps = new Aps(new Alert());
         $apsWithChangedThread = $aps->withThreadId('some');
 
         self::assertEquals('some', $apsWithChangedThread->getThreadId());
-        self::assertNotEquals(spl_object_hash($aps), spl_object_hash($apsWithChangedThread));
+        self::assertNotEquals(\spl_object_hash($aps), \spl_object_hash($apsWithChangedThread));
     }
 }

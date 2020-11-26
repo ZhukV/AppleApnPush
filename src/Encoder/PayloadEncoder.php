@@ -16,6 +16,7 @@ namespace Apple\ApnPush\Encoder;
 use Apple\ApnPush\Model\Alert;
 use Apple\ApnPush\Model\Aps;
 use Apple\ApnPush\Model\Payload;
+use Apple\ApnPush\Model\Sound;
 
 /**
  * The encoder for encode notification payload to string for next send to Apple Push Notification Service
@@ -52,7 +53,18 @@ class PayloadEncoder implements PayloadEncoderInterface
         }
 
         if ($aps->getSound()) {
-            $data['sound'] = $aps->getSound();
+            $sound = $aps->getSound();
+
+            if ($sound instanceof Sound) {
+                $data['sound'] = [
+                    'critical' => $sound->isCritical() ? 1 : 0,
+                    'name'     => $sound->getName(),
+                    'volume'   => $sound->getVolume(),
+                ];
+            } else {
+                // Sound pass as string
+                $data['sound'] = $sound;
+            }
         }
 
         if ($aps->getBadge() !== null) {
