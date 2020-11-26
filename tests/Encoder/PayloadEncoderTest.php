@@ -16,6 +16,7 @@ use Apple\ApnPush\Model\Alert;
 use Apple\ApnPush\Model\Aps;
 use Apple\ApnPush\Model\Localized;
 use Apple\ApnPush\Model\Payload;
+use Apple\ApnPush\Model\Sound;
 use PHPUnit\Framework\TestCase;
 
 class PayloadEncoderTest extends TestCase
@@ -36,7 +37,7 @@ class PayloadEncoderTest extends TestCase
     /**
      * @test
      */
-    public function shouldSuccessEncodeWithBody()
+    public function shouldSuccessEncodeWithBody(): void
     {
         $alert = new Alert();
         $alert = $alert->withBody('some');
@@ -50,7 +51,7 @@ class PayloadEncoderTest extends TestCase
     /**
      * @test
      */
-    public function shouldSuccessEncodeWithLocalizedBody()
+    public function shouldSuccessEncodeWithLocalizedBody(): void
     {
         $alert = new Alert();
         $alert = $alert->withBodyLocalized(new Localized('some', ['key' => 'value']));
@@ -64,7 +65,7 @@ class PayloadEncoderTest extends TestCase
     /**
      * @test
      */
-    public function shouldSuccessEncodeWithTitle()
+    public function shouldSuccessEncodeWithTitle(): void
     {
         $alert = new Alert();
         $alert = $alert->withTitle('some');
@@ -78,7 +79,7 @@ class PayloadEncoderTest extends TestCase
     /**
      * @test
      */
-    public function shouldSuccessEncodeWithLocalizedTitle()
+    public function shouldSuccessEncodeWithLocalizedTitle(): void
     {
         $alert = new Alert();
         $alert = $alert->withLocalizedTitle(new Localized('some', ['key' => 'value']));
@@ -92,7 +93,7 @@ class PayloadEncoderTest extends TestCase
     /**
      * @test
      */
-    public function shouldSuccessEncodeWithActionLocalizedKey()
+    public function shouldSuccessEncodeWithActionLocalizedKey(): void
     {
         $alert = new Alert();
         $alert = $alert->withActionLocalized(new Localized('some'));
@@ -106,7 +107,7 @@ class PayloadEncoderTest extends TestCase
     /**
      * @test
      */
-    public function shouldSuccessEncodeWithLaunchImage()
+    public function shouldSuccessEncodeWithLaunchImage(): void
     {
         $alert = new Alert();
         $alert = $alert->withLaunchImage('some');
@@ -120,7 +121,7 @@ class PayloadEncoderTest extends TestCase
     /**
      * @test
      */
-    public function shouldSuccessEncodeWithCategory()
+    public function shouldSuccessEncodeWithCategory(): void
     {
         $aps = new Aps(new Alert());
         $aps = $aps->withCategory('some');
@@ -134,7 +135,7 @@ class PayloadEncoderTest extends TestCase
     /**
      * @test
      */
-    public function shouldSuccessEncodeWithBadge()
+    public function shouldSuccessEncodeWithBadge(): void
     {
         $aps = new Aps(new Alert());
         $aps = $aps->withBadge(11);
@@ -148,7 +149,7 @@ class PayloadEncoderTest extends TestCase
     /**
      * @test
      */
-    public function shouldSuccessEncodeWithBadgeAsZero()
+    public function shouldSuccessEncodeWithBadgeAsZero(): void
     {
         $aps = new Aps(new Alert());
         $aps = $aps->withBadge(0);
@@ -162,7 +163,7 @@ class PayloadEncoderTest extends TestCase
     /**
      * @test
      */
-    public function shouldSuccessEncodeWithSound()
+    public function shouldSuccessEncodeWithSoundAsString(): void
     {
         $aps = new Aps(new Alert());
         $aps = $aps->withSound('some');
@@ -176,7 +177,24 @@ class PayloadEncoderTest extends TestCase
     /**
      * @test
      */
-    public function shouldSuccessEncodeWithContentAvailable()
+    public function shouldSuccessEncodeWithSoundAsObject(): void
+    {
+        $aps = new Aps(new Alert());
+        $aps = $aps->withSound(new Sound('foo', 0.55, true));
+
+        $payload = new Payload($aps);
+        $encoded = $this->encoder->encode($payload);
+
+        self::assertEquals(
+            '{"aps":{"alert":{"body":""},"sound":{"critical":1,"name":"foo","volume":0.55}}}',
+            $encoded
+        );
+    }
+
+    /**
+     * @test
+     */
+    public function shouldSuccessEncodeWithContentAvailable(): void
     {
         $aps = new Aps();
         $aps = $aps->withContentAvailable(true);
@@ -190,7 +208,7 @@ class PayloadEncoderTest extends TestCase
     /**
      * @test
      */
-    public function shouldSuccessEncodeWithMutableContent()
+    public function shouldSuccessEncodeWithMutableContent(): void
     {
         $aps = new Aps(new Alert());
         $aps = $aps->withMutableContent(true);
@@ -204,7 +222,7 @@ class PayloadEncoderTest extends TestCase
     /**
      * @test
      */
-    public function shouldSuccessEncodeWithThreadId()
+    public function shouldSuccessEncodeWithThreadId(): void
     {
         $aps = new Aps(new Alert());
         $aps = $aps->withThreadId('123');
@@ -218,7 +236,7 @@ class PayloadEncoderTest extends TestCase
     /**
      * @test
      */
-    public function shouldSuccessEncodeWithCustomData()
+    public function shouldSuccessEncodeWithCustomData(): void
     {
         $aps = new Aps(new Alert());
         $payload = new Payload($aps);

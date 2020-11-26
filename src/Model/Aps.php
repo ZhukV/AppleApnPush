@@ -29,7 +29,7 @@ class Aps
     private $badge = null;
 
     /**
-     * @var string
+     * @var string|Sound
      */
     private $sound = '';
 
@@ -40,7 +40,7 @@ class Aps
 
     /**
      * @var bool
-    */
+     */
     private $mutableContent = false;
 
     /**
@@ -118,12 +118,20 @@ class Aps
     /**
      * Set sound
      *
-     * @param string $sound
+     * @param string|Sound $sound
      *
      * @return Aps
      */
-    public function withSound(string $sound): Aps
+    public function withSound($sound): Aps
     {
+        if (!\is_string($sound) && !$sound instanceof Sound) {
+            throw new \InvalidArgumentException(\sprintf(
+                'Sound must be a string or %s object, but "%s" given.',
+                Sound::class,
+                \is_object($sound) ? \get_class($sound) : \gettype($sound)
+            ));
+        }
+
         $cloned = clone $this;
 
         $cloned->sound = $sound;
@@ -134,9 +142,9 @@ class Aps
     /**
      * Get sound
      *
-     * @return string
+     * @return string|Sound
      */
-    public function getSound(): string
+    public function getSound()
     {
         return $this->sound;
     }
