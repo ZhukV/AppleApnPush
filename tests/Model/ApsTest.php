@@ -82,6 +82,19 @@ class ApsTest extends TestCase
     /**
      * @test
      */
+    public function shouldThrowExceptionIfSetInvalidSound(): void
+    {
+        $aps = new Aps(new Alert());
+
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage('Sound must be a string or Apple\ApnPush\Model\Sound object, but "stdClass" given.');
+
+        $aps->withSound(new \stdClass());
+    }
+
+    /**
+     * @test
+     */
     public function shouldSuccessChangeBadge(): void
     {
         $aps = new Aps(new Alert());

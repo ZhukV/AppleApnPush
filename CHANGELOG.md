@@ -1,3 +1,13 @@
+## v3.0.8
+
+### Features
+
+* Add possible to send sound as an [object](https://developer.apple.com/documentation/usernotifications/setting_up_a_remote_notification_server/generating_a_remote_notification#2990112).
+
+### Impact
+
+Make changes without impact. 
+
 ## v3.0.7
 
 ### Features
