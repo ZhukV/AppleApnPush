@@ -1,0 +1,66 @@
+name: Testing
+
+on:
+    push:
+    pull_request:
+
+jobs:
+    code-style:
+        name: Check code style
+        runs-on: ubuntu-latest
+
+        steps:
+            -   name: Checkout
+                uses: actions/checkout@v2
+
+            -   name: Setup PHP
+                uses: shivammathur/setup-php@v2
+                with:
+                    coverage: "none"
+                    extensions: "json"
+                    php-version: "7.2"
+                    tools: "composer"
+
+            -   name: Install vendors
+                run: composer install --prefer-dist
+
+            -   name: Configure PHPCS
+                run: bin/phpcs --config-set show_warnings 0
+
+            -   name: Check style on sources
+                run: bin/phpcs --standard=vendor/escapestudios/symfony2-coding-standard/Symfony/ src/
+
+            -   name: Check style on tests
+                run: bin/phpcs --standard=tests/phpcs-ruleset.xml tests/
+
+    tests:
+        name: Run tests
+        runs-on: ubuntu-latest
+
+        strategy:
+            matrix:
+                php: [ '7.2', '7.4' ]
+
+        steps:
+            -   name: Checkout
+                uses: actions/checkout@v2
+
+            -   name: Setup PHP
+                uses: shivammathur/setup-php@v2
+                with:
+                    coverage: "none"
+                    extensions: "json"
+                    php-version: "${{ matrix.php }}"
+                    tools: "composer"
+
+            -   name: Install vendors (stable)
+                run: composer install --prefer-dist
+
+            -   name: Run tests
+                run: bin/phpunit
+
+            -   name: Install vendors (lowest)
+                run: composer update --prefer-lowest
+
+            -   name: Run tests
+                run: bin/phpunit
