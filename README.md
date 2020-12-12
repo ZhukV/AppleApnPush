@@ -56,7 +56,7 @@ The source of the documentation is stored in the `docs` folder in this package:
 License
 -------
 
-This library is under the MIT license. See the complete license in library
+This library is under the MIT license. See the complete license in library.
 
 ```
 LICENSE
