@@ -21,7 +21,7 @@ class PayloadTest extends TestCase
     /**
      * @test
      */
-    public function shouldSuccessCreate()
+    public function shouldSuccessCreate(): void
     {
         $payload = new Payload(new Aps(new Alert()));
 
@@ -32,7 +32,7 @@ class PayloadTest extends TestCase
     /**
      * @test
      */
-    public static function shouldSuccessCreateWithBody()
+    public static function shouldSuccessCreateWithBody(): void
     {
         $payload = Payload::createWithBody('some');
 
@@ -42,7 +42,7 @@ class PayloadTest extends TestCase
     /**
      * @test
      */
-    public function shouldSuccessChangeAps()
+    public function shouldSuccessChangeAps(): void
     {
         $payload = new Payload(new Aps(new Alert()));
         $payloadWithChangedAps = $payload->withAps(new Aps(new Alert('some')));
@@ -54,7 +54,7 @@ class PayloadTest extends TestCase
     /**
      * @test
      */
-    public function shouldSuccessChangeCustomData()
+    public function shouldSuccessChangeCustomData(): void
     {
         $payload = new Payload(new Aps(new Alert()));
         $payloadWithChangedCustomData = $payload->withCustomData('some', 'value');
@@ -66,7 +66,7 @@ class PayloadTest extends TestCase
     /**
      * @test
      */
-    public function shouldThrowExceptionIfTrySetInvalidCustomData()
+    public function shouldThrowExceptionIfTrySetInvalidCustomData(): void
     {
         $this->expectException(\InvalidArgumentException::class);
         $this->expectExceptionMessage('The custom data value should be a scalar or \JsonSerializable instance, but "stdClass" given.');

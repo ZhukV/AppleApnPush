@@ -38,7 +38,7 @@ class AddExpirationHeaderVisitorTest extends TestCase
     /**
      * @test
      */
-    public function shouldAddHeaderForExpiration()
+    public function shouldAddHeaderForExpiration(): void
     {
         $storeTo = new \DateTime();
 
@@ -58,7 +58,7 @@ class AddExpirationHeaderVisitorTest extends TestCase
     /**
      * @test
      */
-    public function shouldAddHeaderForZeroExpiration()
+    public function shouldAddHeaderForZeroExpiration(): void
     {
         $payload = new Payload(new Aps(new Alert()));
         $notification = new Notification($payload, null, null, new Expiration());
@@ -76,7 +76,7 @@ class AddExpirationHeaderVisitorTest extends TestCase
     /**
      * @test
      */
-    public function shouldNotAddHeaderForExpiration()
+    public function shouldNotAddHeaderForExpiration(): void
     {
         $payload = new Payload(new Aps(new Alert()));
         $notification = new Notification($payload);

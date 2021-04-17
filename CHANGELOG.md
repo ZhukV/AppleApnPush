@@ -1,6 +1,7 @@
 ## v3.1.0
 
 * Add support PHP 8.
+* Add cached JWT signature generator (require any [cache adapter](https://packagist.org/packages/psr/simple-cache) based on [PSR-16](https://www.php-fig.org/psr/psr-16/)).
 
 ## v3.0.10
 

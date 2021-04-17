@@ -19,7 +19,7 @@ class CollapseIdTest extends TestCase
     /**
      * @test
      */
-    public function shouldSuccessCreate()
+    public function shouldSuccessCreate(): void
     {
         $collapseId = new CollapseId('some');
 
@@ -29,7 +29,7 @@ class CollapseIdTest extends TestCase
     /**
      * @test
      */
-    public function shouldThrowExceptionIfValueIsInvalid()
+    public function shouldThrowExceptionIfValueIsInvalid(): void
     {
         $this->expectException(\InvalidArgumentException::class);
         $this->expectExceptionMessage('The apns-collapse-id cannot be larger than 64 bytes.');

@@ -19,7 +19,7 @@ class LocalizedTest extends TestCase
     /**
      * @test
      */
-    public function shouldSuccessCreate()
+    public function shouldSuccessCreate(): void
     {
         $localized = new Localized('some', ['key' => 'value']);
 

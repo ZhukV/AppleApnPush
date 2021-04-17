@@ -27,7 +27,7 @@ class NotificationTest extends TestCase
     /**
      * @test
      */
-    public function shouldSuccessCreate()
+    public function shouldSuccessCreate(): void
     {
         $notification = new Notification($this->createPayload());
 
@@ -40,7 +40,7 @@ class NotificationTest extends TestCase
     /**
      * @test
      */
-    public function shouldSuccessCreateWithBody()
+    public function shouldSuccessCreateWithBody(): void
     {
         $notification = Notification::createWithBody('some');
 
@@ -50,7 +50,7 @@ class NotificationTest extends TestCase
     /**
      * @test
      */
-    public function shouldSuccessChangePayload()
+    public function shouldSuccessChangePayload(): void
     {
         $notification = new Notification($this->createPayload());
         $notificationWithChangedPayload = $notification->withPayload(new Payload(new Aps(new Alert('some'))));
@@ -62,7 +62,7 @@ class NotificationTest extends TestCase
     /**
      * @test
      */
-    public function shouldSuccessChangeApnId()
+    public function shouldSuccessChangeApnId(): void
     {
         $notification = new Notification($this->createPayload());
         $notificationWithChangedApnId = $notification->withApnId(new ApnId('550e8400-e29b-41d4-a716-446655440000'));
@@ -74,7 +74,7 @@ class NotificationTest extends TestCase
     /**
      * @test
      */
-    public function shouldSuccessChangePriority()
+    public function shouldSuccessChangePriority(): void
     {
         $notification = new Notification($this->createPayload());
         $notificationWithChangedPriority = $notification->withPriority(new Priority(5));
@@ -86,7 +86,7 @@ class NotificationTest extends TestCase
     /**
      * @test
      */
-    public function shouldSuccessChangeExpiration()
+    public function shouldSuccessChangeExpiration(): void
     {
         $now = new \DateTime();
 
@@ -100,7 +100,7 @@ class NotificationTest extends TestCase
     /**
      * @test
      */
-    public function shouldSuccessChangeCollapseId()
+    public function shouldSuccessChangeCollapseId(): void
     {
         $notification = new Notification($this->createPayload());
         $notificationWithChangedCollapseId = $notification->withCollapseId(new CollapseId('some'));
@@ -112,7 +112,7 @@ class NotificationTest extends TestCase
     /**
      * @test
      */
-    public function shouldSuccessChangePushType()
+    public function shouldSuccessChangePushType(): void
     {
         $notification = new Notification($this->createPayload());
         $notificationWithChangedPushType = $notification->withPushType(PushType::alert());

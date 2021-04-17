@@ -19,7 +19,7 @@ class ApnIdTest extends TestCase
     /**
      * @test
      */
-    public function shouldThrowsExceptionIfIdIsInvalid()
+    public function shouldThrowsExceptionIfIdIsInvalid(): void
     {
         $this->expectException(\InvalidArgumentException::class);
         $this->expectExceptionMessage('Invalid UUID identifier "asd".');
@@ -30,7 +30,7 @@ class ApnIdTest extends TestCase
     /**
      * @test
      */
-    public function shouldSuccessCreateFromId()
+    public function shouldSuccessCreateFromId(): void
     {
         $id = new ApnId('6c109fec-9123-11e6-ae22-56b6b6499611');
 

@@ -19,7 +19,7 @@ class ContentCertificateTest extends TestCase
     /**
      * @test
      */
-    public function shouldSuccessCreateContentCertificate()
+    public function shouldSuccessCreateContentCertificate(): void
     {
         $certificate = new ContentCertificate('content', 'pass', sys_get_temp_dir());
 

@@ -20,7 +20,7 @@ class AlertTest extends TestCase
     /**
      * @test
      */
-    public function shouldSuccessCreate()
+    public function shouldSuccessCreate(): void
     {
         $alert = new Alert();
 
@@ -35,7 +35,7 @@ class AlertTest extends TestCase
     /**
      * @test
      */
-    public function shouldSuccessChangeTitle()
+    public function shouldSuccessChangeTitle(): void
     {
         $alert = new Alert();
         $alertWithChangedTitle = $alert->withTitle('some');
@@ -47,7 +47,7 @@ class AlertTest extends TestCase
     /**
      * @test
      */
-    public function shouldSuccessChangeBody()
+    public function shouldSuccessChangeBody(): void
     {
         $alert = new Alert();
         $alertWithChangedBody = $alert->withBody('some');
@@ -59,7 +59,7 @@ class AlertTest extends TestCase
     /**
      * @test
      */
-    public function shouldSuccessChangeLaunchImage()
+    public function shouldSuccessChangeLaunchImage(): void
     {
         $alert = new Alert();
         $alertWithChangedLaunchImage = $alert->withLaunchImage('some.png');
@@ -71,7 +71,7 @@ class AlertTest extends TestCase
     /**
      * @test
      */
-    public function shouldSuccessChangeLocalizedTitle()
+    public function shouldSuccessChangeLocalizedTitle(): void
     {
         $alert = new Alert();
         $alertWithChangedLocalizedTitle = $alert->withLocalizedTitle(new Localized('some', ['key' => 'value']));
@@ -83,7 +83,7 @@ class AlertTest extends TestCase
     /**
      * @test
      */
-    public function shouldSuccessChangeLocalizedBody()
+    public function shouldSuccessChangeLocalizedBody(): void
     {
         $alert = new Alert();
         $alertWithChangedLocalizedBody = $alert->withBodyLocalized(new Localized('some', ['key' => 'value']));
@@ -95,7 +95,7 @@ class AlertTest extends TestCase
     /**
      * @test
      */
-    public function shouldSuccessChangeLocalizedAction()
+    public function shouldSuccessChangeLocalizedAction(): void
     {
         $alert = new Alert();
         $alertWithChangedLocalizedAction = $alert->withActionLocalized(new Localized('some', ['key' => 'value']));

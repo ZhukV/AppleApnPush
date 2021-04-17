@@ -19,7 +19,7 @@ class PushTypeTest extends TestCase
     /**
      * @test
      */
-    public function shouldSuccessCreate()
+    public function shouldSuccessCreate(): void
     {
         self::assertEquals(PushType::TYPE_ALERT, (string) PushType::alert());
         self::assertEquals(PushType::TYPE_BACKGROUND, (string) PushType::background());

@@ -38,7 +38,7 @@ class AddApnIdHeaderVisitorTest extends TestCase
     /**
      * @test
      */
-    public function shouldAddHeaderForApnId()
+    public function shouldAddHeaderForApnId(): void
     {
         $payload = new Payload(new Aps(new Alert()));
         $notification = new Notification($payload, new ApnId('550e8400-e29b-41d4-a716-446655440000'));
