@@ -19,7 +19,7 @@ class PriorityTest extends TestCase
     /**
      * @test
      */
-    public function shouldFailCreate()
+    public function shouldFailCreate(): void
     {
         $this->expectException(\InvalidArgumentException::class);
         $this->expectExceptionMessage('Invalid priority "123". Can be 5 or 10.');
@@ -30,7 +30,7 @@ class PriorityTest extends TestCase
     /**
      * @test
      */
-    public function shouldSuccessCreateImmediately()
+    public function shouldSuccessCreateImmediately(): void
     {
         $priority = Priority::immediately();
 
@@ -40,7 +40,7 @@ class PriorityTest extends TestCase
     /**
      * @test
      */
-    public function shouldSuccessCreatePowerConsiderations()
+    public function shouldSuccessCreatePowerConsiderations(): void
     {
         $priority = Priority::powerConsiderations();
 

@@ -57,7 +57,7 @@ class JwtTest extends TestCase
     /**
      * @test
      */
-    public function shouldFailCreateIfFileNotFound()
+    public function shouldFailCreateIfFileNotFound(): void
     {
         $this->expectException(CertificateFileNotFoundException::class);
 

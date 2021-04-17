@@ -19,7 +19,7 @@ class ExpirationTest extends TestCase
     /**
      * @test
      */
-    public function shouldReturnZeroIfNotStore()
+    public function shouldReturnZeroIfNotStore(): void
     {
         $expiration = new Expiration();
         $value = $expiration->getValue();
@@ -30,7 +30,7 @@ class ExpirationTest extends TestCase
     /**
      * @test
      */
-    public function shouldSuccessCreate()
+    public function shouldSuccessCreate(): void
     {
         $now = new \DateTime();
         $expiration = new Expiration($now);

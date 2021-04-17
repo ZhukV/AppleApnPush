@@ -20,7 +20,7 @@ class ReceiverTest extends TestCase
     /**
      * @test
      */
-    public function shouldSuccessCreate()
+    public function shouldSuccessCreate(): void
     {
         $receiver = new Receiver(new DeviceToken('4e064d251c73cca4096b82b3fbe9abd05d239f96b91a09edb61c92322bf959ca'), 'my.topic');
 

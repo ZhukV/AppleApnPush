@@ -51,9 +51,9 @@ class JwtAuthenticator implements AuthenticatorInterface
     /**
      * Constructor.
      *
-     * @param JwtInterface                $jwt
-     * @param \DateInterval               $jwsLifetime
-     * @param SignatureGeneratorInterface $signatureGenerator
+     * @param JwtInterface                     $jwt
+     * @param \DateInterval|null               $jwsLifetime
+     * @param SignatureGeneratorInterface|null $signatureGenerator
      *
      * @throws \InvalidArgumentException
      * @throws \LogicException
@@ -83,8 +83,6 @@ class JwtAuthenticator implements AuthenticatorInterface
             $this->jwsValidTo = $this->jwsLifetime ? ($now)->add($this->jwsLifetime) : $this->jwsValidTo;
         }
 
-        $request = $request->withHeader('authorization', sprintf('bearer %s', $this->jws));
-
-        return $request;
+        return $request->withHeader('authorization', sprintf('bearer %s', $this->jws));
     }
 }

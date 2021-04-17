@@ -38,7 +38,7 @@ class AddPriorityHeaderVisitorTest extends TestCase
     /**
      * @test
      */
-    public function shouldAddHeaderForPriority()
+    public function shouldAddHeaderForPriority(): void
     {
         $payload = new Payload(new Aps(new Alert()));
         $notification = new Notification($payload, null, Priority::immediately());
@@ -56,7 +56,7 @@ class AddPriorityHeaderVisitorTest extends TestCase
     /**
      * @test
      */
-    public function shouldNotAddHeaderForPriority()
+    public function shouldNotAddHeaderForPriority(): void
     {
         $payload = new Payload(new Aps(new Alert()));
         $notification = new Notification($payload);

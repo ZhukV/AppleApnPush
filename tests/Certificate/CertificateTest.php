@@ -20,7 +20,7 @@ class CertificateTest extends TestCase
     /**
      * @test
      */
-    public function shouldFailIfCertificateNotFound()
+    public function shouldFailIfCertificateNotFound(): void
     {
         $this->expectException(CertificateFileNotFoundException::class);
         $this->expectExceptionMessage('The certificate file "/path/to/missing/certificate.pem" was not found.');
@@ -31,7 +31,7 @@ class CertificateTest extends TestCase
     /**
      * @test
      */
-    public function shouldSuccessCreate()
+    public function shouldSuccessCreate(): void
     {
         $tmpDir = \sys_get_temp_dir();
         $file = $tmpDir.'/'.\md5(\uniqid(\random_int(0, 9999), true)).'.pem';

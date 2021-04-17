@@ -23,7 +23,7 @@ class HttpProtocolChainVisitorTest extends TestCase
     /**
      * @test
      */
-    public function shouldSuccessCallsWithPriority()
+    public function shouldSuccessCallsWithPriority(): void
     {
         $notification = $this->createMock(Notification::class);
         $request = $this->createMock(Request::class);
@@ -79,7 +79,7 @@ class HttpProtocolChainVisitorTest extends TestCase
     /**
      * @test
      */
-    public function shouldNotCallNextCheckedIfPreviouslyCheckWithError()
+    public function shouldNotCallNextCheckedIfPreviouslyCheckWithError(): void
     {
         $this->expectException(\InvalidArgumentException::class);
 
@@ -114,7 +114,7 @@ class HttpProtocolChainVisitorTest extends TestCase
      *
      * @return HttpProtocolVisitorInterface|MockObject
      */
-    private function createVisitor()
+    private function createVisitor(): HttpProtocolVisitorInterface
     {
         $className = sprintf(
             'HttpProtocolVisitorInterface_%s',

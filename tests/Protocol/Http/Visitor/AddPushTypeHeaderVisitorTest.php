@@ -38,7 +38,7 @@ class AddPushTypeHeaderVisitorTest extends TestCase
     /**
      * @test
      */
-    public function shouldAddHeaderForPushType()
+    public function shouldAddHeaderForPushType(): void
     {
         $payload = new Payload(new Aps(new Alert()));
         $notification = new Notification($payload, null, null, null, null, PushType::alert());
@@ -56,7 +56,7 @@ class AddPushTypeHeaderVisitorTest extends TestCase
     /**
      * @test
      */
-    public function shouldNotAddHeaderForPriority()
+    public function shouldNotAddHeaderForPriority(): void
     {
         $payload = new Payload(new Aps(new Alert()));
         $notification = new Notification($payload);

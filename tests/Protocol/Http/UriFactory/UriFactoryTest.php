@@ -33,7 +33,7 @@ class UriFactoryTest extends TestCase
     /**
      * @test
      */
-    public function shouldSuccessCreateForProductionMode()
+    public function shouldSuccessCreateForProductionMode(): void
     {
         $token = new DeviceToken(str_repeat('af', 32));
         $uri = $this->uriFactory->create($token, false);
@@ -47,7 +47,7 @@ class UriFactoryTest extends TestCase
     /**
      * @test
      */
-    public function shouldSuccessCreateForDevelopmentMode()
+    public function shouldSuccessCreateForDevelopmentMode(): void
     {
         $token = new DeviceToken(str_repeat('aa', 32));
         $uri = $this->uriFactory->create($token, true);

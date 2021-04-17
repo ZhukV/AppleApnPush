@@ -46,7 +46,7 @@ class SenderTest extends TestCase
     /**
      * @test
      */
-    public function shouldSuccessSend()
+    public function shouldSuccessSend(): void
     {
         $token = new DeviceToken(str_repeat('af', 32));
         $receiver = new Receiver($token, 'com.domain');

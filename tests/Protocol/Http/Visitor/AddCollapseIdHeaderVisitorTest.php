@@ -38,7 +38,7 @@ class AddCollapseIdHeaderVisitorTest extends TestCase
     /**
      * @test
      */
-    public function shouldAddHeaderForCollapseId()
+    public function shouldAddHeaderForCollapseId(): void
     {
         $payload = new Payload(new Aps(new Alert()));
         $notification = new Notification($payload, null, null, null, new CollapseId('some'));
@@ -56,7 +56,7 @@ class AddCollapseIdHeaderVisitorTest extends TestCase
     /**
      * @test
      */
-    public function shouldNotAddHeaderForCollapseId()
+    public function shouldNotAddHeaderForCollapseId(): void
     {
         $payload = new Payload(new Aps(new Alert()));
         $notification = new Notification($payload);

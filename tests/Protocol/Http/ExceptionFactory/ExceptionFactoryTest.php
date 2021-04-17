@@ -65,7 +65,7 @@ class ExceptionFactoryTest extends TestCase
     /**
      * @test
      */
-    public function shouldFailIfContentNotFound()
+    public function shouldFailIfContentNotFound(): void
     {
         $this->expectException(MissingContentInResponseException::class);
         $this->expectExceptionMessage('Missing content in response.');
@@ -78,7 +78,7 @@ class ExceptionFactoryTest extends TestCase
     /**
      * @test
      */
-    public function shouldFailIfInvalidJson()
+    public function shouldFailIfInvalidJson(): void
     {
         $this->expectException(InvalidResponseException::class);
 
@@ -90,7 +90,7 @@ class ExceptionFactoryTest extends TestCase
     /**
      * @test
      */
-    public function shouldFailIfMissingReason()
+    public function shouldFailIfMissingReason(): void
     {
         $this->expectException(MissingErrorReasonInResponseException::class);
         $this->expectExceptionMessage('Missing error reason in response.');
@@ -109,7 +109,7 @@ class ExceptionFactoryTest extends TestCase
      *
      * @dataProvider provideReasons
      */
-    public function shouldSuccessCreate($reason, \Exception $expectedException, array $extra = [])
+    public function shouldSuccessCreate($reason, \Exception $expectedException, array $extra = []): void
     {
         $json = array_merge([
             'reason' => $reason,
@@ -126,7 +126,7 @@ class ExceptionFactoryTest extends TestCase
      *
      * @return array
      */
-    public function provideReasons()
+    public function provideReasons(): array
     {
         $lastUse = \DateTime::createFromFormat('!Y/m/d', '2017/01/01');
 
