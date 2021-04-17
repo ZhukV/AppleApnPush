@@ -1,4 +1,4 @@
-FROM php:7.2-cli
+FROM php:8-cli
 
 MAINTAINER Vitaliy Zhuk <v.zhukv@fivelab.org>
 

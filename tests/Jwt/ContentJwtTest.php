@@ -19,7 +19,7 @@ class ContentJwtTest extends TestCase
     /**
      * @test
      */
-    public function shouldSuccessCreate()
+    public function shouldSuccessCreate(): void
     {
         $jwt = new ContentJwt('team id', 'key', 'jwt certificate content', sys_get_temp_dir());
 
@@ -33,6 +33,10 @@ class ContentJwtTest extends TestCase
 
         unset($jwt);
 
-        self::assertFileNotExists($path);
+        if (\method_exists($this, 'assertFileDoesNotExist')) {
+            self::assertFileDoesNotExist($path);
+        } else {
+            self::assertFileNotExists($path);
+        }
     }
 }

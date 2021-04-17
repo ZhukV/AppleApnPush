@@ -1,3 +1,7 @@
+## v3.1.0
+
+* Add support PHP 8.
+
 ## v3.0.10
 
 ### Features

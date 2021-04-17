@@ -41,7 +41,7 @@ class CertificateAuthenticatorTest extends TestCase
     /**
      * @test
      */
-    public function shouldSuccessAuthenticate()
+    public function shouldSuccessAuthenticate(): void
     {
         $request = new Request('some', '{}', []);
 
