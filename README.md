@@ -33,7 +33,7 @@ Add AppleApnPush in your composer.json:
 ````json
 {
     "require": {
-        "apple/apn-push": "~3.0.0"
+        "apple/apn-push": "~3.0"
     }
 }
 ````
