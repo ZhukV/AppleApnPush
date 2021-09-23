@@ -119,6 +119,15 @@ class PayloadEncoder implements PayloadEncoderInterface
             $data['title'] = $alert->getTitle();
         }
 
+        if ($alert->getSubtitleLocalized()->getKey()) {
+            $data['subtitle-loc-key'] = $alert->getSubtitleLocalized()->getKey();
+            $data['subtitle-loc-args'] = $alert->getSubtitleLocalized()->getArgs();
+        }
+
+        if ($alert->getSubtitle()) {
+            $data['subtitle'] = $alert->getSubtitle();
+        }
+
         if ($alert->getActionLocalized()->getKey()) {
             $data['action-loc-key'] = $alert->getActionLocalized()->getKey();
         }

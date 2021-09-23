@@ -25,8 +25,10 @@ class AlertTest extends TestCase
         $alert = new Alert();
 
         self::assertEmpty($alert->getTitle());
+        self::assertEmpty($alert->getSubtitle());
         self::assertEmpty($alert->getBody());
         self::assertEquals(new Localized(''), $alert->getTitleLocalized());
+        self::assertEquals(new Localized(''), $alert->getSubtitleLocalized());
         self::assertEquals(new Localized(''), $alert->getBodyLocalized());
         self::assertEquals(new Localized(''), $alert->getActionLocalized());
         self::assertEmpty($alert->getLaunchImage());
@@ -42,6 +44,18 @@ class AlertTest extends TestCase
 
         self::assertEquals('some', $alertWithChangedTitle->getTitle());
         self::assertNotEquals(spl_object_hash($alert), spl_object_hash($alertWithChangedTitle));
+    }
+
+    /**
+     * @test
+     */
+    public function shouldSuccessChangeSubtitle(): void
+    {
+        $alert = new Alert();
+        $alertWithChangedSubtitle = $alert->withSubtitle('some');
+
+        self::assertEquals('some', $alertWithChangedSubtitle->getSubtitle());
+        self::assertNotEquals(spl_object_hash($alert), spl_object_hash($alertWithChangedSubtitle));
     }
 
     /**
@@ -78,6 +92,18 @@ class AlertTest extends TestCase
 
         self::assertEquals(new Localized('some', ['key' => 'value']), $alertWithChangedLocalizedTitle->getTitleLocalized());
         self::assertNotEquals(spl_object_hash($alert), spl_object_hash($alertWithChangedLocalizedTitle));
+    }
+
+    /**
+     * @test
+     */
+    public function shouldSuccessChangeLocalizedSubtitle(): void
+    {
+        $alert = new Alert();
+        $alertWithChangedLocalizedSubtitle = $alert->withLocalizedSubtitle(new Localized('some', ['key' => 'value']));
+
+        self::assertEquals(new Localized('some', ['key' => 'value']), $alertWithChangedLocalizedSubtitle->getSubtitleLocalized());
+        self::assertNotEquals(spl_object_hash($alert), spl_object_hash($alertWithChangedLocalizedSubtitle));
     }
 
     /**

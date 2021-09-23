@@ -93,6 +93,34 @@ class PayloadEncoderTest extends TestCase
     /**
      * @test
      */
+    public function shouldSuccessEncodeWithSubtitle(): void
+    {
+        $alert = new Alert();
+        $alert = $alert->withSubtitle('some');
+
+        $payload = new Payload(new Aps($alert));
+        $encoded = $this->encoder->encode($payload);
+
+        self::assertEquals('{"aps":{"alert":{"body":"","subtitle":"some"}}}', $encoded);
+    }
+
+    /**
+     * @test
+     */
+    public function shouldSuccessEncodeWithLocalizedSubtitle(): void
+    {
+        $alert = new Alert();
+        $alert = $alert->withLocalizedSubtitle(new Localized('some', ['key' => 'value']));
+
+        $payload = new Payload(new Aps($alert));
+        $encoded = $this->encoder->encode($payload);
+
+        self::assertEquals('{"aps":{"alert":{"body":"","subtitle-loc-key":"some","subtitle-loc-args":{"key":"value"}}}}', $encoded);
+    }
+
+    /**
+     * @test
+     */
     public function shouldSuccessEncodeWithActionLocalizedKey(): void
     {
         $alert = new Alert();
