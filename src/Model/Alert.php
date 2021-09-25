@@ -63,6 +63,7 @@ class Alert
      *
      * @param string $body
      * @param string $title
+     * @param string $subtitle
      */
     public function __construct(string $body = '', string $title = '', string $subtitle = '')
     {
@@ -126,7 +127,6 @@ class Alert
     {
         return $this->titleLocalized;
     }
-
 
 
     /**

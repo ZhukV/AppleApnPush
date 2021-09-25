@@ -1,3 +1,8 @@
+## v3.1.1
+
+* Add `subtitle` property to alert.
+
+
 ## v3.1.0
 
 * Add support PHP 8.
