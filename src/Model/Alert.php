@@ -31,6 +31,16 @@ class Alert
     /**
      * @var string
      */
+    private $subtitle;
+
+    /**
+     * @var Localized
+     */
+    private $subtitleLocalized;
+
+    /**
+     * @var string
+     */
     private $body;
 
     /**
@@ -59,6 +69,7 @@ class Alert
         $this->body = $body;
         $this->title = $title;
         $this->titleLocalized = new Localized('');
+        $this->subtitleLocalized = new Localized('');
         $this->bodyLocalized = new Localized('');
         $this->actionLocalized = new Localized('');
     }
@@ -113,6 +124,60 @@ class Alert
     public function getTitleLocalized(): Localized
     {
         return $this->titleLocalized;
+    }
+
+
+
+    /**
+     * Set subtitle
+     *
+     * @param string $subtitle
+     *
+     * @return Alert
+     */
+    public function withSubtitle(string $subtitle): Alert
+    {
+        $cloned = clone $this;
+
+        $cloned->subtitle = $subtitle;
+
+        return $cloned;
+    }
+
+    /**
+     * With localized subtitle
+     *
+     * @param Localized $localized
+     *
+     * @return Alert
+     */
+    public function withLocalizedSubtitle(Localized $localized): Alert
+    {
+        $cloned = clone $this;
+
+        $cloned->subtitleLocalized = $localized;
+
+        return $cloned;
+    }
+
+    /**
+     * Get subtitle
+     *
+     * @return string
+     */
+    public function getSubtitle(): ?string
+    {
+        return $this->subtitle;
+    }
+
+    /**
+     * Get localized subtitle
+     *
+     * @return Localized
+     */
+    public function getSubtitleLocalized(): Localized
+    {
+        return $this->subtitleLocalized;
     }
 
     /**
