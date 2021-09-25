@@ -64,10 +64,11 @@ class Alert
      * @param string $body
      * @param string $title
      */
-    public function __construct(string $body = '', string $title = '')
+    public function __construct(string $body = '', string $title = '', string $subtitle = '')
     {
         $this->body = $body;
         $this->title = $title;
+        $this->subtitle = $subtitle;
         $this->titleLocalized = new Localized('');
         $this->subtitleLocalized = new Localized('');
         $this->bodyLocalized = new Localized('');
@@ -165,7 +166,7 @@ class Alert
      *
      * @return string
      */
-    public function getSubtitle(): ?string
+    public function getSubtitle(): string
     {
         return $this->subtitle;
     }
