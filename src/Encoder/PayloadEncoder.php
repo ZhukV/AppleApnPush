@@ -87,6 +87,10 @@ class PayloadEncoder implements PayloadEncoderInterface
             $data['thread-id'] = $aps->getThreadId();
         }
 
+        if ($aps->hasUrlArgs()) {
+            $data['url-args'] = $aps->getUrlArgs();
+        }
+
         return $data;
     }
 

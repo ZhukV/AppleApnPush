@@ -54,6 +54,11 @@ class Aps
     private $threadId = '';
 
     /**
+     * @var string[]|null
+     */
+    private $urlArgs = null;
+
+    /**
      * Constructor.
      *
      * @param Alert|null $alert
@@ -251,5 +256,41 @@ class Aps
     public function getThreadId(): string
     {
         return $this->threadId;
+    }
+
+    /**
+     * Set url arguments
+     *
+     * @param array $urlArgs
+     *
+     * @return Aps
+     */
+    public function withUrlArgs(array $urlArgs): Aps
+    {
+        $cloned = clone $this;
+
+        $cloned->urlArgs = $urlArgs;
+
+        return $cloned;
+    }
+
+    /**
+     * Get url arguments
+     *
+     * @return string[]|null
+     */
+    public function getUrlArgs(): ?array
+    {
+        return $this->urlArgs;
+    }
+
+    /**
+     * Have url arguments been set (even if as an empty array).
+     *
+     * @return bool
+     */
+    public function hasUrlArgs(): bool
+    {
+        return is_array($this->urlArgs);
     }
 }

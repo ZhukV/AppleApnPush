@@ -264,6 +264,34 @@ class PayloadEncoderTest extends TestCase
     /**
      * @test
      */
+    public function shouldSuccessEncodeWithUrlArgs(): void
+    {
+        $aps = new Aps(new Alert());
+        $aps = $aps->withUrlArgs(['some', '123']);
+
+        $payload = new Payload($aps);
+        $encoded = $this->encoder->encode($payload);
+
+        self::assertEquals('{"aps":{"alert":{"body":""},"url-args":["some","123"]}}', $encoded);
+    }
+
+    /**
+     * @test
+     */
+    public function shouldSuccessEncodeWithUrlArgsEmpty(): void
+    {
+        $aps = new Aps(new Alert());
+        $aps = $aps->withUrlArgs([]);
+
+        $payload = new Payload($aps);
+        $encoded = $this->encoder->encode($payload);
+
+        self::assertEquals('{"aps":{"alert":{"body":""},"url-args":[]}}', $encoded);
+    }
+
+    /**
+     * @test
+     */
     public function shouldSuccessEncodeWithCustomData(): void
     {
         $aps = new Aps(new Alert());
