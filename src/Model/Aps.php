@@ -283,14 +283,4 @@ class Aps
     {
         return $this->urlArgs;
     }
-
-    /**
-     * Have url arguments been set (even if as an empty array).
-     *
-     * @return bool
-     */
-    public function hasUrlArgs(): bool
-    {
-        return is_array($this->urlArgs);
-    }
 }
