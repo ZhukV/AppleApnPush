@@ -29,6 +29,7 @@ class ApsTest extends TestCase
         self::assertEmpty($aps->getSound());
         self::assertEmpty($aps->getBadge());
         self::assertEmpty($aps->getThreadId());
+        self::assertEmpty($aps->getUrlArgs());
     }
 
     /**
@@ -137,6 +138,31 @@ class ApsTest extends TestCase
         $apsWithChangedThread = $aps->withThreadId('some');
 
         self::assertEquals('some', $apsWithChangedThread->getThreadId());
+        self::assertNotEquals(\spl_object_hash($aps), \spl_object_hash($apsWithChangedThread));
+    }
+
+    /**
+     * @test
+     */
+    public function shouldSuccessChangeUrlArgs(): void
+    {
+        $aps = new Aps(new Alert());
+        $apsWithChangedThread = $aps->withUrlArgs(['some', '123']);
+
+        self::assertEquals(['some', '123'], $apsWithChangedThread->getUrlArgs());
+        self::assertNotEquals(\spl_object_hash($aps), \spl_object_hash($apsWithChangedThread));
+    }
+
+    /**
+     * @test
+     */
+    public function shouldSuccessChangeUrlArgsEmpty(): void
+    {
+        $aps = new Aps(new Alert());
+        $apsWithChangedThread = $aps->withUrlArgs([]);
+
+        self::assertNull($aps->getUrlArgs());
+        self::assertEquals([], $apsWithChangedThread->getUrlArgs());
         self::assertNotEquals(\spl_object_hash($aps), \spl_object_hash($apsWithChangedThread));
     }
 }
