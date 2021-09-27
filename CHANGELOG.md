@@ -1,3 +1,7 @@
+## v3.1.2
+
+* Add `url-args` property to APS.
+
 ## v3.1.1
 
 * Add `subtitle` property to alert.
