@@ -15,10 +15,9 @@ namespace Apple\ApnPush\Jwt\SignatureGenerator;
 
 use Apple\ApnPush\Jwt\JwtInterface;
 use Jose\Component\Core\AlgorithmManager;
-use Jose\Component\Core\Converter\JsonConverter;
-use Jose\Component\Core\Converter\StandardConverter;
-use Jose\Component\KeyManagement\JWKFactory;
+use Jose\Component\Core\Util\JsonConverter;
 use Jose\Component\Signature\Algorithm\ES256;
+use Jose\Component\KeyManagement\JWKFactory;
 use Jose\Component\Signature\JWSBuilder;
 use Jose\Component\Signature\Serializer\CompactSerializer;
 use Jose\Component\Signature\Serializer\JWSSerializer;
@@ -29,15 +28,10 @@ use Jose\Component\Signature\Serializer\JWSSerializer;
  * Next libraries must be installed:
  *      - web-token/jwt-key-mgmt
  *      - web-token/jwt-core
- *      - web-token/jwt-signature
+ *      - web-token/jwt-signature-algorithm-ecdsa
  */
 class WebTokenJwtSignatureGenerator implements SignatureGeneratorInterface
 {
-    /**
-     * @var JsonConverter
-     */
-    private $jsonConverter;
-
     /**
      * @var JWSBuilder
      */
@@ -53,9 +47,9 @@ class WebTokenJwtSignatureGenerator implements SignatureGeneratorInterface
      */
     public function __construct()
     {
-        $this->jsonConverter = new StandardConverter();
-        $this->jwsBuilder = new JWSBuilder($this->jsonConverter, AlgorithmManager::create([new ES256()]));
-        $this->serializer = new CompactSerializer($this->jsonConverter);
+        $algorithmManager = new AlgorithmManager([new ES256()]);
+        $this->jwsBuilder = new JWSBuilder($algorithmManager);
+        $this->serializer = new CompactSerializer();
     }
 
     /**
@@ -77,7 +71,7 @@ class WebTokenJwtSignatureGenerator implements SignatureGeneratorInterface
             'kid' => $jwk->get('kid'),
         ];
 
-        $payload = $this->jsonConverter->encode($claims);
+        $payload = JsonConverter::encode($claims);
 
         $jws = $this->jwsBuilder
             ->create()
