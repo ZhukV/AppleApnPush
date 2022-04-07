@@ -22,6 +22,7 @@
         "phpunit/phpunit": "^8.0 | ^9.0",
         "web-token/jwt-key-mgmt": "~2.0",
         "web-token/jwt-signature": "~2.0",
+        "web-token/jwt-signature-algorithm-ecdsa": "~2.0",
         "phpmetrics/phpmetrics": "^2.0",
         "escapestudios/symfony2-coding-standard": "~3.0",
         "psr/simple-cache":  "~1.0"
@@ -30,6 +31,7 @@
     "suggest": {
         "web-token/jwt-key-mgmt": "Allow using JSON Web Token for authenticating in Provider.",
         "web-token/jwt-signature": "Allow using JSON Web Token for authenticating in Provider.",
+        "web-token/jwt-signature-algorithm-ecdsa": "Allow using JSON Web Token for authenticating in Provider.",
         "spomky-labs/jose": "Allow using JSON Web Token for authenticating in Provider (do not work with PHP 7.2)."
     },
 
