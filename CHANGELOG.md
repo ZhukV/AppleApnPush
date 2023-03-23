@@ -1,3 +1,11 @@
+## v3.1.4
+
+* Support the `liveactivity` push type.
+
+## v3.1.3
+
+* Fix works with JWM tokens.
+
 ## v3.1.2
 
 * Add `url-args` property to APS.
