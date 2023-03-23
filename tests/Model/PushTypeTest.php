@@ -23,5 +23,6 @@ class PushTypeTest extends TestCase
     {
         self::assertEquals(PushType::TYPE_ALERT, (string) PushType::alert());
         self::assertEquals(PushType::TYPE_BACKGROUND, (string) PushType::background());
+        self::assertEquals(PushType::TYPE_LIVEACTIVITY, (string) PushType::liveactivity());
     }
 }

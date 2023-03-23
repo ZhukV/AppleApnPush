@@ -21,6 +21,7 @@ final class PushType
 {
     const TYPE_ALERT      = 'alert';
     const TYPE_BACKGROUND = 'background';
+    const TYPE_LIVEACTIVITY = 'liveactivity';
 
     private $value;
 
@@ -45,6 +46,16 @@ final class PushType
     }
 
     /**
+     * Create liveactivity push-type
+     *
+     * @return PushType
+     */
+    public static function liveactivity(): PushType
+    {
+        return new self(self::TYPE_LIVEACTIVITY);
+    }
+
+    /**
      * @return string
      */
     public function __toString(): string
@@ -59,12 +70,13 @@ final class PushType
      */
     private function __construct(string $type)
     {
-        if (!\in_array($type, [self::TYPE_ALERT, self::TYPE_BACKGROUND], true)) {
+        if (!\in_array($type, [self::TYPE_ALERT, self::TYPE_BACKGROUND, self::TYPE_LIVEACTIVITY], true)) {
             throw new \InvalidArgumentException(\sprintf(
-                'Invalid priority "%d". Can be "%s" or "%s".',
+                'Invalid priority "%d". Can be "%s", "%s", or "%s".',
                 $type,
                 self::TYPE_BACKGROUND,
-                self::TYPE_ALERT
+                self::TYPE_ALERT,
+                self::TYPE_LIVEACTIVITY
             ));
         }
 
