@@ -14,14 +14,12 @@ $ cd /path/to/apple-apn-push
 $ docker build -t apple-apn-push:latest .
 
 # Run the container with shared volumes
-$ docker run -d -it --name apple-apn-push -v "${PWD}:/code" apple-apn-push
+$ docker run -it --rm --name apple-apn-push -v "${PWD}:/code" apple-apn-push bash
 ```
 
 After starting the container you can attach to the container and execute any commands:
 
 ```bash
-$ docker exec -it apple-apn-push bash
-
 # Go to code path (we share this path via -v "${PWD}:/code")
 $ cd /code
 

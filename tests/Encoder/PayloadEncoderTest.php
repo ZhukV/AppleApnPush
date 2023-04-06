@@ -310,12 +310,25 @@ class PayloadEncoderTest extends TestCase
      */
     public function shouldSuccessEncodeWithCustomApsData(): void
     {
-        $aps     = new Aps(new Alert(), ['foo' => ['bar']]);
-        $aps     = $aps->withCustomData('some', 'key');
+        $aps = new Aps(new Alert(), ['foo' => ['bar']]);
+        $aps = $aps->withCustomData('some', 'key');
         $payload = new Payload($aps);
 
         $encoded = $this->encoder->encode($payload);
 
-        self::assertEquals('{"aps":{"alert":{"body":""},"foo":["bar"],"some":"key"}}', $encoded);
+        self::assertEquals('{"aps":{"foo":["bar"],"some":"key","alert":{"body":""}}}', $encoded);
+    }
+
+    /**
+     * @test
+     */
+    public function shouldSuccessEncodeWithCustomDataAndNotReplaceOriginApsData(): void
+    {
+        $aps = new Aps(new Alert('some my body'), ['alert' => ['body' => 'replaced body']]);
+        $payload = new Payload($aps);
+
+        $encoded = $this->encoder->encode($payload);
+
+        self::assertEquals('{"aps":{"alert":{"body":"some my body"}}}', $encoded);
     }
 }

@@ -71,7 +71,7 @@ class Aps
      */
     public function __construct(Alert $alert = null, array $customData = [])
     {
-        $this->alert      = $alert;
+        $this->alert = $alert;
         $this->customData = $customData;
     }
 
@@ -294,7 +294,7 @@ class Aps
     /**
      * Get custom data
      *
-     * @return array
+     * @return array<string, mixed>
      */
     public function getCustomData(): array
     {
@@ -316,7 +316,7 @@ class Aps
         if ($value && !is_array($value) && !is_scalar($value) && !$value instanceof \JsonSerializable) {
             throw new \InvalidArgumentException(sprintf(
                 'The custom data value should be a scalar or \JsonSerializable instance, but "%s" given.',
-                is_object($value) ? get_class($value) : gettype($value)
+                \is_object($value) ? \get_class($value) : \gettype($value)
             ));
         }
 

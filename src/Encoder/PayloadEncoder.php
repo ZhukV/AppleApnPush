@@ -91,7 +91,7 @@ class PayloadEncoder implements PayloadEncoderInterface
             $data['url-args'] = $aps->getUrlArgs();
         }
 
-        return array_merge($data, $aps->getCustomData());
+        return \array_merge($aps->getCustomData(), $data);
     }
 
     /**
