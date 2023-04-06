@@ -1,3 +1,9 @@
+# CHANGELOG
+
+## v3.1.5
+
+* Add custom data to APS.
+
 ## v3.1.4
 
 * Support the `liveactivity` push type.
