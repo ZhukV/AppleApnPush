@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## v3.1.6
+
+* Remove fixed size from device token.
+
 ## v3.1.5
 
 * Add custom data to APS.
