@@ -22,9 +22,9 @@ class DeviceTokenTest extends TestCase
     public function shouldThrowsExceptionIfTokenIsInvalid(): void
     {
         $this->expectException(\InvalidArgumentException::class);
-        $this->expectExceptionMessage('Invalid device token "some".');
+        $this->expectExceptionMessage('Invalid device token "invalid token with a space".');
 
-        new DeviceToken('some');
+        new DeviceToken('invalid token with a space');
     }
 
     /**
