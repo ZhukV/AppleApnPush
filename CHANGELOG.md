@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## v3.1.7
+
+* Fix close curl connection if we don't create curl resource previously ([@richso](https://github.com/richso))
+
 ## v3.1.6
 
 * Remove fixed size from device token.
