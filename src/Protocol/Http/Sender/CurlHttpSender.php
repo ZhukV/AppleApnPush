@@ -23,7 +23,7 @@ use Apple\ApnPush\Protocol\Http\Sender\Exception\HttpSenderException;
 class CurlHttpSender implements HttpSenderInterface
 {
     /**
-     * @var resource
+     * @var resource|\CurlHandle
      */
     private $resource;
 
@@ -57,7 +57,10 @@ class CurlHttpSender implements HttpSenderInterface
      */
     public function close(): void
     {
-        \curl_close($this->resource);
+        if ($this->resource) {
+            \curl_close($this->resource);
+        }
+
         $this->resource = null;
     }
 

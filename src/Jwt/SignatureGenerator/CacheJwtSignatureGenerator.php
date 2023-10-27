@@ -2,8 +2,6 @@
 
 declare(strict_types = 1);
 
-namespace Apple\ApnPush\Jwt\SignatureGenerator;
-
 /*
  * This file is part of the AppleApnPush package
  *
@@ -12,6 +10,8 @@ namespace Apple\ApnPush\Jwt\SignatureGenerator;
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code
  */
+
+namespace Apple\ApnPush\Jwt\SignatureGenerator;
 
 use Apple\ApnPush\Jwt\JwtInterface;
 use Apple\ApnPush\Jwt\SignatureGenerator\Cache\JwtCacheKeyGenerator;
