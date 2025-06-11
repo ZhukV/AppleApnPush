@@ -69,7 +69,7 @@ class Aps
      * @param Alert|null $alert
      * @param array      $customData
      */
-    public function __construct(Alert $alert = null, array $customData = [])
+    public function __construct(?Alert $alert = null, array $customData = [])
     {
         $this->alert = $alert;
         $this->customData = $customData;

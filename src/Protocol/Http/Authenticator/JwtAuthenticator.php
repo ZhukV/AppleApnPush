@@ -58,7 +58,7 @@ class JwtAuthenticator implements AuthenticatorInterface
      * @throws \InvalidArgumentException
      * @throws \LogicException
      */
-    public function __construct(JwtInterface $jwt, \DateInterval $jwsLifetime = null, SignatureGeneratorInterface $signatureGenerator = null)
+    public function __construct(JwtInterface $jwt, ?\DateInterval $jwsLifetime = null, ?SignatureGeneratorInterface $signatureGenerator = null)
     {
         $this->jwt = $jwt;
 

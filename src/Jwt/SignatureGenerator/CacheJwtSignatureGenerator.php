@@ -49,9 +49,9 @@ class CacheJwtSignatureGenerator implements SignatureGeneratorInterface
      * @param SignatureGeneratorInterface        $generator
      * @param CacheInterface                     $cache
      * @param JwtCacheKeyGeneratorInterface|null $cacheKeyGenerator
-     * @param \DateInterval                      $ttl
+     * @param \DateInterval|null                 $ttl
      */
-    public function __construct(SignatureGeneratorInterface $generator, CacheInterface $cache, JwtCacheKeyGeneratorInterface $cacheKeyGenerator = null, $ttl = null)
+    public function __construct(SignatureGeneratorInterface $generator, CacheInterface $cache, ?JwtCacheKeyGeneratorInterface $cacheKeyGenerator = null, ?\DateInterval $ttl = null)
     {
         $this->generator = $generator;
         $this->cache = $cache;
