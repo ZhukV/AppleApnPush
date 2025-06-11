@@ -18,7 +18,7 @@ jobs:
                 with:
                     coverage: "none"
                     extensions: "json"
-                    php-version: "7.2"
+                    php-version: "8.4"
                     tools: "composer"
 
             -   name: Install vendors
@@ -39,7 +39,7 @@ jobs:
 
         strategy:
             matrix:
-                php: [ '7.2', '7.4', '8.0' ]
+                php: [ '7.2', '7.4', '8.0', '8.1', '8.2', '8.3', '8.4' ]
 
         steps:
             -   name: Checkout
