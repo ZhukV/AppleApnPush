@@ -47,7 +47,7 @@ class Payload
      * Add or replace custom data by name
      *
      * @param string $name
-     * @param mixed       $value
+     * @param mixed  $value
      *
      * @return self
      */
