@@ -13,23 +13,10 @@ declare(strict_types = 1);
 
 namespace Apple\ApnPush\Model;
 
-/**
- * Message priority
- */
 class Priority
 {
-    /**
-     * @var int
-     */
-    private $value;
+    private int $value;
 
-    /**
-     * Constructor.
-     *
-     * @param int $priority
-     *
-     * @throws \InvalidArgumentException
-     */
     public function __construct(int $priority)
     {
         if (!\in_array($priority, [5, 10], true)) {
@@ -42,31 +29,16 @@ class Priority
         $this->value = $priority;
     }
 
-    /**
-     * Create immediately priority
-     *
-     * @return Priority
-     */
-    public static function immediately(): Priority
+    public static function immediately(): self
     {
         return new self(10);
     }
 
-    /**
-     * Create priority with power considerations
-     *
-     * @return Priority
-     */
-    public static function powerConsiderations(): Priority
+    public static function powerConsiderations(): self
     {
         return new self(5);
     }
 
-    /**
-     * Get value
-     *
-     * @return int
-     */
     public function getValue(): int
     {
         return $this->value;

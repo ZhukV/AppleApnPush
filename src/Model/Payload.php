@@ -13,52 +13,22 @@ declare(strict_types = 1);
 
 namespace Apple\ApnPush\Model;
 
-/**
- * Payload model
- */
 class Payload
 {
-    /**
-     * @var Aps
-     */
-    private $aps;
+    private Aps $aps;
+    private array $customData;
 
-    /**
-     * @var array
-     */
-    private $customData;
-
-    /**
-     * Constructor.
-     *
-     * @param Aps   $apsData
-     * @param array $customData
-     */
     public function __construct(Aps $apsData, array $customData = [])
     {
         $this->aps = $apsData;
         $this->customData = $customData;
     }
 
-    /**
-     * Create new payload with body only.
-     *
-     * @param string $body
-     *
-     * @return Payload
-     */
-    public static function createWithBody(string $body): Payload
+    public static function createWithBody(string $body): self
     {
         return new self(new Aps(new Alert($body)));
     }
 
-    /**
-     * Set aps
-     *
-     * @param Aps $aps
-     *
-     * @return Payload
-     */
     public function withAps(Aps $aps): Payload
     {
         $cloned = clone $this;
@@ -68,32 +38,25 @@ class Payload
         return $cloned;
     }
 
-    /**
-     * Get APS data
-     *
-     * @return Aps
-     */
     public function getAps(): Aps
     {
         return $this->aps;
     }
 
     /**
-     * Add or replace custom data
+     * Add or replace custom data by name
      *
      * @param string $name
      * @param mixed  $value
      *
-     * @return Payload
-     *
-     * @throws \InvalidArgumentException
+     * @return self
      */
-    public function withCustomData(string $name, $value): Payload
+    public function withCustomData(string $name, $value): self
     {
-        if ($value && !is_array($value) && !is_scalar($value) && !$value instanceof \JsonSerializable) {
+        if ($value && !\is_array($value) && !\is_scalar($value) && !$value instanceof \JsonSerializable) {
             throw new \InvalidArgumentException(sprintf(
                 'The custom data value should be a scalar or \JsonSerializable instance, but "%s" given.',
-                is_object($value) ? get_class($value) : gettype($value)
+                \is_object($value) ? \get_class($value) : \gettype($value)
             ));
         }
 
@@ -104,11 +67,6 @@ class Payload
         return $cloned;
     }
 
-    /**
-     * Get custom data
-     *
-     * @return array
-     */
     public function getCustomData(): array
     {
         return $this->customData;

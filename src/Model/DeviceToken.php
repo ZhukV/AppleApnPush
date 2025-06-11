@@ -13,23 +13,10 @@ declare(strict_types = 1);
 
 namespace Apple\ApnPush\Model;
 
-/**
- * Device token model
- */
 class DeviceToken
 {
-    /**
-     * @var string
-     */
-    private $value;
+    private string $value;
 
-    /**
-     * Constructor.
-     *
-     * @param string $token
-     *
-     * @throws \InvalidArgumentException
-     */
     public function __construct(string $token)
     {
         if (!\preg_match('/^[0-9a-fA-F]+$/', $token)) {
@@ -42,19 +29,11 @@ class DeviceToken
         $this->value = $token;
     }
 
-    /**
-     * Get token value
-     *
-     * @return string
-     */
     public function getValue(): string
     {
         return $this->value;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function __toString()
     {
         return $this->value;

@@ -21,24 +21,13 @@ use Apple\ApnPush\Protocol\Http\Request;
  */
 class CertificateAuthenticator implements AuthenticatorInterface
 {
-    /**
-     * @var CertificateInterface
-     */
-    private $certificate;
+    private CertificateInterface$certificate;
 
-    /**
-     * Constructor.
-     *
-     * @param CertificateInterface $certificate
-     */
     public function __construct(CertificateInterface $certificate)
     {
         $this->certificate = $certificate;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function authenticate(Request $request): Request
     {
         $request = $request->withCertificate($this->certificate->getPath());

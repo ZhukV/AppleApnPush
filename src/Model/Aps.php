@@ -13,76 +13,29 @@ declare(strict_types = 1);
 
 namespace Apple\ApnPush\Model;
 
-/**
- * Default APS data
- */
 class Aps
 {
-    /**
-     * @var Alert
-     */
-    private $alert;
-
-    /**
-     * @var int|null
-     */
-    private $badge = null;
+    private ?Alert $alert;
+    private ?int $badge = null;
+    private bool $contentAvailable = false;
+    private bool $mutableContent = false;
+    private string $category = '';
+    private string $threadId = '';
+    private array $customData;
+    private ?array $urlArgs = null;
 
     /**
      * @var string|Sound
      */
     private $sound = '';
 
-    /**
-     * @var bool
-     */
-    private $contentAvailable = false;
-
-    /**
-     * @var bool
-     */
-    private $mutableContent = false;
-
-    /**
-     * @var string
-     */
-    private $category = '';
-
-    /**
-     * @var string
-     */
-    private $threadId = '';
-
-    /**
-     * @var string[]|null
-     */
-    private $urlArgs = null;
-
-    /**
-     * @var array
-     */
-    private $customData;
-
-    /**
-     * Constructor.
-     *
-     * @param Alert|null $alert
-     * @param array      $customData
-     */
     public function __construct(?Alert $alert = null, array $customData = [])
     {
         $this->alert = $alert;
         $this->customData = $customData;
     }
 
-    /**
-     * Set alert
-     *
-     * @param Alert $alert
-     *
-     * @return Aps
-     */
-    public function withAlert(Alert $alert): Aps
+    public function withAlert(Alert $alert): self
     {
         $cloned = clone $this;
 
@@ -91,24 +44,12 @@ class Aps
         return $cloned;
     }
 
-    /**
-     * Get alert data
-     *
-     * @return Alert
-     */
     public function getAlert(): ?Alert
     {
         return $this->alert;
     }
 
-    /**
-     * Set category
-     *
-     * @param string $category
-     *
-     * @return Aps
-     */
-    public function withCategory(string $category): Aps
+    public function withCategory(string $category): self
     {
         $cloned = clone $this;
 
@@ -117,24 +58,19 @@ class Aps
         return $cloned;
     }
 
-    /**
-     * Get category
-     *
-     * @return string
-     */
     public function getCategory(): string
     {
         return $this->category;
     }
 
     /**
-     * Set sound
+     * Set sound for APS
      *
-     * @param string|Sound $sound
+     * @param string|Sound|mixed $sound
      *
-     * @return Aps
+     * @return self
      */
-    public function withSound($sound): Aps
+    public function withSound($sound): self
     {
         if (!\is_string($sound) && !$sound instanceof Sound) {
             throw new \InvalidArgumentException(\sprintf(
@@ -152,49 +88,30 @@ class Aps
     }
 
     /**
-     * Get sound
+     * Get sound for APS
      *
-     * @return string|Sound
+     * @return Sound|string
      */
     public function getSound()
     {
         return $this->sound;
     }
 
-    /**
-     * Set badge
-     *
-     * @param int $badge
-     *
-     * @return Aps
-     */
-    public function withBadge(int $badge): Aps
+    public function withBadge(int $badge): self
     {
         $cloned = clone $this;
 
-        $cloned->badge = (int) $badge;
+        $cloned->badge = $badge;
 
         return $cloned;
     }
 
-    /**
-     * Get badge
-     *
-     * @return int|null
-     */
     public function getBadge(): ?int
     {
         return $this->badge;
     }
 
-    /**
-     * Set content available option
-     *
-     * @param bool $contentAvailable
-     *
-     * @return Aps
-     */
-    public function withContentAvailable(bool $contentAvailable): Aps
+    public function withContentAvailable(bool $contentAvailable): self
     {
         $cloned = clone $this;
 
@@ -203,24 +120,12 @@ class Aps
         return $cloned;
     }
 
-    /**
-     * Get content available option
-     *
-     * @return bool
-     */
     public function isContentAvailable(): bool
     {
         return $this->contentAvailable;
     }
 
-    /**
-     * Set mutable content option
-     *
-     * @param bool $mutableContent
-     *
-     * @return Aps
-     */
-    public function withMutableContent(bool $mutableContent): Aps
+    public function withMutableContent(bool $mutableContent): self
     {
         $cloned = clone $this;
 
@@ -229,24 +134,12 @@ class Aps
         return $cloned;
     }
 
-    /**
-     * Get mutable content option
-     *
-     * @return bool
-     */
     public function isMutableContent(): bool
     {
         return $this->mutableContent;
     }
 
-    /**
-     * Set thread id
-     *
-     * @param string $threadId
-     *
-     * @return Aps
-     */
-    public function withThreadId(string $threadId): Aps
+    public function withThreadId(string $threadId): self
     {
         $cloned = clone $this;
 
@@ -255,24 +148,12 @@ class Aps
         return $cloned;
     }
 
-    /**
-     * Get thread id
-     *
-     * @return string
-     */
     public function getThreadId(): string
     {
         return $this->threadId;
     }
 
-    /**
-     * Set url arguments
-     *
-     * @param array $urlArgs
-     *
-     * @return Aps
-     */
-    public function withUrlArgs(array $urlArgs): Aps
+    public function withUrlArgs(array $urlArgs): self
     {
         $cloned = clone $this;
 
@@ -281,37 +162,25 @@ class Aps
         return $cloned;
     }
 
-    /**
-     * Get url arguments
-     *
-     * @return string[]|null
-     */
     public function getUrlArgs(): ?array
     {
         return $this->urlArgs;
     }
 
-    /**
-     * Get custom data
-     *
-     * @return array<string, mixed>
-     */
     public function getCustomData(): array
     {
         return $this->customData;
     }
 
     /**
-     * Add or replace custom data
+     * Set or replace custom data by name
      *
      * @param string $name
      * @param mixed  $value
      *
-     * @return Aps
-     *
-     * @throws \InvalidArgumentException
+     * @return self
      */
-    public function withCustomData(string $name, $value): Aps
+    public function withCustomData(string $name, $value): self
     {
         if ($value && !is_array($value) && !is_scalar($value) && !$value instanceof \JsonSerializable) {
             throw new \InvalidArgumentException(sprintf(

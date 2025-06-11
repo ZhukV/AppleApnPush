@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 /*
  * This file is part of the AppleApnPush package
  *
@@ -22,14 +24,8 @@ use PHPUnit\Framework\TestCase;
 
 class AddPriorityHeaderVisitorTest extends TestCase
 {
-    /**
-     * @var AddPriorityHeaderVisitor
-     */
-    private $visitor;
+    private AddPriorityHeaderVisitor $visitor;
 
-    /**
-     * {@inheritdoc}
-     */
     protected function setUp(): void
     {
         $this->visitor = new AddPriorityHeaderVisitor();

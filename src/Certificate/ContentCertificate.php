@@ -21,33 +21,11 @@ namespace Apple\ApnPush\Certificate;
  */
 class ContentCertificate implements CertificateInterface
 {
-    /**
-     * @var string
-     */
-    private $content;
+    private string $content;
+    private string $passPhrase;
+    private string $tmpDir;
+    private ?string $certificateFilePath = null;
 
-    /**
-     * @var string
-     */
-    private $passPhrase;
-
-    /**
-     * @var string
-     */
-    private $tmpDir;
-
-    /**
-     * @var string
-     */
-    private $certificateFilePath;
-
-    /**
-     * Construct
-     *
-     * @param string $content
-     * @param string $passPhrase
-     * @param string $tmpDir
-     */
     public function __construct(string $content, string $passPhrase, string $tmpDir)
     {
         $this->content = $content;
@@ -55,9 +33,6 @@ class ContentCertificate implements CertificateInterface
         $this->tmpDir = $tmpDir;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getPath(): string
     {
         if ($this->certificateFilePath) {
@@ -65,23 +40,16 @@ class ContentCertificate implements CertificateInterface
         }
 
         $this->certificateFilePath = $this->createTemporaryFile();
-        file_put_contents($this->certificateFilePath, $this->content);
+        \file_put_contents($this->certificateFilePath, $this->content);
 
         return $this->certificateFilePath;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getPassPhrase(): string
     {
         return $this->passPhrase;
     }
 
-    /**
-     * Implement __destruct
-     * Remove temporary file
-     */
     public function __destruct()
     {
         if ($this->certificateFilePath) {
@@ -89,13 +57,6 @@ class ContentCertificate implements CertificateInterface
         }
     }
 
-    /**
-     * Create a temporary file
-     *
-     * @return string Path to temporary file
-     *
-     * @throws \RuntimeException
-     */
     private function createTemporaryFile(): string
     {
         $tmpDir = $this->tmpDir;
@@ -106,9 +67,11 @@ class ContentCertificate implements CertificateInterface
 
         $errorCode = $errorMessage = null;
 
-        \set_error_handler(function ($errCode, $errMessage) use (&$errorCode, &$errorMessage) {
+        \set_error_handler(static function (int $errCode, string $errMessage) use (&$errorCode, &$errorMessage) {
             $errorCode = $errCode;
             $errorMessage = $errMessage;
+
+            return true;
         });
 
         if (!\file_exists($tmpDir)) {
@@ -146,15 +109,11 @@ class ContentCertificate implements CertificateInterface
         return $tmpFilePath;
     }
 
-    /**
-     * Remove temporary file
-     *
-     * @param string $filePath
-     */
-    private function removeTemporaryFile($filePath): void
+    private function removeTemporaryFile(string $filePath): void
     {
         // Set custom error handler for suppress error
-        \set_error_handler(function () {
+        \set_error_handler(static function () {
+            return true;
         });
 
         \unlink($filePath);

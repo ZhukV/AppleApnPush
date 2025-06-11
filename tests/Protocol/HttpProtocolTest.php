@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 /*
  * This file is part of the AppleApnPush package
  *
@@ -33,44 +35,15 @@ use PHPUnit\Framework\TestCase;
 
 class HttpProtocolTest extends TestCase
 {
-    /**
-     * @var AuthenticatorInterface|MockObject
-     */
-    private $authenticator;
+    private AuthenticatorInterface $authenticator;
+    private HttpSenderInterface $httpSender;
+    private PayloadEncoderInterface $payloadEncoder;
+    private UriFactoryInterface $uriFactory;
+    private HttpProtocolVisitorInterface $visitor;
+    private ExceptionFactoryInterface $exceptionFactory;
 
-    /**
-     * @var HttpSenderInterface|MockObject
-     */
-    private $httpSender;
+    private HttpProtocol $protocol;
 
-    /**
-     * @var PayloadEncoderInterface|MockObject
-     */
-    private $payloadEncoder;
-
-    /**
-     * @var UriFactoryInterface|MockObject
-     */
-    private $uriFactory;
-
-    /**
-     * @var HttpProtocolVisitorInterface|MockObject
-     */
-    private $visitor;
-
-    /**
-     * @var ExceptionFactoryInterface|MockObject
-     */
-    private $exceptionFactory;
-
-    /**
-     * @var HttpProtocol
-     */
-    private $protocol;
-
-    /**
-     * {@inheritdoc}
-     */
     protected function setUp(): void
     {
         $this->authenticator = $this->createMock(AuthenticatorInterface::class);

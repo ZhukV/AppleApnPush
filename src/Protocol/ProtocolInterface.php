@@ -17,9 +17,6 @@ use Apple\ApnPush\Exception\SendNotification\SendNotificationException;
 use Apple\ApnPush\Model\Notification;
 use Apple\ApnPush\Model\Receiver;
 
-/**
- * All protocols for send notification should implement this interface
- */
 interface ProtocolInterface
 {
     /**

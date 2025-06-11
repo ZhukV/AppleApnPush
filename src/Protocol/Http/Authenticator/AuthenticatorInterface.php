@@ -15,17 +15,7 @@ namespace Apple\ApnPush\Protocol\Http\Authenticator;
 
 use Apple\ApnPush\Protocol\Http\Request;
 
-/**
- * All HTTP authenticators should implement this interface
- */
 interface AuthenticatorInterface
 {
-    /**
-     * Authenticate request
-     *
-     * @param Request $request
-     *
-     * @return Request
-     */
     public function authenticate(Request $request): Request;
 }

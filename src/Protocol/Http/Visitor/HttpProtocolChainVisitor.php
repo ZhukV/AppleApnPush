@@ -16,38 +16,23 @@ namespace Apple\ApnPush\Protocol\Http\Visitor;
 use Apple\ApnPush\Model\Notification;
 use Apple\ApnPush\Protocol\Http\Request;
 
-/**
- * Chain visitor for visit for notification and request before send request
- */
 class HttpProtocolChainVisitor implements HttpProtocolVisitorInterface
 {
     /**
-     * @var \SplPriorityQueue|HttpProtocolVisitorInterface[]
+     * @var \SplPriorityQueue<int, HttpProtocolVisitorInterface>
      */
-    private $visitors;
+    private \SplPriorityQueue $visitors;
 
-    /**
-     * Constructor.
-     */
     public function __construct()
     {
         $this->visitors = new \SplPriorityQueue();
     }
 
-    /**
-     * Add visitor to chain
-     *
-     * @param HttpProtocolVisitorInterface $visitor
-     * @param int                          $priority
-     */
     public function add(HttpProtocolVisitorInterface $visitor, int $priority = 0): void
     {
         $this->visitors->insert($visitor, $priority);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function visit(Notification $notification, Request $request): Request
     {
         // Clone all visitors because \SplPriorityQueue remove object after iteration

@@ -13,51 +13,15 @@ declare(strict_types = 1);
 
 namespace Apple\ApnPush\Model;
 
-/**
- * Send this notification to device.
- */
 class Notification
 {
-    /**
-     * @var Payload
-     */
-    private $payload;
+    private Payload $payload;
+    private ?ApnId $apnId;
+    private ?Priority $priority;
+    private ?Expiration $expiration;
+    private ?CollapseId $collapseId;
+    private ?PushType $pushType;
 
-    /**
-     * @var ApnId
-     */
-    private $apnId;
-
-    /**
-     * @var Priority
-     */
-    private $priority;
-
-    /**
-     * @var Expiration
-     */
-    private $expiration;
-
-    /**
-     * @var CollapseId
-     */
-    private $collapseId;
-
-    /**
-     * @var PushType
-     */
-    private $pushType;
-
-    /**
-     * Constructor.
-     *
-     * @param Payload         $payload
-     * @param ApnId|null      $apnId
-     * @param Priority|null   $priority
-     * @param Expiration|null $expiration
-     * @param CollapseId|null $collapseId
-     * @param PushType|null   $pushType
-     */
     public function __construct(Payload $payload, ?ApnId $apnId = null, ?Priority $priority = null, ?Expiration $expiration = null, ?CollapseId $collapseId = null, ?PushType $pushType = null)
     {
         $this->payload = $payload;
@@ -68,26 +32,12 @@ class Notification
         $this->pushType = $pushType;
     }
 
-    /**
-     * Create new notification with body only
-     *
-     * @param string $body
-     *
-     * @return Notification
-     */
-    public static function createWithBody(string $body): Notification
+    public static function createWithBody(string $body): self
     {
         return new self(Payload::createWithBody($body));
     }
 
-    /**
-     * Set payload
-     *
-     * @param Payload $payload
-     *
-     * @return Notification
-     */
-    public function withPayload(Payload $payload): Notification
+    public function withPayload(Payload $payload): self
     {
         $cloned = clone $this;
 
@@ -96,24 +46,12 @@ class Notification
         return $cloned;
     }
 
-    /**
-     * Get payload
-     *
-     * @return Payload
-     */
     public function getPayload(): Payload
     {
         return $this->payload;
     }
 
-    /**
-     * Set apn identifier
-     *
-     * @param ApnId|null $apnId
-     *
-     * @return Notification
-     */
-    public function withApnId(?ApnId $apnId = null): Notification
+    public function withApnId(?ApnId $apnId = null): self
     {
         $cloned = clone $this;
 
@@ -122,24 +60,12 @@ class Notification
         return $cloned;
     }
 
-    /**
-     * Get identifier of notification
-     *
-     * @return ApnId
-     */
     public function getApnId(): ?ApnId
     {
         return $this->apnId;
     }
 
-    /**
-     * Set priority
-     *
-     * @param Priority|null $priority
-     *
-     * @return Notification
-     */
-    public function withPriority(?Priority $priority = null): Notification
+    public function withPriority(?Priority $priority = null): self
     {
         $cloned = clone $this;
 
@@ -148,24 +74,12 @@ class Notification
         return $cloned;
     }
 
-    /**
-     * Get priority
-     *
-     * @return Priority
-     */
     public function getPriority(): ?Priority
     {
         return $this->priority;
     }
 
-    /**
-     * Set expiration
-     *
-     * @param Expiration|null $expiration
-     *
-     * @return Notification
-     */
-    public function withExpiration(?Expiration $expiration = null): Notification
+    public function withExpiration(?Expiration $expiration = null): self
     {
         $cloned = clone $this;
 
@@ -174,24 +88,12 @@ class Notification
         return $cloned;
     }
 
-    /**
-     * Get expiration
-     *
-     * @return Expiration
-     */
     public function getExpiration(): ?Expiration
     {
         return $this->expiration;
     }
 
-    /**
-     * Set the collapse identifier
-     *
-     * @param CollapseId|null $collapseId
-     *
-     * @return Notification
-     */
-    public function withCollapseId(?CollapseId $collapseId = null): Notification
+    public function withCollapseId(?CollapseId $collapseId = null): self
     {
         $cloned = clone $this;
 
@@ -200,24 +102,12 @@ class Notification
         return $cloned;
     }
 
-    /**
-     * Get the collapse identifier
-     *
-     * @return CollapseId|null
-     */
     public function getCollapseId(): ?CollapseId
     {
         return $this->collapseId;
     }
 
-    /**
-     * Set the push type
-     *
-     * @param PushType|null $pushType
-     *
-     * @return Notification
-     */
-    public function withPushType(?PushType $pushType): Notification
+    public function withPushType(?PushType $pushType): self
     {
         $cloned = clone $this;
 
@@ -226,11 +116,6 @@ class Notification
         return $cloned;
     }
 
-    /**
-     * Get the push type
-     *
-     * @return PushType|null
-     */
     public function getPushType(): ?PushType
     {
         return $this->pushType;

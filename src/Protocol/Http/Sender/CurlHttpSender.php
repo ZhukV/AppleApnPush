@@ -23,15 +23,10 @@ use Apple\ApnPush\Protocol\Http\Sender\Exception\HttpSenderException;
 class CurlHttpSender implements HttpSenderInterface
 {
     /**
-     * @var resource|\CurlHandle
+     * @var resource|\CurlHandle|null
      */
-    private $resource;
+    private $resource; // @phpstan-ignore-line property.unusedType
 
-    /**
-     * {@inheritdoc}
-     *
-     * @throws HttpSenderException
-     */
     public function send(Request $request): Response
     {
         $this->initializeCurlResource();
@@ -52,9 +47,6 @@ class CurlHttpSender implements HttpSenderInterface
         return new Response($statusCode, (string) $content);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function close(): void
     {
         if ($this->resource) {
@@ -64,9 +56,6 @@ class CurlHttpSender implements HttpSenderInterface
         $this->resource = null;
     }
 
-    /**
-     * Initialize cURL resource
-     */
     private function initializeCurlResource(): void
     {
         if (!$this->resource) {
@@ -78,11 +67,6 @@ class CurlHttpSender implements HttpSenderInterface
         }
     }
 
-    /**
-     * Prepare cURL resource by request
-     *
-     * @param Request $request
-     */
     private function prepareCurlResourceByRequest(Request $request): void
     {
         \curl_setopt($this->resource, CURLOPT_URL, $request->getUrl());

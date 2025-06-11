@@ -21,39 +21,12 @@ namespace Apple\ApnPush\Jwt;
  */
 class ContentJwt implements JwtInterface
 {
-    /**
-     * @var string
-     */
-    private $teamId;
+    private string $teamId;
+    private string $key;
+    private string $content;
+    private string $tmpDir;
+    private ?string $certificateFilePath = null;
 
-    /**
-     * @var string
-     */
-    private $key;
-
-    /**
-     * @var string
-     */
-    private $content;
-
-    /**
-     * @var string
-     */
-    private $tmpDir;
-
-    /**
-     * @var string
-     */
-    private $certificateFilePath;
-
-    /**
-     * Constructor.
-     *
-     * @param string $teamId
-     * @param string $key
-     * @param string $content
-     * @param string $tmpDir
-     */
     public function __construct(string $teamId, string $key, string $content, string $tmpDir)
     {
         $this->teamId = $teamId;
@@ -62,10 +35,6 @@ class ContentJwt implements JwtInterface
         $this->tmpDir = $tmpDir;
     }
 
-    /**
-     * Implement __destruct
-     * Remove temporary file
-     */
     public function __destruct()
     {
         if ($this->certificateFilePath) {
@@ -73,25 +42,16 @@ class ContentJwt implements JwtInterface
         }
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getTeamId(): string
     {
         return $this->teamId;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getKey(): string
     {
         return $this->key;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getPath(): string
     {
         if ($this->certificateFilePath) {
@@ -104,13 +64,6 @@ class ContentJwt implements JwtInterface
         return $this->certificateFilePath;
     }
 
-    /**
-     * Create a temporary file
-     *
-     * @return string Path to temporary file
-     *
-     * @throws \RuntimeException
-     */
     private function createTemporaryFile(): string
     {
         $tmpDir = $this->tmpDir;
@@ -121,9 +74,11 @@ class ContentJwt implements JwtInterface
 
         $errorCode = $errorMessage = null;
 
-        \set_error_handler(function ($errCode, $errMessage) use (&$errorCode, &$errorMessage) {
+        \set_error_handler(static function ($errCode, $errMessage) use (&$errorCode, &$errorMessage): bool {
             $errorCode = $errCode;
             $errorMessage = $errMessage;
+
+            return true;
         });
 
         if (!\file_exists($tmpDir)) {
@@ -161,15 +116,11 @@ class ContentJwt implements JwtInterface
         return $tmpFilePath;
     }
 
-    /**
-     * Remove temporary file
-     *
-     * @param string $filePath
-     */
-    private function removeTemporaryFile($filePath): void
+    private function removeTemporaryFile(string $filePath): void
     {
         // Set custom error handler for suppress error
-        \set_error_handler(function () {
+        \set_error_handler(static function () {
+            return true;
         });
 
         \unlink($filePath);

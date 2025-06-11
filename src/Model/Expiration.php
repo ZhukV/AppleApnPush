@@ -13,36 +13,18 @@ declare(strict_types = 1);
 
 namespace Apple\ApnPush\Model;
 
-/**
- * Expiration of notification
- */
 class Expiration
 {
-    /**
-     * @var \DateTime
-     */
-    private $storeTo;
+    private ?\DateTimeInterface $storeTo = null;
 
-    /**
-     * Constructor.
-     *
-     * @param \DateTime|null $availableTo
-     */
-    public function __construct(?\DateTime $availableTo = null)
+    public function __construct(?\DateTimeInterface $availableTo = null)
     {
         if ($availableTo) {
-            $this->storeTo = clone $availableTo;
+            $this->storeTo = new \DateTime($availableTo->format(\DateTimeInterface::ATOM));
             $this->storeTo->setTimezone(new \DateTimeZone('UTC'));
         }
     }
 
-    /**
-     * Get value
-     *
-     * @return int
-     *
-     * @throws \LogicException
-     */
     public function getValue(): int
     {
         if (!$this->storeTo) {

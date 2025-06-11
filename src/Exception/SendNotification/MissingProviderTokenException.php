@@ -19,11 +19,6 @@ namespace Apple\ApnPush\Exception\SendNotification;
  */
 class MissingProviderTokenException extends SendNotificationException
 {
-    /**
-     * Constructor.
-     *
-     * @param string $message
-     */
     public function __construct(string $message = 'Missing provider token.')
     {
         parent::__construct($message);

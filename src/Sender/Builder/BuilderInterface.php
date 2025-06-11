@@ -16,9 +16,6 @@ namespace Apple\ApnPush\Sender\Builder;
 use Apple\ApnPush\Protocol\ProtocolInterface;
 use Apple\ApnPush\Sender\SenderInterface;
 
-/**
- * All builders for build senders should implement this interface
- */
 interface BuilderInterface
 {
     /**

@@ -13,43 +13,14 @@ declare(strict_types = 1);
 
 namespace Apple\ApnPush\Protocol\Http;
 
-/**
- * Object for presentation http request
- */
 class Request
 {
-    /**
-     * @var string
-     */
-    private $url;
+    private string $url;
+    private array $headers;
+    private string $content;
+    private string $certificate = '';
+    private string $certificatePassPhrase = '';
 
-    /**
-     * @var array
-     */
-    private $headers;
-
-    /**
-     * @var string
-     */
-    private $content;
-
-    /**
-     * @var string
-     */
-    private $certificate = '';
-
-    /**
-     * @var string
-     */
-    private $certificatePassPhrase = '';
-
-    /**
-     * Constructor.
-     *
-     * @param string $url
-     * @param string $content
-     * @param array  $headers
-     */
     public function __construct(string $url, string $content, array $headers = [])
     {
         $this->url = $url;
@@ -57,25 +28,12 @@ class Request
         $this->content = $content;
     }
 
-    /**
-     * Get url
-     *
-     * @return string
-     */
     public function getUrl(): string
     {
         return $this->url;
     }
 
-    /**
-     * Add or replace header
-     *
-     * @param string $name
-     * @param string $value
-     *
-     * @return Request
-     */
-    public function withHeader(string $name, string $value): Request
+    public function withHeader(string $name, string $value): self
     {
         $cloned = clone $this;
 
@@ -84,14 +42,7 @@ class Request
         return $cloned;
     }
 
-    /**
-     * Add multiple headers
-     *
-     * @param array $headers
-     *
-     * @return Request
-     */
-    public function withHeaders(array $headers): Request
+    public function withHeaders(array $headers): self
     {
         $cloned = clone $this;
 
@@ -102,34 +53,17 @@ class Request
         return $cloned;
     }
 
-    /**
-     * Get headers
-     *
-     * @return array
-     */
     public function getHeaders(): array
     {
         return $this->headers;
     }
 
-    /**
-     * Get content
-     *
-     * @return string
-     */
     public function getContent(): string
     {
         return $this->content;
     }
 
-    /**
-     * Use certificate for send request
-     *
-     * @param string $certificate
-     *
-     * @return Request
-     */
-    public function withCertificate(string $certificate): Request
+    public function withCertificate(string $certificate): self
     {
         $cloned = clone $this;
 
@@ -138,24 +72,12 @@ class Request
         return $cloned;
     }
 
-    /**
-     * Get certificate
-     *
-     * @return string
-     */
     public function getCertificate(): string
     {
         return $this->certificate;
     }
 
-    /**
-     * Use pass phrase of certificate for send request
-     *
-     * @param string $passPhrase
-     *
-     * @return Request
-     */
-    public function withCertificatePassPhrase(string $passPhrase): Request
+    public function withCertificatePassPhrase(string $passPhrase): self
     {
         $cloned = clone $this;
 
@@ -164,11 +86,6 @@ class Request
         return $cloned;
     }
 
-    /**
-     * Get certificate pass phrase
-     *
-     * @return string
-     */
     public function getCertificatePassPhrase(): string
     {
         return $this->certificatePassPhrase;

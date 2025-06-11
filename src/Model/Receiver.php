@@ -13,49 +13,22 @@ declare(strict_types = 1);
 
 namespace Apple\ApnPush\Model;
 
-/**
- * The receiver model.
- * Store device token and topic (application).
- */
 class Receiver
 {
-    /**
-     * @var DeviceToken
-     */
-    private $token;
+    private DeviceToken $token;
+    private string $topic;
 
-    /**
-     * @var string
-     */
-    private $topic;
-
-    /**
-     * Constructor.
-     *
-     * @param DeviceToken $token
-     * @param string      $topic
-     */
     public function __construct(DeviceToken $token, string $topic)
     {
         $this->token = $token;
         $this->topic = $topic;
     }
 
-    /**
-     * Get token
-     *
-     * @return DeviceToken
-     */
     public function getToken(): DeviceToken
     {
         return $this->token;
     }
 
-    /**
-     * Get topic
-     *
-     * @return string
-     */
     public function getTopic(): string
     {
         return $this->topic;

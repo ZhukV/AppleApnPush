@@ -15,29 +15,11 @@ namespace Apple\ApnPush\Certificate;
 
 use Apple\ApnPush\Exception\CertificateFileNotFoundException;
 
-/**
- * Base certificate
- */
 class Certificate implements CertificateInterface
 {
-    /**
-     * @var string
-     */
-    private $path;
+    private string $path;
+    private string $passPhrase;
 
-    /**
-     * @var string
-     */
-    private $passPhrase;
-
-    /**
-     * Construct
-     *
-     * @param string $path
-     * @param string $passPhrase
-     *
-     * @throws CertificateFileNotFoundException
-     */
     public function __construct(string $path, string $passPhrase)
     {
         if (!\file_exists($path) || !\is_file($path)) {
@@ -51,21 +33,11 @@ class Certificate implements CertificateInterface
         $this->passPhrase = $passPhrase;
     }
 
-    /**
-     * Get path
-     *
-     * @return string
-     */
     public function getPath(): string
     {
         return $this->path;
     }
 
-    /**
-     * Get pass phrase
-     *
-     * @return string
-     */
     public function getPassPhrase(): string
     {
         return $this->passPhrase;

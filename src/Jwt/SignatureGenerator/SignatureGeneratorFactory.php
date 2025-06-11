@@ -25,7 +25,7 @@ use Jose\Factory\JWSFactory;
 class SignatureGeneratorFactory
 {
     /**
-     * @var array|callable[]
+     * @var array<callable>
      */
     private static $resolvers = [];
 

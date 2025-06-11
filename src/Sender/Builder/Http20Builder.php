@@ -40,45 +40,16 @@ use Apple\ApnPush\Sender\SenderInterface;
 class Http20Builder implements BuilderInterface
 {
     /**
-     * @var \SplPriorityQueue|HttpProtocolVisitorInterface[]
+     * @var \SplPriorityQueue<int, HttpProtocolVisitorInterface>
      */
-    private $visitors;
+    private \SplPriorityQueue $visitors;
 
-    /**
-     * @var UriFactoryInterface
-     */
-    private $uriFactory;
+    private UriFactoryInterface $uriFactory;
+    private PayloadEncoderInterface $payloadEncoder;
+    private AuthenticatorInterface $authenticator;
+    private HttpSenderInterface $httpSender;
+    private ExceptionFactoryInterface $exceptionFactory;
 
-    /**
-     * @var PayloadEncoderInterface
-     */
-    private $payloadEncoder;
-
-    /**
-     * @var AuthenticatorInterface
-     */
-    private $authenticator;
-
-    /**
-     * @var HttpSenderInterface
-     */
-    private $httpSender;
-
-    /**
-     * @var ExceptionFactoryInterface
-     */
-    private $exceptionFactory;
-
-    /**
-     * @var bool
-     */
-    private $addedDefaultVisitors;
-
-    /**
-     * Constructor.
-     *
-     * @param AuthenticatorInterface $authenticator
-     */
     public function __construct(AuthenticatorInterface $authenticator)
     {
         $this->authenticator = $authenticator;
@@ -88,123 +59,55 @@ class Http20Builder implements BuilderInterface
         $this->httpSender = new CurlHttpSender();
         $this->exceptionFactory = new ExceptionFactory();
 
-        $this->addDefaultVisitors();
+        $this->addVisitor(new AddExpirationHeaderVisitor());
+        $this->addVisitor(new AddPriorityHeaderVisitor());
+        $this->addVisitor(new AddApnIdHeaderVisitor());
+        $this->addVisitor(new AddCollapseIdHeaderVisitor());
+        $this->addVisitor(new AddPushTypeHeaderVisitor());
     }
 
-    /**
-     * Set authenticator
-     *
-     * @param AuthenticatorInterface $authenticator
-     *
-     * @return Http20Builder
-     */
-    public function setAuthenticator(AuthenticatorInterface $authenticator): Http20Builder
+    public function setAuthenticator(AuthenticatorInterface $authenticator): self
     {
         $this->authenticator = $authenticator;
 
         return $this;
     }
 
-    /**
-     * Add visitor
-     *
-     * @param HttpProtocolVisitorInterface $visitor
-     * @param int                          $priority
-     *
-     * @return Http20Builder
-     */
-    public function addVisitor(HttpProtocolVisitorInterface $visitor, int $priority = 0): Http20Builder
+    public function addVisitor(HttpProtocolVisitorInterface $visitor, int $priority = 0): self
     {
         $this->visitors->insert($visitor, $priority);
 
         return $this;
     }
 
-    /**
-     * Add default visitors
-     *
-     * @return Http20Builder
-     *
-     * @deprecated This method is deprecated and will be a move to private scope.
-     *             Please do not use this method in your code.
-     *             This method will be called from the constructor of this builder.
-     */
-    public function addDefaultVisitors(): Http20Builder
-    {
-        if ($this->addedDefaultVisitors) {
-            return $this;
-        }
-
-        $this->addedDefaultVisitors = true;
-
-        $this->addVisitor(new AddExpirationHeaderVisitor());
-        $this->addVisitor(new AddPriorityHeaderVisitor());
-        $this->addVisitor(new AddApnIdHeaderVisitor());
-        $this->addVisitor(new AddCollapseIdHeaderVisitor());
-        $this->addVisitor(new AddPushTypeHeaderVisitor());
-
-        return $this;
-    }
-
-    /**
-     * Set URI factory
-     *
-     * @param UriFactoryInterface $uriFactory
-     *
-     * @return Http20Builder
-     */
-    public function setUriFactory(UriFactoryInterface $uriFactory): Http20Builder
+    public function setUriFactory(UriFactoryInterface $uriFactory): self
     {
         $this->uriFactory = $uriFactory;
 
         return $this;
     }
 
-    /**
-     * Set notification encoder
-     *
-     * @param PayloadEncoderInterface $payloadEncoder
-     *
-     * @return Http20Builder
-     */
-    public function setPayloadEncoder(PayloadEncoderInterface $payloadEncoder): Http20Builder
+    public function setPayloadEncoder(PayloadEncoderInterface $payloadEncoder): self
     {
         $this->payloadEncoder = $payloadEncoder;
 
         return $this;
     }
 
-    /**
-     * Set http sender
-     *
-     * @param HttpSenderInterface $httpSender
-     *
-     * @return Http20Builder
-     */
-    public function setHttpSender(HttpSenderInterface $httpSender): Http20Builder
+    public function setHttpSender(HttpSenderInterface $httpSender): self
     {
         $this->httpSender = $httpSender;
 
         return $this;
     }
 
-    /**
-     * Set exception factory
-     *
-     * @param ExceptionFactoryInterface $exceptionFactory
-     *
-     * @return Http20Builder
-     */
-    public function setExceptionFactory(ExceptionFactoryInterface $exceptionFactory): Http20Builder
+    public function setExceptionFactory(ExceptionFactoryInterface $exceptionFactory): self
     {
         $this->exceptionFactory = $exceptionFactory;
 
         return $this;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function buildProtocol(): ProtocolInterface
     {
         $chainVisitor = $this->createChainVisitor();
@@ -219,9 +122,6 @@ class Http20Builder implements BuilderInterface
         );
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function build(): SenderInterface
     {
         $protocol = $this->buildProtocol();
@@ -229,11 +129,6 @@ class Http20Builder implements BuilderInterface
         return new Sender($protocol);
     }
 
-    /**
-     * Create chain visitor
-     *
-     * @return HttpProtocolChainVisitor
-     */
     private function createChainVisitor(): HttpProtocolChainVisitor
     {
         $chainVisitors = new HttpProtocolChainVisitor();

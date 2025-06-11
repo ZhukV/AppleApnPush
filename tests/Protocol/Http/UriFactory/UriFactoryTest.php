@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 /*
  * This file is part of the AppleApnPush package
  *
@@ -17,14 +19,8 @@ use PHPUnit\Framework\TestCase;
 
 class UriFactoryTest extends TestCase
 {
-    /**
-     * @var UriFactory
-     */
-    private $uriFactory;
+    private UriFactory $uriFactory;
 
-    /**
-     * {@inheritdoc}
-     */
     protected function setUp(): void
     {
         $this->uriFactory = new UriFactory();

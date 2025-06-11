@@ -16,17 +16,7 @@ namespace Apple\ApnPush\Protocol\Http\ExceptionFactory;
 use Apple\ApnPush\Exception\SendNotification\SendNotificationException;
 use Apple\ApnPush\Protocol\Http\Response;
 
-/**
- * All exception factories for convert response to exception should implement this interface
- */
 interface ExceptionFactoryInterface
 {
-    /**
-     * Create new exception by response
-     *
-     * @param Response $response
-     *
-     * @return SendNotificationException
-     */
     public function create(Response $response): SendNotificationException;
 }

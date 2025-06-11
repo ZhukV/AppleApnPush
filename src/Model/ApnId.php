@@ -18,18 +18,8 @@ namespace Apple\ApnPush\Model;
  */
 class ApnId
 {
-    /**
-     * @var string
-     */
-    private $value;
+    private string $value;
 
-    /**
-     * Constructor.
-     *
-     * @param string $value
-     *
-     * @throws \InvalidArgumentException
-     */
     public function __construct(string $value)
     {
         if (!\preg_match('/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/', $value)) {
@@ -42,11 +32,6 @@ class ApnId
         $this->value = $value;
     }
 
-    /**
-     * Get value
-     *
-     * @return string
-     */
     public function getValue(): string
     {
         return $this->value;

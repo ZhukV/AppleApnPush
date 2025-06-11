@@ -13,58 +13,17 @@ declare(strict_types = 1);
 
 namespace Apple\ApnPush\Model;
 
-/**
- * Value object for alert object
- */
 class Alert
 {
-    /**
-     * @var string
-     */
-    private $title;
+    private string $title;
+    private Localized $titleLocalized;
+    private string $subtitle;
+    private Localized $subtitleLocalized;
+    private string $body;
+    private Localized $bodyLocalized;
+    private Localized $actionLocalized;
+    private string $launchImage = '';
 
-    /**
-     * @var Localized
-     */
-    private $titleLocalized;
-
-    /**
-     * @var string
-     */
-    private $subtitle;
-
-    /**
-     * @var Localized
-     */
-    private $subtitleLocalized;
-
-    /**
-     * @var string
-     */
-    private $body;
-
-    /**
-     * @var Localized
-     */
-    private $bodyLocalized;
-
-    /**
-     * @var Localized
-     */
-    private $actionLocalized;
-
-    /**
-     * @var string
-     */
-    private $launchImage = '';
-
-    /**
-     * Constructor.
-     *
-     * @param string $body
-     * @param string $title
-     * @param string $subtitle
-     */
     public function __construct(string $body = '', string $title = '', string $subtitle = '')
     {
         $this->body = $body;
@@ -76,14 +35,7 @@ class Alert
         $this->actionLocalized = new Localized('');
     }
 
-    /**
-     * Set title
-     *
-     * @param string $title
-     *
-     * @return Alert
-     */
-    public function withTitle(string $title): Alert
+    public function withTitle(string $title): self
     {
         $cloned = clone $this;
 
@@ -92,14 +44,7 @@ class Alert
         return $cloned;
     }
 
-    /**
-     * With localized title
-     *
-     * @param Localized $localized
-     *
-     * @return Alert
-     */
-    public function withLocalizedTitle(Localized $localized): Alert
+    public function withLocalizedTitle(Localized $localized): self
     {
         $cloned = clone $this;
 
@@ -108,35 +53,17 @@ class Alert
         return $cloned;
     }
 
-    /**
-     * Get title
-     *
-     * @return string
-     */
     public function getTitle(): string
     {
         return $this->title;
     }
 
-    /**
-     * Get localized title
-     *
-     * @return Localized
-     */
     public function getTitleLocalized(): Localized
     {
         return $this->titleLocalized;
     }
 
-
-    /**
-     * Set subtitle
-     *
-     * @param string $subtitle
-     *
-     * @return Alert
-     */
-    public function withSubtitle(string $subtitle): Alert
+    public function withSubtitle(string $subtitle): self
     {
         $cloned = clone $this;
 
@@ -145,14 +72,7 @@ class Alert
         return $cloned;
     }
 
-    /**
-     * With localized subtitle
-     *
-     * @param Localized $localized
-     *
-     * @return Alert
-     */
-    public function withLocalizedSubtitle(Localized $localized): Alert
+    public function withLocalizedSubtitle(Localized $localized): self
     {
         $cloned = clone $this;
 
@@ -161,33 +81,16 @@ class Alert
         return $cloned;
     }
 
-    /**
-     * Get subtitle
-     *
-     * @return string
-     */
     public function getSubtitle(): string
     {
         return $this->subtitle;
     }
 
-    /**
-     * Get localized subtitle
-     *
-     * @return Localized
-     */
     public function getSubtitleLocalized(): Localized
     {
         return $this->subtitleLocalized;
     }
 
-    /**
-     * Set body
-     *
-     * @param string $body
-     *
-     * @return Alert
-     */
     public function withBody(string $body): Alert
     {
         $cloned = clone $this;
@@ -197,14 +100,7 @@ class Alert
         return $cloned;
     }
 
-    /**
-     * Set localized body
-     *
-     * @param Localized $localized
-     *
-     * @return Alert
-     */
-    public function withBodyLocalized(Localized $localized): Alert
+    public function withBodyLocalized(Localized $localized): self
     {
         $cloned = clone $this;
 
@@ -213,34 +109,17 @@ class Alert
         return $cloned;
     }
 
-    /**
-     * Get localized body
-     *
-     * @return Localized
-     */
     public function getBodyLocalized(): Localized
     {
         return $this->bodyLocalized;
     }
 
-    /**
-     * Get body
-     *
-     * @return string
-     */
     public function getBody(): string
     {
         return $this->body;
     }
 
-    /**
-     * With localized action
-     *
-     * @param Localized $localized
-     *
-     * @return Alert
-     */
-    public function withActionLocalized(Localized $localized): Alert
+    public function withActionLocalized(Localized $localized): self
     {
         $cloned = clone $this;
 
@@ -249,24 +128,12 @@ class Alert
         return $cloned;
     }
 
-    /**
-     * Get localized action
-     *
-     * @return Localized
-     */
     public function getActionLocalized(): Localized
     {
         return $this->actionLocalized;
     }
 
-    /**
-     * Add launch image
-     *
-     * @param string $launchImage
-     *
-     * @return Alert
-     */
-    public function withLaunchImage(string $launchImage): Alert
+    public function withLaunchImage(string $launchImage): self
     {
         $cloned = clone $this;
 
@@ -275,11 +142,6 @@ class Alert
         return $cloned;
     }
 
-    /**
-     * Get launch image
-     *
-     * @return string
-     */
     public function getLaunchImage(): string
     {
         return $this->launchImage;

@@ -15,19 +15,8 @@ namespace Apple\ApnPush\Protocol\Http\UriFactory;
 
 use Apple\ApnPush\Model\DeviceToken;
 
-/**
- * Default URI factory
- */
 class UriFactory implements UriFactoryInterface
 {
-    /**
-     * Create URI for device
-     *
-     * @param DeviceToken $deviceToken
-     * @param bool        $sandbox
-     *
-     * @return string
-     */
     public function create(DeviceToken $deviceToken, bool $sandbox): string
     {
         $uri = 'https://api.push.apple.com/3/device/%s';

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 /*
  * This file is part of the AppleApnPush package
  *
@@ -34,7 +36,7 @@ class CertificateTest extends TestCase
     public function shouldSuccessCreate(): void
     {
         $tmpDir = \sys_get_temp_dir();
-        $file = $tmpDir.'/'.\md5(\uniqid(\random_int(0, 9999), true)).'.pem';
+        $file = $tmpDir.'/'.\md5(\uniqid((string) \random_int(0, 9999), true)).'.pem';
         touch($file);
 
         $certificate = new Certificate($file, 'pass-phrase');

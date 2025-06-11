@@ -13,22 +13,8 @@ declare(strict_types = 1);
 
 namespace Apple\ApnPush\Certificate;
 
-/**
- * All certificate should implement this interface
- */
 interface CertificateInterface
 {
-    /**
-     * Get path
-     *
-     * @return string
-     */
     public function getPath(): string;
-
-    /**
-     * Get pass phrase
-     *
-     * @return string
-     */
     public function getPassPhrase(): string;
 }

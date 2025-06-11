@@ -13,12 +13,10 @@ declare(strict_types = 1);
 
 namespace Apple\ApnPush\Sender;
 
+use Apple\ApnPush\Exception\SendNotification\SendNotificationException;
 use Apple\ApnPush\Model\Notification;
 use Apple\ApnPush\Model\Receiver;
 
-/**
- * All senders for send notifications to device should implement this interface
- */
 interface SenderInterface
 {
     /**
@@ -28,7 +26,7 @@ interface SenderInterface
      * @param Notification $notification
      * @param bool         $sandbox
      *
-     * @throws \Apple\ApnPush\Exception\SendNotification\SendNotificationException
+     * @throws SendNotificationException
      */
     public function send(Receiver $receiver, Notification $notification, bool $sandbox = false): void;
 }
