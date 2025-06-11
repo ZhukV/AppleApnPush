@@ -26,9 +26,9 @@ class Expiration
     /**
      * Constructor.
      *
-     * @param \DateTime $availableTo
+     * @param \DateTime|null $availableTo
      */
-    public function __construct(\DateTime $availableTo = null)
+    public function __construct(?\DateTime $availableTo = null)
     {
         if ($availableTo) {
             $this->storeTo = clone $availableTo;

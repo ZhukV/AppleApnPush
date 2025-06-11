@@ -58,7 +58,7 @@ class Notification
      * @param CollapseId|null $collapseId
      * @param PushType|null   $pushType
      */
-    public function __construct(Payload $payload, ApnId $apnId = null, Priority $priority = null, Expiration $expiration = null, CollapseId $collapseId = null, PushType $pushType = null)
+    public function __construct(Payload $payload, ?ApnId $apnId = null, ?Priority $priority = null, ?Expiration $expiration = null, ?CollapseId $collapseId = null, ?PushType $pushType = null)
     {
         $this->payload = $payload;
         $this->priority = $priority;
@@ -109,11 +109,11 @@ class Notification
     /**
      * Set apn identifier
      *
-     * @param ApnId $apnId
+     * @param ApnId|null $apnId
      *
      * @return Notification
      */
-    public function withApnId(ApnId $apnId = null): Notification
+    public function withApnId(?ApnId $apnId = null): Notification
     {
         $cloned = clone $this;
 
@@ -135,11 +135,11 @@ class Notification
     /**
      * Set priority
      *
-     * @param Priority $priority
+     * @param Priority|null $priority
      *
      * @return Notification
      */
-    public function withPriority(Priority $priority = null): Notification
+    public function withPriority(?Priority $priority = null): Notification
     {
         $cloned = clone $this;
 
@@ -161,11 +161,11 @@ class Notification
     /**
      * Set expiration
      *
-     * @param Expiration $expiration
+     * @param Expiration|null $expiration
      *
      * @return Notification
      */
-    public function withExpiration(Expiration $expiration = null): Notification
+    public function withExpiration(?Expiration $expiration = null): Notification
     {
         $cloned = clone $this;
 
@@ -191,7 +191,7 @@ class Notification
      *
      * @return Notification
      */
-    public function withCollapseId(CollapseId $collapseId = null): Notification
+    public function withCollapseId(?CollapseId $collapseId = null): Notification
     {
         $cloned = clone $this;
 
