@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 /*
  * This file is part of the AppleApnPush package
  *
@@ -17,22 +19,13 @@ use PHPUnit\Framework\TestCase;
 
 class JwtTest extends TestCase
 {
-    /**
-     * @var string
-     */
-    private $tmpFileName;
+    private ?string $tmpFileName = null;
 
-    /**
-     * {@inheritdoc}
-     */
     protected function setUp(): void
     {
         $this->tmpFileName = \tempnam(\sys_get_temp_dir(), 'apn_push_test_jwt');
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function tearDown(): void
     {
         if (\file_exists($this->tmpFileName)) {

@@ -18,14 +18,8 @@ use Apple\ApnPush\Model\Aps;
 use Apple\ApnPush\Model\Payload;
 use Apple\ApnPush\Model\Sound;
 
-/**
- * The encoder for encode notification payload to string for next send to Apple Push Notification Service
- */
 class PayloadEncoder implements PayloadEncoderInterface
 {
-    /**
-     * {@inheritdoc}
-     */
     public function encode(Payload $payload): string
     {
         $data = [
@@ -34,16 +28,9 @@ class PayloadEncoder implements PayloadEncoderInterface
 
         $data = \array_merge($payload->getCustomData(), $data);
 
-        return \json_encode($data);
+        return \json_encode($data, JSON_THROW_ON_ERROR);
     }
 
-    /**
-     * Convert APS data to array
-     *
-     * @param Aps $aps
-     *
-     * @return array
-     */
     private function convertApsToArray(Aps $aps): array
     {
         $data = [];
@@ -94,13 +81,6 @@ class PayloadEncoder implements PayloadEncoderInterface
         return \array_merge($aps->getCustomData(), $data);
     }
 
-    /**
-     * Convert alert object to array
-     *
-     * @param Alert $alert
-     *
-     * @return array
-     */
     private function convertAlertToArray(Alert $alert): array
     {
         $data = [];

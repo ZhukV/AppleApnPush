@@ -18,30 +18,16 @@ namespace Apple\ApnPush\Exception\SendNotification;
  */
 class UnregisteredException extends SendNotificationException
 {
-    /**
-     * @var \DateTime
-     */
-    private $lastConfirmed;
+    private \DateTimeInterface $lastConfirmed;
 
-    /**
-     * Constructor.
-     *
-     * @param \DateTime $lastConfirmed
-     * @param string    $message
-     */
-    public function __construct(\DateTime $lastConfirmed, string $message = 'Unregistered.')
+    public function __construct(\DateTimeInterface $lastConfirmed, string $message = 'Unregistered.')
     {
         $this->lastConfirmed = $lastConfirmed;
 
         parent::__construct($message);
     }
 
-    /**
-     * Get last confirmed
-     *
-     * @return \DateTime
-     */
-    public function getLastConfirmed(): \DateTime
+    public function getLastConfirmed(): \DateTimeInterface
     {
         return $this->lastConfirmed;
     }

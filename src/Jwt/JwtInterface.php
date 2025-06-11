@@ -27,6 +27,7 @@ interface JwtInterface
 
     /**
      * Get the key of token
+     * You can see the key of certificate in Apple Developer Center
      *
      * @return string
      */

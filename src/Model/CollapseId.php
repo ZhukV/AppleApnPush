@@ -13,23 +13,10 @@ declare(strict_types = 1);
 
 namespace Apple\ApnPush\Model;
 
-/**
- * The value object for store the apns-collapse-id
- */
 class CollapseId
 {
-    /**
-     * @var string
-     */
-    private $value;
+    private string $value;
 
-    /**
-     * Constructor.
-     *
-     * @param string $value
-     *
-     * @throws \InvalidArgumentException
-     */
     public function __construct(string $value)
     {
         if (\strlen($value) > 64) {
@@ -39,11 +26,6 @@ class CollapseId
         $this->value = $value;
     }
 
-    /**
-     * Get the value of collapse id
-     *
-     * @return string
-     */
     public function getValue(): string
     {
         return $this->value;

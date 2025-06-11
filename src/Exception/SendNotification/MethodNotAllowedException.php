@@ -18,11 +18,6 @@ namespace Apple\ApnPush\Exception\SendNotification;
  */
 class MethodNotAllowedException extends SendNotificationException
 {
-    /**
-     * Constructor.
-     *
-     * @param string $message
-     */
     public function __construct(string $message = 'Method not allowed.')
     {
         parent::__construct($message);

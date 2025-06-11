@@ -13,48 +13,22 @@ declare(strict_types = 1);
 
 namespace Apple\ApnPush\Protocol\Http;
 
-/**
- * Object for presentation http response
- */
 class Response
 {
-    /**
-     * @var int
-     */
-    private $statusCode;
+    private int $statusCode;
+    private string $content;
 
-    /**
-     * @var string
-     */
-    private $content;
-
-    /**
-     * Constructor.
-     *
-     * @param int    $statusCode
-     * @param string $content
-     */
     public function __construct(int $statusCode, string $content)
     {
         $this->statusCode = $statusCode;
         $this->content = $content;
     }
 
-    /**
-     * Get status code
-     *
-     * @return int
-     */
     public function getStatusCode(): int
     {
         return $this->statusCode;
     }
 
-    /**
-     * Get content
-     *
-     * @return string
-     */
     public function getContent(): string
     {
         return $this->content;

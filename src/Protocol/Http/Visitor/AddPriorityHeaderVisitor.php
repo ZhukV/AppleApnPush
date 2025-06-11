@@ -16,14 +16,8 @@ namespace Apple\ApnPush\Protocol\Http\Visitor;
 use Apple\ApnPush\Model\Notification;
 use Apple\ApnPush\Protocol\Http\Request;
 
-/**
- * Visitor for add priority header to request
- */
 class AddPriorityHeaderVisitor implements HttpProtocolVisitorInterface
 {
-    /**
-     * {@inheritdoc}
-     */
     public function visit(Notification $notification, Request $request): Request
     {
         $priority = $notification->getPriority();

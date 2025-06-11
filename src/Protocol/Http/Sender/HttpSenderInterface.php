@@ -33,8 +33,5 @@ interface HttpSenderInterface
      */
     public function send(Request $request): Response;
 
-    /**
-     * Close connection
-     */
     public function close(): void;
 }

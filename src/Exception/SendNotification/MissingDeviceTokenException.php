@@ -19,11 +19,6 @@ namespace Apple\ApnPush\Exception\SendNotification;
  */
 class MissingDeviceTokenException extends SendNotificationException
 {
-    /**
-     * Constructor.
-     *
-     * @param string $message
-     */
     public function __construct(string $message = 'Missing device token.')
     {
         parent::__construct($message);

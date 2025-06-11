@@ -16,14 +16,8 @@ namespace Apple\ApnPush\Protocol\Http\Visitor;
 use Apple\ApnPush\Model\Notification;
 use Apple\ApnPush\Protocol\Http\Request;
 
-/**
- * Visitor for add the apns-collapse-id header.
- */
 class AddCollapseIdHeaderVisitor implements HttpProtocolVisitorInterface
 {
-    /**
-     * {@inheritdoc}
-     */
     public function visit(Notification $notification, Request $request): Request
     {
         $collapseId = $notification->getCollapseId();

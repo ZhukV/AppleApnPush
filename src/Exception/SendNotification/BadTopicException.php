@@ -18,11 +18,6 @@ namespace Apple\ApnPush\Exception\SendNotification;
  */
 class BadTopicException extends SendNotificationException
 {
-    /**
-     * Constructor.
-     *
-     * @param string $message
-     */
     public function __construct(string $message = 'Bad topic.')
     {
         parent::__construct($message);

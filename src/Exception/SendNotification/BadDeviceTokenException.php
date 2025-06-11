@@ -19,11 +19,6 @@ namespace Apple\ApnPush\Exception\SendNotification;
  */
 class BadDeviceTokenException extends SendNotificationException
 {
-    /**
-     * Constructor.
-     *
-     * @param string $message
-     */
     public function __construct(string $message = 'Bad device token.')
     {
         parent::__construct($message);

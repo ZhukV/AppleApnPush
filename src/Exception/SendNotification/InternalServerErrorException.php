@@ -18,11 +18,6 @@ namespace Apple\ApnPush\Exception\SendNotification;
  */
 class InternalServerErrorException extends SendNotificationException
 {
-    /**
-     * Constructor.
-     *
-     * @param string $message
-     */
     public function __construct(string $message = 'Internal server error.')
     {
         parent::__construct($message);

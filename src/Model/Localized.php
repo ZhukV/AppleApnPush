@@ -13,48 +13,22 @@ declare(strict_types = 1);
 
 namespace Apple\ApnPush\Model;
 
-/**
- * Value object for store localized information
- */
 class Localized
 {
-    /**
-     * @var string
-     */
-    protected $key;
+    protected string $key;
+    protected array $args;
 
-    /**
-     * @var array
-     */
-    protected $args;
-
-    /**
-     * Constructor.
-     *
-     * @param string $key
-     * @param array  $args
-     */
     public function __construct(string $key, array $args = [])
     {
         $this->key = $key;
         $this->args = $args;
     }
 
-    /**
-     * Get localized key
-     *
-     * @return string
-     */
     public function getKey(): string
     {
         return $this->key;
     }
 
-    /**
-     * Get localized args
-     *
-     * @return array
-     */
     public function getArgs(): array
     {
         return $this->args;

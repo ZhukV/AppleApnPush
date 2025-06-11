@@ -18,11 +18,6 @@ namespace Apple\ApnPush\Exception\SendNotification;
  */
 class BadCollapseIdException extends SendNotificationException
 {
-    /**
-     * Constructor.
-     *
-     * @param string $message
-     */
     public function __construct(string $message = 'Bad collapse id.')
     {
         parent::__construct($message);

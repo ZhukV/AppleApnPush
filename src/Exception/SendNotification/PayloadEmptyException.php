@@ -18,11 +18,6 @@ namespace Apple\ApnPush\Exception\SendNotification;
  */
 class PayloadEmptyException extends SendNotificationException
 {
-    /**
-     * Constructor.
-     *
-     * @param string $message
-     */
     public function __construct(string $message = 'Payload empty.')
     {
         parent::__construct($message);

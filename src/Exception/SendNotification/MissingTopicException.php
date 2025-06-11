@@ -20,11 +20,6 @@ namespace Apple\ApnPush\Exception\SendNotification;
  */
 class MissingTopicException extends SendNotificationException
 {
-    /**
-     * Constructor.
-     *
-     * @param string $message
-     */
     public function __construct(string $message = 'Missing topic.')
     {
         parent::__construct($message);

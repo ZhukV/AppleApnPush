@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 /*
  * This file is part of the AppleApnPush package
  *
@@ -49,14 +51,8 @@ use PHPUnit\Framework\TestCase;
 
 class ExceptionFactoryTest extends TestCase
 {
-    /**
-     * @var ExceptionFactory
-     */
-    private $exceptionFactory;
+    private ExceptionFactory $exceptionFactory;
 
-    /**
-     * {@inheritdoc}
-     */
     protected function setUp(): void
     {
         $this->exceptionFactory = new ExceptionFactory();
@@ -109,13 +105,13 @@ class ExceptionFactoryTest extends TestCase
      *
      * @dataProvider provideReasons
      */
-    public function shouldSuccessCreate($reason, \Exception $expectedException, array $extra = []): void
+    public function shouldSuccessCreate(string $reason, \Exception $expectedException, array $extra = []): void
     {
-        $json = array_merge([
+        $json = \array_merge([
             'reason' => $reason,
         ], $extra);
 
-        $response = new Response(200, json_encode($json));
+        $response = new Response(200, \json_encode($json));
         $exception = $this->exceptionFactory->create($response);
 
         self::assertEquals($expectedException, $exception);
@@ -126,7 +122,7 @@ class ExceptionFactoryTest extends TestCase
      *
      * @return array
      */
-    public function provideReasons(): array
+    public static function provideReasons(): array
     {
         $lastUse = \DateTime::createFromFormat('!Y/m/d', '2017/01/01');
 

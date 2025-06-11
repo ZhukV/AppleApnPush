@@ -54,9 +54,6 @@ use Apple\ApnPush\Protocol\Http\Response;
  */
 class ExceptionFactory implements ExceptionFactoryInterface
 {
-    /**
-     * {@inheritdoc}
-     */
     public function create(Response $response): SendNotificationException
     {
         $content = $response->getContent();
@@ -84,14 +81,6 @@ class ExceptionFactory implements ExceptionFactoryInterface
         return $this->createByReason($reason, $json);
     }
 
-    /**
-     * Create exception by reason
-     *
-     * @param string $reason
-     * @param array  $json
-     *
-     * @return SendNotificationException
-     */
     private function createByReason(string $reason, array $json): SendNotificationException
     {
         $reason = \strtolower($reason);
@@ -162,8 +151,8 @@ class ExceptionFactory implements ExceptionFactoryInterface
 
             case 'unregistered':
                 $timestamp = \array_key_exists('timestamp', $json) ? $json['timestamp'] : 0;
-                $lastConfirmed = new \DateTime('now', new \DateTimeZone('UTC'));
-                $lastConfirmed->setTimestamp($timestamp);
+                $lastConfirmed = new \DateTimeImmutable('now', new \DateTimeZone('UTC'));
+                $lastConfirmed = $lastConfirmed->setTimestamp($timestamp);
 
                 return new UnregisteredException($lastConfirmed);
 

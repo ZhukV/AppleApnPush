@@ -1,0 +1,25 @@
+parameters:
+    level: 8
+    paths:
+        - src
+
+    checkUninitializedProperties: true
+
+    ignoreErrors:
+        -
+            identifier: missingType.iterableValue
+
+        -
+            message: '/Parameter #1 \$handle of function curl_([^\s]+) expects CurlHandle, CurlHandle\|resource(\|null)? given\./'
+            path: src
+
+        -
+            message: '/Parameter #3 \$value of function curl_setopt expects (bool, int given|non-empty-string, string given)\./'
+
+        -
+            identifier: class.notFound
+            path: src/Jwt/SignatureGenerator/SignatureGeneratorFactory.php
+
+        -
+            identifier: class.notFound
+            path: src/Jwt/SignatureGenerator/SpomkyLabsJoseSignatureGenerator.php

@@ -17,29 +17,15 @@ use Apple\ApnPush\Model\Notification;
 use Apple\ApnPush\Model\Receiver;
 use Apple\ApnPush\Protocol\ProtocolInterface;
 
-/**
- * Default notification sender
- */
 class Sender implements SenderInterface
 {
-    /**
-     * @var ProtocolInterface
-     */
-    private $protocol;
+    private ProtocolInterface $protocol;
 
-    /**
-     * Constructor.
-     *
-     * @param ProtocolInterface $protocol
-     */
     public function __construct(ProtocolInterface $protocol)
     {
         $this->protocol = $protocol;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function send(Receiver $receiver, Notification $notification, bool $sandbox = false): void
     {
         $this->protocol->send($receiver, $notification, $sandbox);

@@ -23,57 +23,23 @@ use Apple\ApnPush\Protocol\Http\Request;
  */
 class JwtAuthenticator implements AuthenticatorInterface
 {
-    /**
-     * @var JwtInterface
-     */
-    private $jwt;
+    private JwtInterface $jwt;
+    private SignatureGeneratorInterface $signatureGenerator;
+    private ?\DateInterval $jwsLifetime;
+    private ?string $jws = null;
+    private ?\DateTimeInterface $jwsValidTo = null;
 
-    /**
-     * @var SignatureGeneratorInterface
-     */
-    private $signatureGenerator;
-
-    /**
-     * @var string
-     */
-    private $jws;
-
-    /**
-     * @var \DateInterval
-     */
-    private $jwsLifetime;
-
-    /**
-     * @var \DateTime
-     */
-    private $jwsValidTo;
-
-    /**
-     * Constructor.
-     *
-     * @param JwtInterface                     $jwt
-     * @param \DateInterval|null               $jwsLifetime
-     * @param SignatureGeneratorInterface|null $signatureGenerator
-     *
-     * @throws \InvalidArgumentException
-     * @throws \LogicException
-     */
     public function __construct(JwtInterface $jwt, ?\DateInterval $jwsLifetime = null, ?SignatureGeneratorInterface $signatureGenerator = null)
     {
-        $this->jwt = $jwt;
-
         if ($jwsLifetime && $jwsLifetime->invert) {
             throw new \InvalidArgumentException('JWS lifetime must not be inverted');
         }
 
+        $this->jwt = $jwt;
         $this->jwsLifetime = $jwsLifetime;
-
         $this->signatureGenerator = $signatureGenerator ?: SignatureGeneratorFactory::resolve();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function authenticate(Request $request): Request
     {
         $now = new \DateTimeImmutable();
@@ -83,6 +49,6 @@ class JwtAuthenticator implements AuthenticatorInterface
             $this->jwsValidTo = $this->jwsLifetime ? ($now)->add($this->jwsLifetime) : $this->jwsValidTo;
         }
 
-        return $request->withHeader('authorization', sprintf('bearer %s', $this->jws));
+        return $request->withHeader('authorization', \sprintf('bearer %s', $this->jws));
     }
 }

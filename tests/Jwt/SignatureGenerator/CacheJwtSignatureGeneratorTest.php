@@ -22,24 +22,10 @@ use Psr\SimpleCache\CacheInterface;
 
 class CacheJwtSignatureGeneratorTest extends TestCase
 {
-    /**
-     * @var SignatureGeneratorInterface
-     */
-    private $originGenerator;
+    private SignatureGeneratorInterface $originGenerator;
+    private CacheInterface $cache;
+    private JwtCacheKeyGeneratorInterface $keyGenerator;
 
-    /**
-     * @var CacheInterface
-     */
-    private $cache;
-
-    /**
-     * @var JwtCacheKeyGeneratorInterface
-     */
-    private $keyGenerator;
-
-    /**
-     * {@inheritdoc}
-     */
     protected function setUp(): void
     {
         $this->originGenerator = $this->createMock(SignatureGeneratorInterface::class);

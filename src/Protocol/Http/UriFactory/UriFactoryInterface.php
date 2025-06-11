@@ -15,18 +15,7 @@ namespace Apple\ApnPush\Protocol\Http\UriFactory;
 
 use Apple\ApnPush\Model\DeviceToken;
 
-/**
- * All URI factories for create URI for send push notification via HTTP should implement this interface
- */
 interface UriFactoryInterface
 {
-    /**
-     * Create URI for send request
-     *
-     * @param DeviceToken $deviceToken
-     * @param bool        $sandbox
-     *
-     * @return string
-     */
     public function create(DeviceToken $deviceToken, bool $sandbox): string;
 }

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 /*
  * This file is part of the AppleApnPush package
  *
@@ -24,19 +26,9 @@ use PHPUnit\Framework\TestCase;
 
 class SenderTest extends TestCase
 {
-    /**
-     * @var ProtocolInterface|MockObject
-     */
-    private $protocol;
+    private ProtocolInterface $protocol;
+    private Sender $sender;
 
-    /**
-     * @var Sender
-     */
-    private $sender;
-
-    /**
-     * {@inheritdoc}
-     */
     protected function setUp(): void
     {
         $this->protocol = $this->createMock(ProtocolInterface::class);

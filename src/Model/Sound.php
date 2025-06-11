@@ -13,33 +13,12 @@ declare(strict_types = 1);
 
 namespace Apple\ApnPush\Model;
 
-/**
- * Value object for store sound object
- */
 class Sound
 {
-    /**
-     * @var bool
-     */
-    private $critical;
+    private bool $critical;
+    private string $name;
+    private float $volume;
 
-    /**
-     * @var string
-     */
-    private $name;
-
-    /**
-     * @var float
-     */
-    private $volume;
-
-    /**
-     * Constructor.
-     *
-     * @param string    $name
-     * @param float|int $volume
-     * @param bool      $critical
-     */
     public function __construct(string $name, float $volume = 1.0, bool $critical = false)
     {
         if ($volume < 0 || $volume > 1) {
@@ -54,31 +33,16 @@ class Sound
         $this->critical = $critical;
     }
 
-    /**
-     * Is critical?
-     *
-     * @return bool
-     */
     public function isCritical(): bool
     {
         return $this->critical;
     }
 
-    /**
-     * Get the name of volume
-     *
-     * @return string
-     */
     public function getName(): string
     {
         return $this->name;
     }
 
-    /**
-     * Get the volume
-     *
-     * @return float
-     */
     public function getVolume(): float
     {
         return $this->volume;

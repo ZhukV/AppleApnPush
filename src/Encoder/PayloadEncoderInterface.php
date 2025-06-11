@@ -15,9 +15,6 @@ namespace Apple\ApnPush\Encoder;
 
 use Apple\ApnPush\Model\Payload;
 
-/**
- * All payload encoder should implement this interface
- */
 interface PayloadEncoderInterface
 {
     /**

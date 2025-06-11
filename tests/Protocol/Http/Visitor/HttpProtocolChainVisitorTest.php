@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 /*
  * This file is part of the AppleApnPush package
  *
@@ -109,16 +111,11 @@ class HttpProtocolChainVisitorTest extends TestCase
         $chain->visit($notification, $request);
     }
 
-    /**
-     * Create visitor mock
-     *
-     * @return HttpProtocolVisitorInterface|MockObject
-     */
     private function createVisitor(): HttpProtocolVisitorInterface
     {
         $className = sprintf(
             'HttpProtocolVisitorInterface_%s',
-            \md5(\uniqid(\random_int(0, 9999), true))
+            \md5(\uniqid((string) \random_int(0, 9999), true))
         );
 
         $visitor = $this->getMockBuilder(HttpProtocolVisitorInterface::class)

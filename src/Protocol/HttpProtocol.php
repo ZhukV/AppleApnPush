@@ -25,51 +25,15 @@ use Apple\ApnPush\Protocol\Http\Sender\HttpSenderInterface;
 use Apple\ApnPush\Protocol\Http\UriFactory\UriFactoryInterface;
 use Apple\ApnPush\Protocol\Http\Visitor\HttpProtocolVisitorInterface;
 
-/**
- * Implement HTTP protocol for send push notification
- */
 class HttpProtocol implements ProtocolInterface
 {
-    /**
-     * @var AuthenticatorInterface
-     */
-    private $authenticator;
+    private AuthenticatorInterface $authenticator;
+    private HttpSenderInterface $httpSender;
+    private PayloadEncoderInterface $payloadEncoder;
+    private UriFactoryInterface$uriFactory;
+    private HttpProtocolVisitorInterface $visitor;
+    private ExceptionFactoryInterface $exceptionFactory;
 
-    /**
-     * @var HttpSenderInterface
-     */
-    private $httpSender;
-
-    /**
-     * @var PayloadEncoderInterface
-     */
-    private $payloadEncoder;
-
-    /**
-     * @var UriFactoryInterface
-     */
-    private $uriFactory;
-
-    /**
-     * @var HttpProtocolVisitorInterface
-     */
-    private $visitor;
-
-    /**
-     * @var ExceptionFactoryInterface
-     */
-    private $exceptionFactory;
-
-    /**
-     * Constructor.
-     *
-     * @param AuthenticatorInterface       $authenticator
-     * @param HttpSenderInterface          $httpSender
-     * @param PayloadEncoderInterface      $payloadEncoder
-     * @param UriFactoryInterface          $uriFactory
-     * @param HttpProtocolVisitorInterface $visitor
-     * @param ExceptionFactoryInterface    $exceptionFactory
-     */
     public function __construct(AuthenticatorInterface $authenticator, HttpSenderInterface $httpSender, PayloadEncoderInterface $payloadEncoder, UriFactoryInterface $uriFactory, HttpProtocolVisitorInterface $visitor, ExceptionFactoryInterface $exceptionFactory)
     {
         $this->authenticator = $authenticator;
@@ -80,11 +44,6 @@ class HttpProtocol implements ProtocolInterface
         $this->exceptionFactory = $exceptionFactory;
     }
 
-    /**
-     * {@inheritdoc}
-     *
-     * @throws HttpSenderException
-     */
     public function send(Receiver $receiver, Notification $notification, bool $sandbox): void
     {
         try {
@@ -96,24 +55,11 @@ class HttpProtocol implements ProtocolInterface
         }
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function closeConnection(): void
     {
         $this->httpSender->close();
     }
 
-    /**
-     * Inner send process
-     *
-     * @param Receiver     $receiver
-     * @param Notification $notification
-     * @param bool         $sandbox
-     *
-     * @throws SendNotificationException
-     * @throws HttpSenderException
-     */
     private function doSend(Receiver $receiver, Notification $notification, bool $sandbox): void
     {
         $payloadEncoded = $this->payloadEncoder->encode($notification->getPayload());

@@ -16,10 +16,6 @@ namespace Apple\ApnPush\Protocol\Http\Visitor;
 use Apple\ApnPush\Model\Notification;
 use Apple\ApnPush\Protocol\Http\Request;
 
-/**
- * All visitors for visit for notification and request before send request to Apple Apn Push service should implement
- * this interface.
- */
 interface HttpProtocolVisitorInterface
 {
     /**

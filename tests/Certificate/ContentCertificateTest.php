@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 /*
  * This file is part of the AppleApnPush package
  *
@@ -21,10 +23,10 @@ class ContentCertificateTest extends TestCase
      */
     public function shouldSuccessCreateContentCertificate(): void
     {
-        $certificate = new ContentCertificate('content', 'pass', sys_get_temp_dir());
+        $certificate = new ContentCertificate('content', 'pass', \sys_get_temp_dir());
 
         $filePath = $certificate->getPath();
-        $fileContent = file_get_contents($filePath);
+        $fileContent = \file_get_contents($filePath);
 
         self::assertEquals('content', $fileContent);
         self::assertEquals('pass', $certificate->getPassPhrase());

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 /*
  * This file is part of the AppleApnPush package
  *
@@ -21,14 +23,8 @@ use PHPUnit\Framework\TestCase;
 
 class PayloadEncoderTest extends TestCase
 {
-    /**
-     * @var PayloadEncoder
-     */
-    private $encoder;
+    private PayloadEncoder $encoder;
 
-    /**
-     * {@inheritdoc}
-     */
     protected function setUp(): void
     {
         $this->encoder = new PayloadEncoder();

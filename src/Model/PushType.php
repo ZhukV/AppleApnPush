@@ -14,7 +14,6 @@ declare(strict_types = 1);
 namespace Apple\ApnPush\Model;
 
 /**
- * The type of the notification
  * @see https://developer.apple.com/documentation/usernotifications/setting_up_a_remote_notification_server/sending_notification_requests_to_apns
  */
 final class PushType
@@ -23,51 +22,28 @@ final class PushType
     const TYPE_BACKGROUND = 'background';
     const TYPE_LIVEACTIVITY = 'liveactivity';
 
-    private $value;
+    private string $value;
 
-    /**
-     * Create alert push-type
-     *
-     * @return PushType
-     */
-    public static function alert(): PushType
+    public static function alert(): self
     {
         return new self(self::TYPE_ALERT);
     }
 
-    /**
-     * Create background push-type
-     *
-     * @return PushType
-     */
-    public static function background(): PushType
+    public static function background(): self
     {
         return new self(self::TYPE_BACKGROUND);
     }
 
-    /**
-     * Create liveactivity push-type
-     *
-     * @return PushType
-     */
-    public static function liveactivity(): PushType
+    public static function liveactivity(): self
     {
         return new self(self::TYPE_LIVEACTIVITY);
     }
 
-    /**
-     * @return string
-     */
     public function __toString(): string
     {
         return $this->value;
     }
 
-    /**
-     * @param string $type
-     *
-     * @throws \InvalidArgumentException
-     */
     private function __construct(string $type)
     {
         if (!\in_array($type, [self::TYPE_ALERT, self::TYPE_BACKGROUND, self::TYPE_LIVEACTIVITY], true)) {
