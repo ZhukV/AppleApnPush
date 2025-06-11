@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## v3.2.0
+
+* Set minimum PHP version - 7.4.
+* Fix deprecations related to nullable arguments for PHP 8.1 and newer ([@abavyka](https://github.com/abavyka)).
+
 ## v3.1.7
 
 * Fix close curl connection if we don't create curl resource previously ([@richso](https://github.com/richso))
